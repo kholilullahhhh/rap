@@ -310,14 +310,14 @@
                             <div class="d-flex justify-content-between align-items-start">
                                 <div>
                                     <p class="text-muted mb-1">Dokumen per Kategori</p>
-                                    <div class="mt-2">
+                                    {{-- <div class="mt-2">
                                         @foreach($topKategori as $kategori)
                                             <div class="d-flex justify-content-between align-items-center mb-1">
                                                 <small>{{ Str::limit($kategori->nama, 20) }}</small>
                                                 <small class="fw-bold">{{ $kategori->dokumen_count }}</small>
                                             </div>
                                         @endforeach
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="card-icon-wrapper icon-bg-success" style="width: 50px; height: 50px;">
                                     <i class="bi bi-tags"></i>
@@ -430,7 +430,7 @@
                     <div class="dashboard-card card h-100">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h6 class="m-0 font-weight-bold text-primary">Dokumen Terbaru</h6>
-                            <a href="{{ route('dokumen.index') }}" class="btn btn-sm btn-primary">
+                            <a href="{{ route('umkm.index') }}" class="btn btn-sm btn-primary">
                                 <i class="bi bi-list-ul"></i> Lihat Semua
                             </a>
                         </div>

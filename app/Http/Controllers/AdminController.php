@@ -39,10 +39,10 @@ class AdminController extends Controller
         $kategoriAktif = JenisUsaha::count();
 
         // Top 5 kategori dengan dokumen terbanyak
-        $topKategori = JenisUsaha::withCount('dokumen')
-            ->orderBy('dokumen_count', 'desc')
-            ->take(5)
-            ->get();
+        // $topKategori = JenisUsaha::withCount('dokumen')
+        //     ->orderBy('dokumen_count', 'desc')
+        //     ->take(5)
+        //     ->get();
 
         // ========== DATA PENGGUNA ==========
         $totalUsers = User::count();
@@ -51,10 +51,10 @@ class AdminController extends Controller
             ->count();
 
         // Top 5 pengguna dengan dokumen terbanyak
-        $topUsers = User::withCount('dokumen')
-            ->orderBy('dokumen_count', 'desc')
-            ->take(5)
-            ->get();
+        // $topUsers = User::withCount('dokumen')
+        //     ->orderBy('dokumen_count', 'desc')
+        //     ->take(5)
+            // ->get();
 
         // ========== CHART DATA ==========
         // Monthly upload trend
@@ -73,28 +73,28 @@ class AdminController extends Controller
         // Category distribution
         $categoryData = [];
         $categoryLabels = [];
-        $categories = JenisUsaha::withCount('dokumen')
-            ->orderBy('dokumen_count', 'desc')
-            ->take(8)
-            ->get();
+        // $categories = JenisUsaha::withCount('dokumen')
+        //     ->orderBy('dokumen_count', 'desc')
+        //     ->take(8)
+        //     ->get();
         
-        foreach ($categories as $category) {
-            $categoryLabels[] = $category->nama;
-            $categoryData[] = $category->dokumen_count;
-        }
+        // foreach ($categories as $category) {
+        //     $categoryLabels[] = $category->nama;
+        //     $categoryData[] = $category->dokumen_count;
+        // }
 
         // Top users data for chart
         $topUsersData = [];
         $topUsersLabels = [];
-        $topUsersList = User::withCount('dokumen')
-            ->orderBy('dokumen_count', 'desc')
-            ->take(5)
-            ->get();
+        // $topUsersList = User::withCount('dokumen')
+        //     ->orderBy('dokumen_count', 'desc')
+        //     ->take(5)
+        //     ->get();
         
-        foreach ($topUsersList as $user) {
-            $topUsersLabels[] = $user->name;
-            $topUsersData[] = $user->dokumen_count;
-        }
+        // foreach ($topUsersList as $user) {
+        //     $topUsersLabels[] = $user->name;
+        //     $topUsersData[] = $user->dokumen_count;
+        // }
 
         // Version distribution
         $versionData = [];
@@ -158,7 +158,7 @@ class AdminController extends Controller
             // Category data
             'totalKategori' => $totalKategori,
             'kategoriAktif' => $kategoriAktif,
-            'topKategori' => $topKategori,
+            // 'topKategori' => $topKategori,
             
             // User data
             'totalUsers' => $totalUsers,
