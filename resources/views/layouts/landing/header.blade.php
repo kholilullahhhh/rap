@@ -5,7 +5,7 @@
                 <ul class="top-info text-center text-md-left">
                     <li>
                         <i class="fas fa-map-marker-alt"></i>
-                        <p class="info-text">Jl. Jend. Sudirman No.48, Sawerigading, Kec. Ujung Pandang, Kota Makassar,
+                        <p class="info-text">Jalan, Bonto Jai, Kec. Bissappu, Kabupaten Bantaeng, Sulawesi Selatan 92451,
                             Sulawesi
                             Selatan </p>
                     </li>

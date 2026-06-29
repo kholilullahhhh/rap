@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\JenisUsaha;
 
@@ -13,24 +12,70 @@ class JenisUsahaSeeder extends Seeder
      */
     public function run(): void
     {
-        $jenisUsaha = [
-            ['nama_jenis' => 'Tenun', 'deskripsi' => 'Tenun tradisional termasuk Tenun Toraja, Tenun Sutera, dll'],
-            ['nama_jenis' => 'Rajutan/Knit', 'deskripsi' => 'Produk rajutan seperti tas, sepatu, topi, dll'],
-            ['nama_jenis' => 'Anyaman', 'deskripsi' => 'Anyaman dari eceng gondok, daun lontar, bambu, plastik'],
-            ['nama_jenis' => 'Aksesoris', 'deskripsi' => 'Aksesoris seperti kalung, gelang, bros, konektor masker'],
-            ['nama_jenis' => 'Fashion/Desainer', 'deskripsi' => 'Produk fashion dan desainer pakaian'],
-            ['nama_jenis' => 'Kerajinan Kayu', 'deskripsi' => 'Ukiran kayu, gelang kayu, dll'],
-            ['nama_jenis' => 'Kerajinan Logam/Perak', 'deskripsi' => 'Produk dari perak dan logam'],
-            ['nama_jenis' => 'Kerajinan Bambu', 'deskripsi' => 'Produk dari bambu seperti lampu hias, kursi'],
-            ['nama_jenis' => 'Kerajinan Batok Kelapa', 'deskripsi' => 'Produk dari batok kelapa'],
-            ['nama_jenis' => 'Decoupage', 'deskripsi' => 'Kerajinan decoupage'],
-            ['nama_jenis' => 'Makrame', 'deskripsi' => 'Kerajinan makrame'],
-            ['nama_jenis' => 'Songkok', 'deskripsi' => 'Pembuatan songkok'],
-            ['nama_jenis' => 'Hiasan Kaca', 'deskripsi' => 'Hiasan dari kaca'],
-            ['nama_jenis' => 'Akrilik', 'deskripsi' => 'Produk dari akrilik seperti pot bunga'],
+        $jenisSurat = [
+            [
+                'nama_jenis' => 'Surat Keputusan (SK)',
+                'deskripsi' => 'Surat yang berisi penetapan atau keputusan resmi dari pejabat yang berwenang.'
+            ],
+            [
+                'nama_jenis' => 'Surat Tugas',
+                'deskripsi' => 'Surat yang memberikan penugasan kepada pegawai untuk melaksanakan suatu kegiatan.'
+            ],
+            [
+                'nama_jenis' => 'Surat Undangan',
+                'deskripsi' => 'Surat yang digunakan untuk mengundang pihak tertentu dalam suatu kegiatan atau rapat.'
+            ],
+            [
+                'nama_jenis' => 'Surat Edaran',
+                'deskripsi' => 'Surat yang berisi pemberitahuan atau informasi resmi kepada seluruh unit kerja.'
+            ],
+            [
+                'nama_jenis' => 'Nota Dinas',
+                'deskripsi' => 'Surat komunikasi internal antar pejabat atau unit kerja.'
+            ],
+            [
+                'nama_jenis' => 'Memorandum',
+                'deskripsi' => 'Dokumen yang digunakan untuk menyampaikan informasi atau arahan secara internal.'
+            ],
+            [
+                'nama_jenis' => 'Surat Permohonan',
+                'deskripsi' => 'Surat yang digunakan untuk mengajukan permintaan atau usulan tertentu.'
+            ],
+            [
+                'nama_jenis' => 'Surat Persetujuan',
+                'deskripsi' => 'Surat yang menyatakan persetujuan terhadap suatu usulan atau kegiatan.'
+            ],
+            [
+                'nama_jenis' => 'Surat Keterangan',
+                'deskripsi' => 'Surat yang menerangkan suatu keadaan atau informasi tertentu.'
+            ],
+            [
+                'nama_jenis' => 'Berita Acara',
+                'deskripsi' => 'Dokumen yang mencatat hasil pelaksanaan kegiatan, rapat, atau pemeriksaan.'
+            ],
+            [
+                'nama_jenis' => 'Laporan Kegiatan',
+                'deskripsi' => 'Dokumen yang berisi laporan hasil pelaksanaan suatu kegiatan.'
+            ],
+            [
+                'nama_jenis' => 'Surat Perintah',
+                'deskripsi' => 'Surat resmi yang berisi perintah untuk melaksanakan tugas tertentu.'
+            ],
+            [
+                'nama_jenis' => 'Surat Masuk',
+                'deskripsi' => 'Dokumen surat yang diterima dari instansi atau pihak lain.'
+            ],
+            [
+                'nama_jenis' => 'Surat Keluar',
+                'deskripsi' => 'Dokumen surat yang diterbitkan oleh instansi kepada pihak lain.'
+            ],
+            [
+                'nama_jenis' => 'Dokumen Pendukung',
+                'deskripsi' => 'Dokumen pendukung yang dilampirkan dalam proses administrasi atau Rencana Aksi Perubahan.'
+            ],
         ];
 
-        foreach ($jenisUsaha as $jenis) {
+        foreach ($jenisSurat as $jenis) {
             JenisUsaha::create($jenis);
         }
     }

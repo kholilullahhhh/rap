@@ -1,11 +1,11 @@
-<footer id="footer" class="footer bg-danger">
+<footer id="footer" class="footer bg-primer">
     <div class="footer-main">
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-lg-4 col-md-6 footer-widget footer-about">
                     <h3 class="widget-title">Tentang Kami</h3>
                     <img loading="lazy" width="200px" class="footer-logo"
-                        src="{{ asset('landing/images/footer/Dekranasda.png') }}" alt="Constra">
+                        src="{{ asset('landing/images/footer/rapp.png') }}" alt="Constra">
                     <p>DEKRANASDA - Dewan Kerajinan Nasional<br> Daerah Sulawesi Selatan</p>
                     <div class="footer-social">
                         <ul>
@@ -25,7 +25,7 @@
                     <div class="working-hours">
                         <ul class="list-arrow">
                             <li>
-                                Jl. Jend. Sudirman No.48, Sawerigading, Makassar, South Sulawesi 90115
+                               Jalan, Bonto Jai, Kec. Bissappu, Kabupaten Bantaeng, Sulawesi Selatan 92451
                             </li>
                             <li>08898988988 </li>
                             <li>dekranasda@gmail.com </li>
@@ -61,7 +61,7 @@
         </div><!-- Container end -->
     </div><!-- Footer main end -->
 
-    <div class="copyright bg-danger">
+    <div class="copyright bg-primer">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">

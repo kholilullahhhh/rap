@@ -8,14 +8,14 @@
         </style>
     @endpush
     <div class="banner-carousel banner-carousel-1 mb-0">
-        <div class="banner-carousel-item" style="background-image:url({{ asset('landing/images/slider-main/dek1.webp') }})">
+        <div class="banner-carousel-item" style="background-image:url({{ asset('landing/images/slider-main/rap.jpeg') }})">
             <div class="slider-content">
                 <div class="container h-100">
                     <div class="row align-items-center h-100">
                         <div class="col-md-12 text-center">
                             <h2 class="slide-title" data-animation-in="slideInLeft">Selamat Datang di</h2>
-                            <h3 class="slide-sub-title" data-animation-in="slideInRight">Sistem Profiling & Pemetaan<br>
-                                UMKM Binaan
+                            <h3 class="slide-sub-title" data-animation-in="slideInRight">Sistem RAP Kementrian<br>
+                                Imigrasi & Permasyarakatan
                             </h3>
                             <p data-animation-in="slideInLeft" data-duration-in="1.2">
                                 {{-- <a href="services.html" class="slider btn btn-primary">Our Services</a>
@@ -27,15 +27,15 @@
             </div>
         </div>
 
-        <div class="banner-carousel-item" style="background-image:url({{ asset('landing/images/slider-main/dek4.webp') }})">
+        <div class="banner-carousel-item" style="background-image:url({{ asset('landing/images/slider-main/rap.jpeg') }})">
             <div class="slider-content text-left">
                 <div class="container h-100">
                     <div class="row align-items-center h-100">
                         <div class="col-md-12">
-                            <h2 class="slide-title-box" data-animation-in="slideInDown">Siap Membantu UMKM Naik Kelas</h2>
-                            <h3 class="slide-title" data-animation-in="fadeIn">Dedikasi Kami untuk Pelaku Usaha</h3>
-                            <h3 class="slide-sub-title" data-animation-in="slideInLeft">Sistem Profiling & Pemetaan<br>
-                                UMKM Binaan</h3>
+                            <h2 class="slide-title-box" data-animation-in="slideInDown">Sistem RAP Kementrian</h2>
+                            <h3 class="slide-title" data-animation-in="fadeIn">Imigrasi & Permasyarakatan</h3>
+                            <h3 class="slide-sub-title" data-animation-in="slideInLeft">Sistem Rencana Aksi Perubahan <br>
+                                (RAP)</h3>
                             <p data-animation-in="slideInRight">
                                 {{-- <a href="services.html" class="slider btn btn-primary border">Pelayanan Kami</a> --}}
                             </p>
@@ -45,16 +45,16 @@
             </div>
         </div>
 
-        <div class="banner-carousel-item" style="background-image:url({{ asset('landing/images/slider-main/dek5.jpeg') }})">
+        <div class="banner-carousel-item" style="background-image:url({{ asset('landing/images/slider-main/rap.jpeg') }})">
             <div class="slider-content text-right">
                 <div class="container h-100">
                     <div class="row align-items-center h-100">
                         <div class="col-md-12">
                             <h2 class="slide-title" data-animation-in="slideInDown">Temui Layanan Kami</h2>
-                            <h3 class="slide-sub-title" data-animation-in="fadeIn">Keberlanjutan dalam Pendidikan</h3>
+                            <h3 class="slide-sub-title" data-animation-in="fadeIn">Kementrian Imigrasi & Permasyarakatan</h3>
                             <p class="slider-description lead" data-animation-in="slideInRight">
                                 Kami akan mendukung Anda
-                                dalam meraih kesuksesan melalui pendidikan yang berkelanjutan.
+                                dalam meraih kesuksesan melalui imigrasi dan permasyarakatan.
                             </p>
                             <div data-animation-in="slideInLeft">
                                 <a href="{{ route('user.kontak') }}" class="slider btn btn-primary"
@@ -191,23 +191,37 @@
                 <div class="col-lg-12">
                     <div class="ts-intro">
                         <h2 class="into-title">Tentang Aplikasi</h2>
-                        <h3 class="into-sub-title">Sistem Profiling UMKM Binaan</h3>
+                        <h3 class="into-sub-title">Sistem Rencana Aksi Perubahan (RAP)</h3>
                         <p class="my-sub-content">
-                            Aplikasi Profiling & Pemetaan UMKM Binaan dirancang untuk membantu pemerintah daerah, dinas
-                            koperasi, dan lembaga pendamping dalam melakukan pendataan, evaluasi, dan pengembangan UMKM
-                            secara terstruktur dan digital. Dengan sistem ini, setiap UMKM dapat terpetakan dengan jelas
-                            berdasarkan potensi, kesiapan, dan kebutuhan pendampingannya.
+                            Aplikasi Sistem Rencana Aksi Perubahan (RAP) merupakan sebuah sistem informasi berbasis web yang
+                            dirancang untuk mendukung proses perencanaan, pelaksanaan, pemantauan, dan evaluasi program
+                            perubahan di lingkungan Kementerian Imigrasi dan Pemasyarakatan. Aplikasi ini menjadi media
+                            terintegrasi bagi para peserta pelatihan kepemimpinan, pejabat, mentor, serta administrator
+                            dalam menyusun dan mengelola dokumen Rencana Aksi Perubahan secara sistematis, terdokumentasi,
+                            dan mudah dipantau. Melalui sistem ini, seluruh proses pengajuan, pelaksanaan, hingga pelaporan
+                            RAP dapat dilakukan secara digital sehingga meningkatkan efektivitas koordinasi, transparansi,
+                            dan akuntabilitas pelaksanaan program perubahan.
                         </p>
                         <p class="my-sub-content">
-                            Profiling mencakup berbagai aspek usaha, antara lain legalitas usaha, kapasitas produksi,
-                            pemasaran digital, manajemen keuangan, serta potensi pengembangan. Sistem ini memudahkan admin
-                            dan pendamping untuk menginput data, memantau perkembangan, serta menyusun program intervensi
-                            yang tepat sasaran.
+                            Penyusunan Rencana Aksi Perubahan dalam sistem ini mencakup berbagai komponen penting, antara
+                            lain identifikasi permasalahan organisasi, analisis kondisi eksisting, tujuan perubahan, sasaran
+                            yang ingin dicapai, strategi implementasi, tahapan kegiatan, indikator keberhasilan, jadwal
+                            pelaksanaan, kebutuhan sumber daya, hingga dokumentasi bukti pelaksanaan dan capaian hasil.
+                            Selain itu, aplikasi juga menyediakan mekanisme validasi, pemberian masukan, monitoring
+                            perkembangan setiap tahapan, serta evaluasi oleh mentor maupun administrator sehingga setiap RAP
+                            dapat dikawal sesuai dengan target yang telah ditetapkan.
                         </p>
                         <p class="my-sub-content">
-                            Seluruh data profiling tersimpan rapi dan terintegrasi dalam satu platform, sehingga mendukung
-                            pengambilan keputusan berbasis data. Kami berkomitmen menghadirkan sistem profiling yang akurat,
-                            transparan, dan bermanfaat bagi pengembangan ekosistem UMKM yang berkelanjutan.
+                            Seluruh data Rencana Aksi Perubahan tersimpan secara aman, terstruktur, dan terintegrasi dalam
+                            satu platform, sehingga memudahkan proses pencarian data, penyusunan laporan, analisis
+                            perkembangan program, serta pengambilan keputusan berdasarkan data yang akurat. Dengan dukungan
+                            sistem ini, Kementerian Imigrasi dan Pemasyarakatan dapat meningkatkan kualitas tata kelola
+                            pelaksanaan Rencana Aksi Perubahan, mempercepat proses administrasi, serta memastikan setiap
+                            inovasi dan program perubahan yang dijalankan memiliki dampak nyata terhadap peningkatan
+                            kualitas pelayanan, efektivitas organisasi, dan reformasi birokrasi yang berkelanjutan. Kami
+                            berkomitmen menghadirkan sistem RAP yang modern, aman, transparan, dan adaptif terhadap
+                            kebutuhan organisasi, sehingga mampu menjadi sarana pendukung dalam mewujudkan transformasi
+                            kelembagaan yang profesional, inovatif, dan berorientasi pada pelayanan publik yang prima.
                         </p>
                     </div><!-- Intro box end -->
                 </div><!-- Col end -->
@@ -215,16 +229,16 @@
 
 
                 <!-- <div class="col-lg-6 mt-4 mt-lg-4 justify-content-center">
-                                                                <h3 class="into-sub-title"> </h3>
-                                                                <div class="box-video"> -->
+                                                                            <h3 class="into-sub-title"> </h3>
+                                                                            <div class="box-video"> -->
 
                 <!--<iframe width="420" height="315" title="Program Pengembangan keprofesian Guru. Pendidikan Jasmani, olahraga dan kesehatan" src="https://www.youtube.com/embed/gJ3g7xX9O-s"-->
                 <!--    allowfullscreen>-->
                 <!--</iframe>-->
                 <!-- <div class="video-placeholder" data-src="https://www.youtube.com"
-                                                                        onclick="loadVideo(this)">
-                                                                        <div class="video-title">Rencana Pelaksanaan Pembelajaran</div>
-                                                                    </div> -->
+                                                                                    onclick="loadVideo(this)">
+                                                                                    <div class="video-title">Rencana Pelaksanaan Pembelajaran</div>
+                                                                                </div> -->
                 <!--<div class="video-title">Balai Besar Guru Penggerak</div>-->
             </div>
             <!--/ Accordion end -->
@@ -377,12 +391,12 @@
             }
 
             // Optionally, you can use Intersection Observer to load video only when in viewport
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 var lazyVideos = [].slice.call(document.querySelectorAll('.video-placeholder'));
 
                 if ('IntersectionObserver' in window) {
-                    var lazyVideoObserver = new IntersectionObserver(function (entries, observer) {
-                        entries.forEach(function (video) {
+                    var lazyVideoObserver = new IntersectionObserver(function(entries, observer) {
+                        entries.forEach(function(video) {
                             if (video.isIntersecting) {
                                 loadVideo(video.target);
                                 lazyVideoObserver.unobserve(video.target);
@@ -390,12 +404,12 @@
                         });
                     });
 
-                    lazyVideos.forEach(function (video) {
-                                                                                                                lazyVideoObserv er.observe(video);
+                    lazyVideos.forEach(function(video) {
+                        lazyVideoObserv er.observe(video);
                     });
                 } else {
                     // Fallback for older browsers
-                    lazyVideos.forEach(function (video) {
+                    lazyVideos.forEach(function(video) {
                         loadVideo(video);
                     });
                 }

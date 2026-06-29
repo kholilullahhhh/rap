@@ -6,7 +6,7 @@
                 <div class="row align-items-center">
                     <div class="logo col-lg-3 text-center text-lg-left mb-3 mb-md-5 mb-lg-0">
                         <a class="d-block" href="/">
-                            <img style="width:auto; height:80px" src="{{ asset('landing/images/footer/Dekranasda.png') }}"
+                            <img style="width:auto; height:80px" src="{{ asset('landing/images/footer/rapp.png') }}"
                                 alt="BBGP SulSel">
                         </a>
                     </div><!-- logo end -->
@@ -39,7 +39,7 @@
                             </li>
 
                             <li class="header-get-a-quote">
-                                <a class="btn btn-danger" href="{{ route('user.kontak') }}">Kontak</a>
+                                <a class="btn btn-info" href="{{ route('user.kontak') }}">Kontak</a>
                             </li>
                         </ul><!-- Ul end -->
                     </div><!-- header right end -->
@@ -49,11 +49,11 @@
         </div><!-- Container end -->
     </div>
 
-    <div class="site-navigation bg-danger">
+    <div class="site-navigation bg-primer">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <nav class="navbar navbar-expand-lg navbar-dark bg-danger p-0">
+                    <nav class="navbar navbar-expand-lg navbar-dark bg-primer p-0">
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false"
                             aria-label="Toggle navigation">

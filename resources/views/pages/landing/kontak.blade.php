@@ -40,7 +40,7 @@
                         </span>
                         <div class="ts-service-box-content">
                             <h4>Kunjungi lOKASI Kami</h4>
-                            <p> Jl. Jend. Sudirman No.48, Sawerigading, Makassar, South Sulawesi 90115
+                            <p> Jalan, Bonto Jai, Kec. Bissappu, Kabupaten Bantaeng, Sulawesi Selatan 92451
                             </p>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
 
             <div class="google-map">
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.751486031009!2d119.41205397498217!3d-5.14365789483355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dbf1d58d6ddfd51%3A0xbef406f893775b67!2sDekranasda%20Provinsi%20Sulsel!5e0!3m2!1sid!2sid!4v1777491111955!5m2!1sid!2sid"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.9453552202244!2d119.90444747498528!3d-5.575097694405471!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x42888dfc6316d653%3A0x75546e815f267f0c!2sKantor%20Imigrasi%20Kelas%20III%20Non%20TPI%20Bantaeng!5e0!3m2!1sid!2sid!4v1782699706522!5m2!1sid!2sid" 
                     width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>

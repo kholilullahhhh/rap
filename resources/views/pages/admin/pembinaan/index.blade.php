@@ -9,7 +9,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Data Pembinaan</h1>
+                <h1>Data Kegiatan </h1>
             </div>
 
             <div class="section-body">

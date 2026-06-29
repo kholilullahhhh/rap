@@ -1,10 +1,10 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{route('dashboard') }}">DEKRANASDA SULSEL</a>
+            <a href="{{route('dashboard') }}">KEMENTRIAN IMIGRASI</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="{{route('dashboard') }}">UMKM</a>
+            <a href="{{route('dashboard') }}">RAP</a>
         </div>
 
         <ul class="sidebar-menu">
