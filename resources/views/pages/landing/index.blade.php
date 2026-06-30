@@ -997,10 +997,7 @@
                     <span class="hero-floating-card">
                         <span class="icon"><i class="fas fa-bolt"></i></span> Cepat
                     </span>
-                    <span class="hero-floating-card">
-                        <span class="icon"><i class="fas fa-link"></i></span> Terintegrasi
-                    </span>
-                </div>
+                    </div>
             </div>
             <!-- Right Column -->
             <div class="col-lg-6" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
