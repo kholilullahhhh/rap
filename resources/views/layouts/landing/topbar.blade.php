@@ -1,135 +1,106 @@
 <!-- Header start -->
 <header id="header" class="header-one">
-    <div class="bg-white">
+   
+
+    <!-- Logo Area -->
+    <div class="bg-white" style="background: #ffffff !important; border-bottom: 1px solid rgba(0,0,0,0.04);">
         <div class="container">
-            <div style="padding:10px" class="logo-area">
+            <div style="padding:15px 0;" class="logo-area">
                 <div class="row align-items-center">
                     <div class="logo col-lg-3 text-center text-lg-left mb-3 mb-md-5 mb-lg-0">
                         <a class="d-block" href="/">
-                            <img style="width:auto; height:80px" src="{{ asset('landing/images/footer/rapp.png') }}"
-                                alt="BBGP SulSel">
+                            <img style="width:auto; height:90px;" src="{{ asset('landing/images/footer/rapp.png') }}"
+                                alt="RAP Kementerian">
                         </a>
                     </div><!-- logo end -->
 
-                    <div class="col-lg-9 ">
-                        <ul class="top-info-box">
+                    <div class="col-lg-9">
+                        <ul class="top-info-box" style="list-style: none; padding: 0; margin: 0; display: flex; align-items: center; justify-content: flex-end; gap: 1.5rem; flex-wrap: wrap;">
                             <li>
-                                <div class="info-box">
+                                <div class="info-box" style="display: flex; align-items: center; gap: 0.8rem;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(11,31,58,0.06); display: flex; align-items: center; justify-content: center; color: #123E73; font-size: 1rem;">
+                                        <i class="fas fa-phone-alt"></i>
+                                    </div>
                                     <div class="info-box-content">
-                                        <p class="info-box-title">Hubungi Kami</p>
-                                        <p class="info-box-subtitle">(0411) 0889 0992 009 </p>
+                                        <p class="info-box-title" style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #6C757D; margin: 0;">Hubungi Kami</p>
+                                        <p class="info-box-subtitle" style="font-size: 0.95rem; font-weight: 600; color: #0B1F3A; margin: 0;">(0411) 0889 0992 009</p>
                                     </div>
                                 </div>
                             </li>
                             <li class="last">
-                                <div class="info-box last">
+                                <div class="info-box last" style="display: flex; align-items: center; gap: 0.8rem;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(11,31,58,0.06); display: flex; align-items: center; justify-content: center; color: #123E73; font-size: 1rem;">
+                                        <i class="fas fa-fax"></i>
+                                    </div>
                                     <div class="info-box-content">
-                                        <p class="info-box-title">Fax</p>
-                                        <p class="info-box-subtitle">0411-8890098</p>
+                                        <p class="info-box-title" style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #6C757D; margin: 0;">Fax</p>
+                                        <p class="info-box-subtitle" style="font-size: 0.95rem; font-weight: 600; color: #0B1F3A; margin: 0;">0411-8890098</p>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div class="info-box">
+                                <div class="info-box" style="display: flex; align-items: center; gap: 0.8rem;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(11,31,58,0.06); display: flex; align-items: center; justify-content: center; color: #123E73; font-size: 1rem;">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
                                     <div class="info-box-content">
-                                        <p class="info-box-title">Email Kami</p>
-                                        <p class="info-box-subtitle">dekranasda@gmail.com </p>
+                                        <p class="info-box-title" style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #6C757D; margin: 0;">Email Kami</p>
+                                        <p class="info-box-subtitle" style="font-size: 0.95rem; font-weight: 600; color: #0B1F3A; margin: 0;">dekranasda@gmail.com</p>
                                     </div>
                                 </div>
                             </li>
 
                             <li class="header-get-a-quote">
-                                <a class="btn btn-info" href="{{ route('user.kontak') }}">Kontak</a>
+                                <a class="btn btn-premium" href="{{ route('user.kontak') }}" style="background: linear-gradient(135deg, #0B1F3A 0%, #123E73 50%, #1E5AA8 100%); color: #ffffff; border: none; padding: 0.7rem 1.8rem; border-radius: 50px; font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(11,31,58,0.2); display: inline-block; text-decoration: none;">
+                                    <i class="fas fa-paper-plane" style="margin-right: 0.5rem;"></i> Kontak
+                                </a>
                             </li>
-                        </ul><!-- Ul end -->
+                        </ul>
                     </div><!-- header right end -->
                 </div><!-- logo area end -->
-
             </div><!-- Row end -->
         </div><!-- Container end -->
     </div>
 
-    <div class="site-navigation bg-primer">
+    <!-- Navigation with Gradient -->
+    <div class="site-navigation" style="background: linear-gradient(135deg, #0B1F3A 0%, #123E73 50%, #1E5AA8 100%); border-top: 1px solid rgba(255,255,255,0.05);">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <nav class="navbar navbar-expand-lg navbar-dark bg-primer p-0">
+                    <nav class="navbar navbar-expand-lg navbar-dark p-0" style="background: transparent !important;">
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false"
-                            aria-label="Toggle navigation">
+                            aria-label="Toggle navigation" style="border-color: rgba(255,255,255,0.2); padding: 0.5rem 0.8rem;">
                             <span class="navbar-toggler-icon"></span>
                         </button>
 
                         <div id="navbar-collapse" class="collapse navbar-collapse">
-                            <ul class="nav navbar-nav mr-auto">
-                                <li class="nav-item {{ $menu == 'profil' ? 'active' : '' }}"><a class="nav-link"
-                                        href="/">Profil</a></li>
-
-                                <!-- <li class="nav-item {{ $menu == 'data' ? 'active' : '' }} dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Data <i
-                                            class="fa fa-angle-down"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ route('user.pegawai') }}">Data Internal</a></li>
-                                        <li><a href="{{ route('user.guru') }}">Data Eksternal</a></li>
-                                    </ul>
-                                </li> -->
-
-                                <li class="nav-item {{ $menu == 'kontak' ? 'active' : '' }}"><a class="nav-link"
-                                        href="{{ route('user.kontak') }} ">Kontak</a></li>
-
-                                <!-- <li class="nav-item {{ $menu == 'kegiatan' ? 'active' : '' }}"><a class="nav-link" href="{{ route('user.kegiatan') }}">Kegiatan</a></li> -->
-
-                                <!-- <li class="nav-item {{ $menu == 'statistik' ? 'active' : '' }}"><a class="nav-link" href="{{ route('user.statistik') }}">Statistik</a></li> -->
-
-                                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
-
-
-                                {{-- <li class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Projects <i
-                                            class="fa fa-angle-down"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="projects.html">Projects All</a></li>
-                                        <li><a href="projects-single.html">Projects Single</a></li>
-                                    </ul>
+                            <ul class="nav navbar-nav mr-auto" style="display: flex; flex-wrap: wrap; gap: 0.2rem;">
+                                <li class="nav-item {{ $menu == 'profil' ? 'active' : '' }}">
+                                    <a class="nav-link" href="/" style="color: rgba(255,255,255,0.8); font-weight: 500; padding: 0.8rem 1.2rem; transition: all 0.3s ease; border-radius: 8px; font-size: 0.95rem;">
+                                        <i class="fas fa-home" style="margin-right: 0.4rem; font-size: 0.85rem;"></i> Profil
+                                    </a>
                                 </li>
 
-                                <li class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Services <i
-                                            class="fa fa-angle-down"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="services.html">Services All</a></li>
-                                        <li><a href="service-single.html">Services Single</a></li>
-                                    </ul>
+                                <li class="nav-item {{ $menu == 'kontak' ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('user.kontak') }}" style="color: rgba(255,255,255,0.8); font-weight: 500; padding: 0.8rem 1.2rem; transition: all 0.3s ease; border-radius: 8px; font-size: 0.95rem;">
+                                        <i class="fas fa-phone" style="margin-right: 0.4rem; font-size: 0.85rem;"></i> Kontak
+                                    </a>
                                 </li>
 
-                                <li class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Features <i
-                                            class="fa fa-angle-down"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="typography.html">Typography</a></li>
-                                        <li><a href="404.html">404</a></li>
-                                        <li class="dropdown-submenu">
-                                            <a href="#!" class="dropdown-toggle" data-toggle="dropdown">Parent Menu</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#!">Child Menu 1</a></li>
-                                                <li><a href="#!">Child Menu 2</a></li>
-                                                <li><a href="#!">Child Menu 3</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}" style="color: rgba(255,255,255,0.8); font-weight: 500; padding: 0.8rem 1.2rem; transition: all 0.3s ease; border-radius: 8px; font-size: 0.95rem;">
+                                        <i class="fas fa-sign-in-alt" style="margin-right: 0.4rem; font-size: 0.85rem;"></i> Login
+                                    </a>
                                 </li>
-
-                                <li class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">News <i
-                                            class="fa fa-angle-down"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="news-left-sidebar.html">News Left Sidebar</a></li>
-                                        <li><a href="news-right-sidebar.html">News Right Sidebar</a></li>
-                                        <li><a href="news-single.html">News Single</a></li>
-                                    </ul>
-                                </li> --}}
-
                             </ul>
+                        </div>
+
+                        <!-- Search Button -->
+                        <div class="nav-search" style="margin-left: 1rem;">
+                            <span id="search" style="color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.3s ease; padding: 0.5rem;">
+                                <i class="fa fa-search"></i>
+                            </span>
                         </div>
                     </nav>
                 </div>
@@ -137,21 +108,213 @@
             </div>
             <!--/ Row end -->
 
-            <div class="nav-search">
-                <span id="search"><i class="fa fa-search"></i></span>
-            </div><!-- Search end -->
-
-            <div class="search-block" style="display: none;">
-                <label for="search-field" class="w-100 mb-0">
+            <div class="search-block" style="display: none; position: absolute; right: 0; top: 100%; background: #ffffff; padding: 1rem; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 300px; z-index: 1000;">
+                <label for="search-field" class="w-100 mb-0" style="display: flex; align-items: center;">
                     <input type="text" class="form-control" id="search-field"
-                        placeholder="Type what you want and enter">
+                        placeholder="Type what you want and enter" style="border-radius: 8px; border: 1px solid #e0e0e0; padding: 0.6rem 1rem;">
                 </label>
-                <span class="search-close">&times;</span>
+                <span class="search-close" style="position: absolute; top: 0.5rem; right: 1rem; cursor: pointer; color: #6C757D; font-size: 1.2rem;">&times;</span>
             </div><!-- Site search end -->
         </div>
         <!--/ Container end -->
-
     </div>
     <!--/ Navigation end -->
 </header>
 <!--/ Header end -->
+
+@push('styles')
+<style>
+    /* ============================================================
+       HEADER STYLES - Premium Gradient Biru Landing Page
+       ============================================================ */
+    
+    /* ===== NAVIGATION LINK HOVER ===== */
+    .navbar-dark .navbar-nav .nav-link:hover {
+        color: #ffffff !important;
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-1px);
+    }
+
+    .navbar-dark .navbar-nav .nav-item.active .nav-link {
+        color: #ffffff !important;
+        background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* ===== SEARCH BUTTON HOVER ===== */
+    .nav-search #search:hover {
+        color: #ffffff !important;
+    }
+
+    /* ===== TOP SOCIAL HOVER ===== */
+    .top-social li a:hover {
+        background: rgba(255, 255, 255, 0.15) !important;
+        color: #ffffff !important;
+        transform: translateY(-2px);
+        border-color: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 991.98px) {
+        .top-info-box {
+            justify-content: center !important;
+        }
+        
+        .navbar-collapse {
+            background: rgba(11, 31, 58, 0.95);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 0.5rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .navbar-nav {
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .navbar-nav .nav-link {
+            padding: 0.6rem 1rem !important;
+            border-radius: 6px;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .top-info {
+            justify-content: center !important;
+        }
+
+        .top-info li {
+            font-size: 0.75rem !important;
+        }
+
+        .top-social {
+            justify-content: center !important;
+            margin-top: 0.3rem;
+        }
+
+        .top-social li a {
+            width: 28px !important;
+            height: 28px !important;
+        }
+
+        .top-social li a i {
+            font-size: 0.7rem !important;
+        }
+
+        .info-box {
+            flex-direction: column;
+            text-align: center;
+            gap: 0.3rem !important;
+        }
+
+        .info-box .info-box-title {
+            font-size: 0.6rem !important;
+        }
+
+        .info-box .info-box-subtitle {
+            font-size: 0.8rem !important;
+        }
+
+        .header-get-a-quote {
+            width: 100%;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .header-get-a-quote .btn-premium {
+            width: 100%;
+            text-align: center;
+        }
+
+        .search-block {
+            width: 250px !important;
+            right: -50px !important;
+        }
+    }
+
+    @media (max-width: 575.98px) {
+        .top-info li {
+            font-size: 0.65rem !important;
+        }
+
+        .top-info li span {
+            display: none;
+        }
+
+        .top-info li i {
+            font-size: 0.8rem;
+        }
+
+        .logo-area .logo img {
+            height: 55px !important;
+        }
+
+        .top-info-box {
+            gap: 0.5rem !important;
+        }
+
+        .info-box {
+            flex-direction: row !important;
+            gap: 0.5rem !important;
+        }
+
+        .info-box .info-box-title {
+            font-size: 0.5rem !important;
+        }
+
+        .info-box .info-box-subtitle {
+            font-size: 0.7rem !important;
+        }
+
+        .info-box > div:first-child {
+            width: 30px !important;
+            height: 30px !important;
+            font-size: 0.7rem !important;
+        }
+
+        .search-block {
+            width: 200px !important;
+            right: -30px !important;
+        }
+    }
+</style>
+@endpush
+
+@push('scripts')
+<script>
+    // ============================================================
+    // SEARCH TOGGLE
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchBtn = document.getElementById('search');
+        const searchBlock = document.querySelector('.search-block');
+        const searchClose = document.querySelector('.search-close');
+
+        if (searchBtn && searchBlock) {
+            searchBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const isVisible = searchBlock.style.display === 'block';
+                searchBlock.style.display = isVisible ? 'none' : 'block';
+                if (!isVisible) {
+                    const input = searchBlock.querySelector('#search-field');
+                    if (input) setTimeout(() => input.focus(), 100);
+                }
+            });
+
+            if (searchClose) {
+                searchClose.addEventListener('click', function() {
+                    searchBlock.style.display = 'none';
+                });
+            }
+
+            document.addEventListener('click', function(e) {
+                if (!searchBlock.contains(e.target) && e.target !== searchBtn && !searchBtn.contains(e.target)) {
+                    searchBlock.style.display = 'none';
+                }
+            });
+        }
+    });
+</script>
+@endpush

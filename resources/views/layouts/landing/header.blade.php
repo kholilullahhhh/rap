@@ -13,7 +13,7 @@
             </div>
             <!--/ Top info end -->
 
-            <div class="col-lg-4 col-md-4 top-social text-center text-md-right">
+            <div class="col-lg-4 col-md-4 top-social text-center text-md-ri ght">
                 <ul class="list-unstyled">
                     <li>
                         <a title="Facebook" href="https://www.facebook.com/">
