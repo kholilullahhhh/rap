@@ -1,7 +1,7 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{route('dashboard') }}">KEMENTRIAN IMIGRASI</a>
+            <a href="{{route('dashboard') }}">IMIGRASI BANTAENG</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="{{route('dashboard') }}">RAP</a>
@@ -68,14 +68,14 @@
 
             @if (session('role') == 'user')
 
-                <li class="{{ $menu == 'umkm' ? 'active' : '' }}">
+                <li class="{{ $menu == 'dokumen' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('umkm.index') }}">
-                        <i class="fas fa-wallet"></i> <span>UMKM</span>
+                        <i class="fas fa-wallet"></i> <span>Dokumen</span>
                     </a>
                 </li>
                 <li class="{{ $menu == 'pembinaan' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('pembinaan.index') }}">
-                        <i class="fas fa-wallet"></i> <span>Pembinaan</span>
+                        <i class="fas fa-wallet"></i> <span>Kegiatan</span>
                     </a>
                 </li>
                 <li class="menu-header">Landing Page</li>

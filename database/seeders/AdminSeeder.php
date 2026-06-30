@@ -17,6 +17,14 @@ class AdminSeeder extends Seeder
         $users = [
 
             [
+                'name' => 'Admin',
+                'username' => 'admin',
+                'password' => Hash::make('admin'),
+                'jabatan' => 'admin',
+                'role' => 'admin',
+            ],
+
+            [
                 'name' => 'Nur Arifandi Azis, S.H., M.M',
                 'username' => 'nurarifandi',
                 'password' => Hash::make('12345678'),
