@@ -4,8 +4,11 @@
             <div class="row justify-content-between">
                 <div class="col-lg-4 col-md-6 footer-widget footer-about">
                     <h3 class="widget-title" style="color: #ffffff;">Tentang Kami</h3>
-                    <img loading="lazy" width="200px" class="footer-logo"
+                    <img loading="lazy" width="100px" class="footer-logo"
                         src="{{ asset('landing/images/footer/rapp.png') }}" alt="Constra">
+                         <img loading="lazy" width="100px"  class="footer-logo" 
+                        src="{{ asset('landing/images/footer/logoimig.png') }}" alt="Constra">
+                        
                     <p style="color: rgba(255,255,255,0.75);">DEKRANASDA - Dewan Kerajinan Nasional<br> Daerah Sulawesi Selatan</p>
                     <div class="footer-social">
                         <ul>
@@ -58,7 +61,7 @@
         </div><!-- Container end -->
     </div><!-- Footer main end -->
 
-    <div class="copyright" style="background: rgba(0,0,0,0.2); padding: 18px 0; border-top: 1px solid rgba(255,255,255,0.04);">
+    <div class="copyright" style="background: linear-gradient(135deg, #0B1F3A 0%, #123E73 50%, #1E5AA8 100%);">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-12 text-center">
@@ -105,6 +108,7 @@
     }
 
     /* ===== FOOTER MAIN ===== */
+    
     .footer {
         background: var(--navy-gradient);
         color: var(--footer-text);
