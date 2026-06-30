@@ -370,7 +370,7 @@
 
             <!-- Charts Row 1 -->
             <div class="row mb-4">
-                <div class="col-lg-8 mb-4">
+                <div class="col-lg-12 mb-4">
                     <div class="dashboard-card card h-100">
                         <div class="card-header d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-primary">Tren Upload Dokumen</h6>
@@ -392,23 +392,6 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 mb-4">
-                    <div class="dashboard-card card h-100">
-                        <div class="card-header">
-                            <h6 class="m-0 font-weight-bold text-primary">Distribusi Kategori</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-container" style="height: 250px;">
-                                <div id="categoryChart"></div>
-                            </div>
-                            <div class="mt-3">
-                                <small class="text-muted d-block text-center">
-                                    Menampilkan {{ count($categoryLabels) }} kategori dengan dokumen terbanyak
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Charts Row 2 -->

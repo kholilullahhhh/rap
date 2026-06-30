@@ -101,8 +101,11 @@
                                                             required
                                                             class="form-control role-select @error('role') is-invalid @enderror">
                                                             <option value="">-- Pilih Role Akun --</option>
-                                                            <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
+                                                            <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Kasubsi pelayanan & verdokjal</option>
+                                                            <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>TI & inteldaktim</option>
                                                             <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                                                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Kepala Kantor</option>
+                                                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Tata Usaha</option>
                                                         </select>
 
                                                         @error('role')

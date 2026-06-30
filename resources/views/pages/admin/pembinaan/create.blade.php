@@ -24,18 +24,6 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nama UMKM</label>
-                                        <div class="col-sm-12 col-md-7">
-                                            <select name="umkm_id" class="form-control select2" required>
-                                                <option value="">Pilih UMKM</option>
-                                                @foreach($umkm as $umkm)
-                                                    <option value="{{ $umkm->id }}">{{ $umkm->nama_usaha }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-4">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Judul Pembinaan</label>
                                         <div class="col-sm-12 col-md-7">
                                             <input type="text" name="judul_pembinaan" class="form-control" required placeholder="Masukkan judul pembinaan">

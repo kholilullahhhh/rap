@@ -18,15 +18,14 @@ private $menu = 'pembinaan';
     public function index()
     {
         $menu = $this->menu;
-        $datas = Pembinaan::with(['umkm'])->get();
+        $datas = Pembinaan::all();
         return view('pages.admin.pembinaan.index', compact('datas', 'menu'));
     }
     public function create()
     {
         $menu = $this->menu;
-        $umkm = Umkm::all();
         $users = User::where('role', 'user')->get();
-        return view('pages.admin.pembinaan.create', compact('users', 'umkm', 'menu'));
+        return view('pages.admin.pembinaan.create', compact('users', 'menu'));
     }
 
     public function store(Request $request)
@@ -40,9 +39,8 @@ private $menu = 'pembinaan';
     {
         $data = Pembinaan::find($id);
         $menu = $this->menu;
-        $umkm = Umkm::all();
         $users = User::where('role', 'user')->get();
-        return view('pages.admin.pembinaan.edit', compact('data', 'umkm', 'users', 'menu'));
+        return view('pages.admin.pembinaan.edit', compact('data', 'users', 'menu'));
     }
     public function update(Request $request)
     {

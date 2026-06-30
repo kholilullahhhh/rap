@@ -164,10 +164,8 @@ class DokumenController extends Controller
 
         $dokumen->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Dokumen berhasil dihapus'
-        ]);
+        return redirect()->route('umkm.index')
+                ->with('message', 'Data berhasil dihapus');
     }
 
     /**

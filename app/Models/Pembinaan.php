@@ -8,10 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pembinaan extends Model
 {
     use HasFactory;
-    protected $fillable = ['umkm_id', 'judul_pembinaan', 'tanggal', 'deskripsi', 'hasil'];
+    protected $fillable = ['judul_pembinaan', 'tanggal', 'deskripsi', 'hasil'];
 
-    public function umkm()
-    {
-        return $this->belongsTo(Umkm::class);
-    }
+
 }

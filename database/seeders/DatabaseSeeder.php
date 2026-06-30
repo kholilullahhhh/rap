@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Http\Controllers\JadwalController;
 use App\Models\Agenda;
 use App\Models\Dokumen;
+use App\Models\Pembinaan;
 
 use Illuminate\Database\Seeder;
 
@@ -27,6 +28,8 @@ class DatabaseSeeder extends Seeder
         $this->call(AgendaSeeder::class);
         $this->call(JenisUsahaSeeder::class);
         $this->call(DokumenSeeder::class);
+        $this->call(KegiatanSeeder::class);
+        
 
     }
 }

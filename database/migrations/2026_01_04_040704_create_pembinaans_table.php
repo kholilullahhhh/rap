@@ -12,7 +12,6 @@ return new class extends Migration {
     {
         Schema::create('pembinaans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('umkm_id')->constrained('umkms')->onDelete('cascade');
             $table->string('judul_pembinaan');
             $table->date('tanggal');
             $table->text('deskripsi')->nullable();
