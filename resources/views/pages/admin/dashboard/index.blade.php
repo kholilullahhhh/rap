@@ -165,6 +165,24 @@
                 color: white;
                 flex-shrink: 0;
             }
+            
+            .growth-indicator {
+                font-size: 0.875rem;
+            }
+            
+            .growth-up {
+                color: var(--success);
+            }
+            
+            .growth-down {
+                color: var(--danger);
+            }
+            
+            .mini-stat {
+                padding: 0.5rem;
+                background: #f8f9fa;
+                border-radius: 0.5rem;
+            }
         </style>
     @endpush
 
@@ -196,11 +214,18 @@
                                     <div class="card-value">{{ number_format($totalDokumen) }}</div>
                                 </div>
                             </div>
-                            <div class="mt-2">
+                            <div class="mt-2 d-flex justify-content-between align-items-center">
                                 <small class="text-muted">
                                     <i class="bi bi-arrow-up text-success"></i>
-                                    {{ $dokumenBaru }} dokumen baru bulan ini
+                                    {{ $dokumenBaru }} baru bulan ini
                                 </small>
+                                @if($growthPercentage > 0)
+                                    <span class="badge bg-success">+{{ $growthPercentage }}%</span>
+                                @elseif($growthPercentage < 0)
+                                    <span class="badge bg-danger">{{ $growthPercentage }}%</span>
+                                @else
+                                    <span class="badge bg-secondary">0%</span>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -221,7 +246,7 @@
                             <div class="mt-2">
                                 <small class="text-muted">
                                     <i class="bi bi-grid"></i>
-                                    {{ $kategoriAktif }} kategori aktif
+                                    {{-- {{ $kategoriAktif }} aktif, {{ $kategoriKosong }} kosong --}}
                                 </small>
                             </div>
                         </div>
@@ -243,7 +268,7 @@
                             <div class="mt-2">
                                 <small class="text-muted">
                                     <i class="bi bi-person-plus"></i>
-                                    {{ $userBaru }} pengguna baru
+                                    {{-- {{ $userBaru }} baru, {{ $userAktif }} aktif --}}
                                 </small>
                             </div>
                         </div>
@@ -265,7 +290,7 @@
                             <div class="mt-2">
                                 <small class="text-muted">
                                     <i class="bi bi-file-earmark-arrow-up"></i>
-                                    {{ $dokumenRevisi }} dokumen revisi
+                                    {{ $dokumenRevisi }} revisi, {{ $dokumenDenganFile }} dengan file
                                 </small>
                             </div>
                         </div>
@@ -275,23 +300,23 @@
 
             <!-- Status Summary -->
             <div class="row mb-4">
-                <div class="col-lg-4 col-md-6 mb-4">
+                <div class="col-lg-6 col-md-6 mb-4">
                     <div class="dashboard-card card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div>
-                                    <p class="text-muted mb-1">Status Dokumen</p>
-                                    <div class="d-flex gap-3 mt-2">
-                                        <div>
-                                            <span class="status-badge bg-success text-white">Aktif</span>
+                                    <p class="text-muted mb-2">Status Dokumen</p>
+                                    <div class="d-flex gap-3 flex-wrap">
+                                        <div class="mini-stat">
+                                            <span class="status-badge bg-success text-white">Approved</span>
                                             <span class="fw-bold ms-1">{{ $dokumenAktif }}</span>
                                         </div>
-                                        <div>
-                                            <span class="status-badge bg-warning text-dark">Pending</span>
+                                        <div class="mini-stat">
+                                            <span class="status-badge bg-warning text-dark">Review</span>
                                             <span class="fw-bold ms-1">{{ $dokumenPending }}</span>
                                         </div>
-                                        <div>
-                                            <span class="status-badge bg-danger text-white">Arsip</span>
+                                        <div class="mini-stat">
+                                            <span class="status-badge bg-danger text-white">Draft</span>
                                             <span class="fw-bold ms-1">{{ $dokumenArsip }}</span>
                                         </div>
                                     </div>
@@ -304,47 +329,33 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6 mb-4">
+                <div class="col-lg-6 col-md-6 mb-4">
                     <div class="dashboard-card card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div>
-                                    <p class="text-muted mb-1">Dokumen per Kategori</p>
-                                    {{-- <div class="mt-2">
-                                        @foreach($topKategori as $kategori)
-                                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                                <small>{{ Str::limit($kategori->nama, 20) }}</small>
-                                                <small class="fw-bold">{{ $kategori->dokumen_count }}</small>
-                                            </div>
-                                        @endforeach
-                                    </div> --}}
-                                </div>
-                                <div class="card-icon-wrapper icon-bg-success" style="width: 50px; height: 50px;">
-                                    <i class="bi bi-tags"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="dashboard-card card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <p class="text-muted mb-1">Aktivitas Terbaru</p>
-                                    <div class="mt-2">
-                                        <small class="d-block">
+                                    <p class="text-muted mb-2">Aktivitas Terbaru</p>
+                                    <div class="d-flex gap-3 flex-wrap">
+                                        <div class="mini-stat">
                                             <i class="bi bi-upload text-success"></i>
-                                            {{ $uploadBulanIni }} upload bulan ini
-                                        </small>
-                                        <small class="d-block mt-1">
+                                            <span class="fw-bold">{{ $uploadBulanIni }}</span>
+                                            <small class="text-muted">upload bulan ini</small>
+                                        </div>
+                                        <div class="mini-stat">
                                             <i class="bi bi-download text-info"></i>
-                                            {{ $downloadBulanIni }} download bulan ini
-                                        </small>
-                                        <small class="d-block mt-1">
+                                            {{-- <span class="fw-bold">{{ $downloadBulanIni }}</span> --}}
+                                            <small class="text-muted">download</small>
+                                        </div>
+                                        <div class="mini-stat">
                                             <i class="bi bi-eye text-primary"></i>
-                                            {{ $viewBulanIni }} views bulan ini
+                                            {{-- <span class="fw-bold">{{ $viewBulanIni }}</span> --}}
+                                            <small class="text-muted">views</small>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <small class="text-muted">
+                                            <i class="bi bi-calendar-week"></i>
+                                            {{ $uploadMingguIni }} upload minggu ini
                                         </small>
                                     </div>
                                 </div>
@@ -390,6 +401,11 @@
                             <div class="chart-container" style="height: 250px;">
                                 <div id="categoryChart"></div>
                             </div>
+                            <div class="mt-3">
+                                <small class="text-muted d-block text-center">
+                                    Menampilkan {{ count($categoryLabels) }} kategori dengan dokumen terbanyak
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -400,11 +416,11 @@
                 <div class="col-lg-6 mb-4">
                     <div class="dashboard-card card h-100">
                         <div class="card-header">
-                            <h6 class="m-0 font-weight-bold text-primary">Distribusi Status Dokumen</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Top 5 Pengguna Aktif</h6>
                         </div>
                         <div class="card-body">
-                            <div class="chart-container">
-                                <div id="statusChart"></div>
+                            <div class="chart-container" style="height: 250px;">
+                                <div id="topUsersChart"></div>
                             </div>
                         </div>
                     </div>
@@ -413,18 +429,18 @@
                 <div class="col-lg-6 mb-4">
                     <div class="dashboard-card card h-100">
                         <div class="card-header">
-                            <h6 class="m-0 font-weight-bold text-primary">Top Pengunggah Dokumen</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Distribusi Status Dokumen</h6>
                         </div>
                         <div class="card-body">
-                            <div class="chart-container">
-                                <div id="topUsersChart"></div>
+                            <div class="chart-container" style="height: 250px;">
+                                <div id="statusChart"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Recent Documents & Activities -->
+            <!-- Recent Documents & Monthly Stats -->
             <div class="row">
                 <div class="col-lg-6 mb-4">
                     <div class="dashboard-card card h-100">
@@ -442,7 +458,7 @@
                                             <i class="bi bi-file-earmark-pdf"></i>
                                         </div>
                                         <div class="flex-grow-1">
-                                            <h6 class="font-weight-bold mb-1">{{ $dokumen->judul }}</h6>
+                                            <h6 class="font-weight-bold mb-1">{{ Str::limit($dokumen->judul, 50) }}</h6>
                                             <small class="text-muted d-block">
                                                 <i class="bi bi-tag"></i> {{ $dokumen->kategori->nama ?? 'Tanpa Kategori' }}
                                             </small>
@@ -451,7 +467,7 @@
                                             </small>
                                             <small class="text-muted">
                                                 <i class="bi bi-clock"></i> 
-                                                {{ Carbon\Carbon::parse($dokumen->tanggal_dokumen)->format('d M Y') }}
+                                                {{ Carbon\Carbon::parse($dokumen->created_at)->diffForHumans() }}
                                             </small>
                                         </div>
                                         <div class="text-end">
@@ -463,7 +479,7 @@
                                             </span>
                                             @if($dokumen->versi > 1)
                                                 <br>
-                                                <small class="text-muted">v{{ $dokumen->versi }}</small>
+                                                <span class="badge bg-info">v{{ $dokumen->versi }}</span>
                                             @endif
                                         </div>
                                     </div>
@@ -481,7 +497,7 @@
                 <div class="col-lg-6 mb-4">
                     <div class="dashboard-card card h-100">
                         <div class="card-header">
-                            <h6 class="m-0 font-weight-bold text-primary">Statistik Dokumen per Bulan</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Statistik Dokumen 6 Bulan Terakhir</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -601,13 +617,13 @@
             var categoryLabels = @json($categoryLabels);
             
             var categoryChart = new ApexCharts(document.querySelector("#categoryChart"), {
-                series: categoryData,
+                series: categoryData.length > 0 ? categoryData : [1],
                 chart: {
                     type: 'donut',
                     height: 250
                 },
-                labels: categoryLabels,
-                colors: ['#0d6efd', '#198754', '#ffc107', '#dc3545', '#0dcaf0', '#6f42c1'],
+                labels: categoryLabels.length > 0 ? categoryLabels : ['Belum Ada Data'],
+                colors: ['#0d6efd', '#198754', '#ffc107', '#dc3545', '#0dcaf0', '#6f42c1', '#fd7e14', '#20c997'],
                 responsive: [{
                     breakpoint: 480,
                     options: {
@@ -643,7 +659,7 @@
                 series: [{{ $dokumenAktif }}, {{ $dokumenPending }}, {{ $dokumenArsip }}],
                 chart: {
                     type: 'pie',
-                    height: 350
+                    height: 250
                 },
                 labels: ['Aktif', 'Pending', 'Arsip'],
                 colors: ['#198754', '#ffc107', '#dc3545'],
@@ -657,19 +673,29 @@
                             position: 'bottom'
                         }
                     }
-                }]
+                }],
+                plotOptions: {
+                    pie: {
+                        dataLabels: {
+                            offset: -5
+                        }
+                    }
+                }
             });
             statusChart.render();
 
             // Top Users Chart
+            var topUsersData = @json($topUsersData);
+            var topUsersLabels = @json($topUsersLabels);
+            
             var topUsersChart = new ApexCharts(document.querySelector("#topUsersChart"), {
                 series: [{
                     name: 'Jumlah Dokumen',
-                    data: @json($topUsersData)
+                    data: topUsersData.length > 0 ? topUsersData : [0]
                 }],
                 chart: {
                     type: 'bar',
-                    height: 350,
+                    height: 250,
                     toolbar: {
                         show: false
                     }
@@ -688,7 +714,7 @@
                     }
                 },
                 xaxis: {
-                    categories: @json($topUsersLabels),
+                    categories: topUsersLabels.length > 0 ? topUsersLabels : ['Belum Ada Data'],
                     title: {
                         text: 'Jumlah Dokumen'
                     }
@@ -702,10 +728,13 @@
             topUsersChart.render();
 
             // Version Distribution Chart
+            var versionData = @json($versionData);
+            var versionLabels = @json($versionLabels);
+            
             var versionChart = new ApexCharts(document.querySelector("#versionChart"), {
                 series: [{
                     name: 'Jumlah Dokumen',
-                    data: @json($versionData)
+                    data: versionData.length > 0 ? versionData : [0]
                 }],
                 chart: {
                     type: 'bar',
@@ -728,7 +757,7 @@
                     }
                 },
                 xaxis: {
-                    categories: @json($versionLabels),
+                    categories: versionLabels.length > 0 ? versionLabels : ['Belum Ada Data'],
                     title: {
                         text: 'Versi Dokumen'
                     }

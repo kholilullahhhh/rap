@@ -25,9 +25,9 @@ class User extends Authenticatable
         'role'
     ];
 
-    public function umkm()
+    public function dokumen()
     {
-        return $this->belongsTo(Umkm::class, 'umkm_id', 'id');
+        return $this->hasMany(Dokumen::class, 'user_id', 'id');
     }
     
 

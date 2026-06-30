@@ -7,6 +7,7 @@ use App\Models\Dokumen;
 use App\Models\JenisUsaha;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -14,48 +15,65 @@ class AdminController extends Controller
     {
         // Get filter parameters
         $selectedYear = $request->year ?? date('Y');
-
+        
         // ========== DATA DOKUMEN ==========
         $totalDokumen = Dokumen::count();
         
         // Dokumen berdasarkan status
-        $dokumenAktif = Dokumen::where('status', 'aktif')->count();
-        $dokumenPending = Dokumen::where('status', 'pending')->count();
-        $dokumenArsip = Dokumen::where('status', 'arsip')->count();
-
+        $dokumenAktif = Dokumen::where('status', 'approved')->count();
+        $dokumenPending = Dokumen::where('status', 'review')->count();
+        $dokumenArsip = Dokumen::where('status', 'draft')->count();
+        
         // Dokumen baru bulan ini
         $dokumenBaru = Dokumen::whereMonth('created_at', date('m'))
             ->whereYear('created_at', date('Y'))
             ->count();
-
+            
+        // Dokumen baru hari ini
+        $dokumenHariIni = Dokumen::whereDate('created_at', Carbon::today())->count();
+        
         // Dokumen revisi (versi > 1)
         $dokumenRevisi = Dokumen::where('versi', '>', 1)->count();
-
+        
         // Total versi dokumen
         $totalVersi = Dokumen::sum('versi');
-
+        
+        // Dokumen dengan file
+        $dokumenDenganFile = Dokumen::whereNotNull('file_path')->count();
+        
         // ========== DATA KATEGORI ==========
         $totalKategori = JenisUsaha::count();
-        $kategoriAktif = JenisUsaha::count();
-
+        // $kategoriAktif = JenisUsaha::where('status', 'aktif')->count();
+        
         // Top 5 kategori dengan dokumen terbanyak
-        // $topKategori = JenisUsaha::withCount('dokumen')
-        //     ->orderBy('dokumen_count', 'desc')
-        //     ->take(5)
-        //     ->get();
-
+        $topKategori = JenisUsaha::withCount('dokumen')
+            ->orderBy('dokumen_count', 'desc')
+            ->take(5)
+            ->get();
+            
+        // Kategori tanpa dokumen
+        $kategoriKosong = JenisUsaha::withCount('dokumen')
+            ->having('dokumen_count', 0)
+            ->count();
+        
         // ========== DATA PENGGUNA ==========
         $totalUsers = User::count();
         $userBaru = User::whereMonth('created_at', date('m'))
             ->whereYear('created_at', date('Y'))
             ->count();
-
+        // $userAktif = User::where('status', 'aktif')->count();
+        
         // Top 5 pengguna dengan dokumen terbanyak
-        // $topUsers = User::withCount('dokumen')
-        //     ->orderBy('dokumen_count', 'desc')
-        //     ->take(5)
-            // ->get();
-
+        $topUsers = User::withCount('dokumen')
+            ->orderBy('dokumen_count', 'desc')
+            ->take(5)
+            ->get();
+            
+        // Pengguna tanpa dokumen
+        $userTanpaDokumen = User::withCount('dokumen')
+            ->having('dokumen_count', 0)
+            ->count();
+        
         // ========== CHART DATA ==========
         // Monthly upload trend
         $monthlyUploads = [];
@@ -69,34 +87,38 @@ class AdminController extends Controller
                 ->count();
             $monthlyUploads[] = $count;
         }
-
-        // Category distribution
+        
+        // Category distribution - FIXED
+        $categories = JenisUsaha::withCount('dokumen')
+            ->orderBy('dokumen_count', 'desc')
+            ->take(8)
+            ->get();
+        
         $categoryData = [];
         $categoryLabels = [];
-        // $categories = JenisUsaha::withCount('dokumen')
-        //     ->orderBy('dokumen_count', 'desc')
-        //     ->take(8)
-        //     ->get();
+        foreach ($categories as $category) {
+            if ($category->dokumen_count > 0) {
+                $categoryLabels[] = $category->nama;
+                $categoryData[] = $category->dokumen_count;
+            }
+        }
         
-        // foreach ($categories as $category) {
-        //     $categoryLabels[] = $category->nama;
-        //     $categoryData[] = $category->dokumen_count;
-        // }
-
-        // Top users data for chart
+        // Top users data for chart - FIXED
+        $topUsersList = User::withCount('dokumen')
+            ->orderBy('dokumen_count', 'desc')
+            ->take(5)
+            ->get();
+        
         $topUsersData = [];
         $topUsersLabels = [];
-        // $topUsersList = User::withCount('dokumen')
-        //     ->orderBy('dokumen_count', 'desc')
-        //     ->take(5)
-        //     ->get();
+        foreach ($topUsersList as $user) {
+            if ($user->dokumen_count > 0) {
+                $topUsersLabels[] = $user->name;
+                $topUsersData[] = $user->dokumen_count;
+            }
+        }
         
-        // foreach ($topUsersList as $user) {
-        //     $topUsersLabels[] = $user->name;
-        //     $topUsersData[] = $user->dokumen_count;
-        // }
-
-        // Version distribution
+        // Version distribution - FIXED
         $versionData = [];
         $versionLabels = [];
         $versionGroups = Dokumen::selectRaw('versi, count(*) as total')
@@ -108,8 +130,8 @@ class AdminController extends Controller
             $versionLabels[] = 'v' . $group->versi;
             $versionData[] = $group->total;
         }
-
-        // Monthly statistics
+        
+        // Monthly statistics - FIXED with proper month names
         $monthlyStats = [];
         for ($i = 5; $i >= 0; $i--) {
             $month = Carbon::now()->subMonths($i);
@@ -126,22 +148,57 @@ class AdminController extends Controller
             
             $monthlyStats[] = [
                 'month' => $monthName,
+                'month_num' => $month->month,
+                'year' => $month->year,
                 'uploads' => $uploads,
                 'revisions' => $revisions,
                 'total' => $uploads + $revisions
             ];
         }
-
-        // Activity statistics
+        
+        // ========== ACTIVITY STATISTICS ==========
         $uploadBulanIni = Dokumen::whereMonth('created_at', date('m'))
             ->whereYear('created_at', date('Y'))
             ->count();
-
+            
+        $uploadMingguIni = Dokumen::whereBetween('created_at', [
+            Carbon::now()->startOfWeek(),
+            Carbon::now()->endOfWeek()
+        ])->count();
+        
+        // Real download count (if you have downloads table) or use view count as alternative
+        // $downloadBulanIni = DB::table('dokumen_views')
+        //     ->whereMonth('created_at', date('m'))
+        //     ->whereYear('created_at', date('Y'))
+        //     ->count() ?? rand(50, 200);
+            
+        // $viewBulanIni = DB::table('dokumen_views')
+        //     ->whereMonth('created_at', date('m'))
+        //     ->whereYear('created_at', date('Y'))
+        //     ->count() ?? rand(100, 500);
+        
         // Recent documents
         $recentDocuments = Dokumen::with(['kategori', 'user'])
             ->latest()
             ->take(10)
             ->get();
+            
+        // ========== GROWTH CALCULATIONS ==========
+        // Document growth compared to last month
+        $lastMonthUploads = Dokumen::whereMonth('created_at', Carbon::now()->subMonth()->month)
+            ->whereYear('created_at', Carbon::now()->subMonth()->year)
+            ->count();
+            
+        $growthPercentage = $lastMonthUploads > 0 
+            ? round((($uploadBulanIni - $lastMonthUploads) / $lastMonthUploads) * 100, 1)
+            : 0;
+            
+        // ========== STATUS DISTRIBUTION FOR CHART ==========
+        $statusData = [
+            'Aktif' => $dokumenAktif,
+            'Pending' => $dokumenPending,
+            'Arsip' => $dokumenArsip
+        ];
 
         return view('pages.admin.dashboard.index', [
             'menu' => 'dashboard',
@@ -152,17 +209,24 @@ class AdminController extends Controller
             'dokumenPending' => $dokumenPending,
             'dokumenArsip' => $dokumenArsip,
             'dokumenBaru' => $dokumenBaru,
+            'dokumenHariIni' => $dokumenHariIni,
             'dokumenRevisi' => $dokumenRevisi,
             'totalVersi' => $totalVersi,
+            'dokumenDenganFile' => $dokumenDenganFile,
+            'growthPercentage' => $growthPercentage,
             
             // Category data
             'totalKategori' => $totalKategori,
-            'kategoriAktif' => $kategoriAktif,
-            // 'topKategori' => $topKategori,
+            // 'kategoriAktif' => $kategoriAktif,
+            'kategoriKosong' => $kategoriKosong,
+            'topKategori' => $topKategori,
             
             // User data
             'totalUsers' => $totalUsers,
             'userBaru' => $userBaru,
+            // 'userAktif' => $userAktif,
+            'userTanpaDokumen' => $userTanpaDokumen,
+            'topUsers' => $topUsers,
             
             // Chart data
             'monthlyUploads' => $monthlyUploads,
@@ -174,11 +238,13 @@ class AdminController extends Controller
             'versionData' => $versionData,
             'versionLabels' => $versionLabels,
             'monthlyStats' => $monthlyStats,
+            'statusData' => $statusData,
             
             // Activity data
             'uploadBulanIni' => $uploadBulanIni,
-            'downloadBulanIni' => rand(50, 200), // Placeholder
-            'viewBulanIni' => rand(100, 500), // Placeholder
+            'uploadMingguIni' => $uploadMingguIni,
+            // 'downloadBulanIni' => $downloadBulanIni,
+            // 'viewBulanIni' => $viewBulanIni,
             
             // Recent data
             'recentDocuments' => $recentDocuments,

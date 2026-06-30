@@ -43,7 +43,10 @@
                     <select class="form-control  selectric" name="role" id="">
                         <option value="">-- Pilih Role --</option>
                         <option value="admin">Admin</option>
-                        <option value="user">User</option>
+                        <option value="admin">Kepala Kantor</option>
+                        <option value="admin">Tata Usaha</option>
+                        <option value="user">TI & inteldaktim</option>
+                        <option value="user">Kasubsi pelayanan & verdokjal</option>
                     </select>
                 </div>
 
