@@ -1073,7 +1073,7 @@
             <!-- Right: Content -->
             <div class="col-lg-6" data-aos="fade-left" data-aos-duration="800" data-aos-delay="100">
                 <span class="section-badge"><i class="fas fa-info-circle me-1"></i> Tentang Sistem</span>
-                <h2 class="section-title text-left">Sistem Rencana Aksi Perubahan <br><span class="text-navy-light">Kementerian</span></h2>
+                <h2 class="section-title text-left">Sistem Rencana Aksi Perubahan <br><span class="text  -navy-light">Kementerian</span></h2>
                 <p class="section-subtitle-left">
                     Aplikasi Sistem Rencana Aksi Perubahan (RAP) merupakan sistem informasi berbasis web 
                     yang mendukung proses perencanaan, pelaksanaan, pemantauan, dan evaluasi program perubahan 

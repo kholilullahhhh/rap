@@ -29,7 +29,6 @@
     body {
         background: var(--navy-gradient) !important;
         min-height: 100vh;
-        display: flex;
         align-items: center;
         justify-content: center;
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -528,7 +527,7 @@
 
 
     <!-- Login Card -->
-    <div class="login-card">
+    <div class="login-card" >
         <div class="card-header">
             <h4>Selamat Datang</h4>
             <div class="header-sub">
