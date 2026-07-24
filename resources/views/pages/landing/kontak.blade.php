@@ -49,21 +49,19 @@
     }
 
     .banner-text {
-        position: relative;
-        z-index: 2;
-        width: 100%;
-        padding: 80px 0;
-        text-align: center;
+     display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
     }
 
-    .banner-title {
-        font-size: 3.5rem;
-        font-weight: 800;
-        color: #FFFFFF;
-        letter-spacing: -0.02em;
-        margin-bottom: 0.5rem;
-        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
-    }
+ .banner-title{
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
 
     .banner-title .highlight {
         background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
@@ -476,7 +474,7 @@
 <!-- ============================================================
     BANNER AREA
     ============================================================ -->
-<div id="banner-area" class="banner-area" style="background-image:url({{ asset('landing/images/slider-main/dek1.webp') }})">
+<div id="banner-area" class="banner-area" style="background-image:url({{ asset('landing/images/slider-main/rat.jpeg') }})">
     <div class="banner-text">
         <div class="container">
             <div class="row">
