@@ -4,7 +4,7 @@
             <a href="{{route('dashboard') }}">IMIGRASI BANTAENG</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="{{route('dashboard') }}">RAP</a>
+            <a href="{{route('dashboard') }}">BOSS</a>
         </div>
 
         <ul class="sidebar-menu">

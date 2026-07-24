@@ -15,8 +15,8 @@ return new class extends Migration {
             $table->string('name');
             $table->string('username');
             $table->string('password'); 
-            $table->string('jabatan')->nullable(); //Tata Usaha, TI & Inteldakim, Verdokjal
-            $table->enum('role', ['admin', 'user','kepala_kantor','tata_usaha'])->default('user'); //user = verdokjal dan TI inteldaktim
+            $table->string('jabatan')->nullable(); //Tata Usaha, TI & Inteldakim, Verdokjal 
+            $table->enum('role', ['admin', 'user','kepala_kantor','inteldaktim'])->default('user'); //user = verdokjal, tu 
             $table->rememberToken();
             $table->timestamps();
         });

@@ -29,7 +29,7 @@ class AdminSeeder extends Seeder
                 'username' => 'nurarifandi',
                 'password' => Hash::make('12345678'),
                 'jabatan' => 'Kepala Kantor',
-                'role' => 'admin',
+                'role' => 'kepala_kantor',
             ],
 
             [
@@ -37,7 +37,7 @@ class AdminSeeder extends Seeder
                 'username' => 'tajuddin',
                 'password' => Hash::make('12345678'),
                 'jabatan' => 'Kaur Tata Usaha',
-                'role' => 'admin',
+                'role' => 'user',
             ],
 
             [
@@ -45,7 +45,7 @@ class AdminSeeder extends Seeder
                 'username' => 'syahrul',
                 'password' => Hash::make('12345678'),
                 'jabatan' => 'Kasubsi TI & Inteldakim',
-                'role' => 'user',
+                'role' => 'inteldaktim',
             ],
 
             [
