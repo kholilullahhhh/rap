@@ -9,14 +9,14 @@
                          <img loading="lazy" width="100px"  class="footer-logo" 
                         src="{{ asset('landing/images/footer/logoimig.png') }}" alt="Constra">
                         
-                    <p style="color: rgba(255,255,255,0.75);">DEKRANASDA - Dewan Kerajinan Nasional<br> Daerah Sulawesi Selatan</p>
+                    <p style="color: rgba(255,255,255,0.75);">BOSS - Backend Office Support System<br> Imigrasi & Pemasyarakatan Bantaeng</p>
                     <div class="footer-social">
                         <ul>
                             <li><a href="https://www.facebook.com/" aria-label="Facebook" style="color: rgba(255,255,255,0.75);"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="https://www.instagram.com/" aria-label="Instagram" style="color: rgba(255,255,255,0.75);"><i class="fab fa-instagram"></i></a></li>
-                            <li><a href="#" aria-label="Twitter" style="color: rgba(255,255,255,0.75);"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="#" aria-label="LinkedIn" style="color: rgba(255,255,255,0.75);"><i class="fab fa-linkedin-in"></i></a></li>
-                            <li><a href="#" aria-label="Email" style="color: rgba(255,255,255,0.75);"><i class="fas fa-envelope"></i></a></li>
+                            <li><a href="https://www.instagram.com/imigrasi_bantaeng_/" aria-label="Instagram" style="color: rgba(255,255,255,0.75);"><i class="fab fa-instagram"></i></a></li>
+                            <li><a href="https://www.tiktok.com/@imigrasi_bantaeng" aria-label="TikTok" style="color: rgba(255,255,255,0.75);"><i class="fab fa-tiktok"></i></a></li>
+                            <li><a href="https://www.imigrasi.go.id/" aria-label="LinkedIn" style="color: rgba(255,255,255,0.75);"><i class="fas fa-globe"></i></a></li>
+                            <li><a href="mailto:imigrasi.bantaeng@gmail.com" aria-label="Email" style="color: rgba(255,255,255,0.75);"><i class="fas fa-envelope"></i></a></li>
                         </ul>
                     </div><!-- Footer social end -->
                 </div><!-- Col end -->
@@ -34,8 +34,8 @@
                                 <a href="tel:08898988988" style="color: rgba(255,255,255,0.75); text-decoration: none;">08898988988</a>
                             </li>
                             <li style="padding: 0.5rem 0; border-bottom: none; color: rgba(255,255,255,0.75); font-size: 0.9rem; line-height: 1.6; display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fas fa-envelope" style="color: rgba(255,255,255,0.4);"></i>
-                                <a href="mailto:dekranasda@gmail.com" style="color: rgba(255,255,255,0.75); text-decoration: none;">dekranasda@gmail.com</a>
+                                <i class="fab fa-instagram" style="color: rgba(255,255,255,0.4);"></i>
+                                <a href="https://www.instagram.com/imigrasi_bantaeng_/" style="color: rgba(255,255,255,0.75); text-decoration: none;" target="_blank">imigrasi.bantaeng_</a>
                             </li>
                         </ul>
                     </div>
@@ -45,13 +45,13 @@
                     <h3 class="widget-title" style="color: #ffffff;">Jam Kerja</h3>
                     <div class="working-hours" style="color: rgba(255,255,255,0.75);">
                         <p style="font-size: 0.9rem; line-height: 1.7; color: rgba(255,255,255,0.75);">
-                            Kami bekerja 5 hari kerja dalam seminggu, dari Senin hingga Jumat, kecuali hari libur besar.
+                            Kami bekerja 8 hari kerja dalam seminggu, dari Senin hingga Jumat, kecuali hari libur besar.
                             Hubungi kami jika Anda mengalami keadaan darurat melalui Hotline dan Formulir Kontak kami.
                         </p>
                         <div style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 1rem; border: 1px solid rgba(255,255,255,0.06); margin-top: 1rem;">
                             <div style="display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 0.9rem;">
                                 <span style="color: rgba(255,255,255,0.75);">Senin - Jumat</span>
-                                <span style="color: #ffffff; font-weight: 600;">07:30 - 16:00 WITA</span>
+                                <span style="color: #ffffff; font-weight: 600;">08:00 - 16:00 WITA</span>
                             </div>
                         </div>
                     </div>

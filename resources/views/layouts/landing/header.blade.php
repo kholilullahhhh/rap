@@ -16,13 +16,13 @@
             <div class="col-lg-4 col-md-4 top-social text-center text-md-ri ght">
                 <ul class="list-unstyled">
                     <li>
-                        <a title="Facebook" href="https://www.facebook.com/">
-                            <span class="social-icon"><i class="fab fa-facebook-f"></i></span>
-                        </a>
+                        <a title="TikTok" href="https://www.tiktok.com/@imigrasibantaeng" target="_blank">
+                            <span class="social-icon"><i class="fab fa-tiktok"></i></span>
+                        </a>    
                         {{-- <a title="Twitter" href="https://twitter.com/themefisher.com">
                             <span class="social-icon"><i class="fab fa-twitter"></i></span>
                         </a> --}}
-                        <a title="Instagram" href="https://www.instagram.com/">
+                        <a title="Instagram" href="https://www.instagram.com/imigrasi_bantaeng_/">
                             <span class="social-icon"><i class="fab fa-instagram"></i></span>
                         </a>
                     </li>

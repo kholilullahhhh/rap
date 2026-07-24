@@ -33,7 +33,8 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, rgba(11, 31, 58, 0.85) 0%, rgba(18, 62, 115, 0.75) 50%, rgba(30, 90, 168, 0.65) 100%);
+    background: rgba(0, 0, 0, 0.6);
+        
         z-index: 1;
     }
 
@@ -575,8 +576,8 @@
                     <h3>Siap Bekerja Sama <span style="color: rgba(255,255,255,0.8);">Dengan Kami?</span></h3>
                     <p>Hubungi kami sekarang untuk informasi lebih lanjut tentang layanan kami.</p>
                     <div>
-                        <a href="mailto:dekranasda@gmail.com" class="btn-cta-premium">
-                            <i class="fas fa-envelope me-2"></i> Email Kami
+                        <a href="https://www.instagram.com/imigrasi_bantaeng_/" class="btn-cta-premium" target="_blank">
+                            <i class="fab fa-instagram"></i> Instagram Kami
                         </a>
                         <a href="tel:0411000000" class="btn-cta-outline">
                             <i class="fas fa-phone-alt me-2"></i> Telepon Kami
