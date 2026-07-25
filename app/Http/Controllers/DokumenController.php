@@ -50,8 +50,8 @@ class DokumenController extends Controller
         $view = match ($user->role) {
             'admin'            => 'pages.admin.umkm.index',
             'kepala_kantor'    => 'pages.admin.umkm.index',
-            'inteldaktim'      => 'pages.admin.inteldaktim.index',
-            'user'             => 'pages.admin.user.index',
+            'inteldaktim'      => 'pages.admin.umkm.inteldaktim',
+            'user'             => 'pages.admin.umkm.user',
             default            => abort(403),
         };
 

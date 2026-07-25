@@ -568,10 +568,10 @@
                     <select class="form-control selectric" name="role" id="role" tabindex="3">
                         <option value="">— Pilih Role —</option>
                         <option value="admin">Admin</option>
-                        <option value="kepala">Kepala Kantor</option>
-                        <option value="tu">Tata Usaha</option>
-                        <option value="ti">TI & Inteldaktim</option>
-                        <option value="kasubsi">Kasubsi Pelayanan & Verdokjal</option>
+                        <option value="kepala_kantor">Kepala Kantor</option>
+                        <option value="inteldaktim">TI & Inteldaktim</option>
+                        <option value="user">Tata Usaha</option>
+                        <option value="user">Kasubsi Pelayanan & Verdokjal</option>
                     </select>
                 </div>
 
