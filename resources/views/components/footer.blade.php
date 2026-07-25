@@ -1,6 +1,6 @@
 <footer class="main-footer">
     <div class="footer-left">
-        Copyright &copy; <div class="bullet"></div> RPPH Sulsel
+        Copyright &copy; <div class="bullet"></div> Luluuu
         {{-- <a href="https://nauv.al/">
             Muhamad
             Nauval Azhar</a> --}}
