@@ -26,7 +26,7 @@
                 $showAkun = ($role == 'admin');
             @endphp
 
-            <!-- MASTER DATA -->
+            <!-- MASTER DATA (untuk admin & kepala_kantor) -->
             @if($hasMasterData)
                 <li class="nav-item dropdown {{ $menu == 'dokumen' || $menu == 'jenis_usaha' || $menu == 'pembinaan' ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown">
@@ -34,48 +34,79 @@
                         <span>Master Data</span>
                     </a>
                     <ul class="dropdown-menu">
-                        @if($showDokumen)
-                            <li class="{{ $menu == 'dokumen' ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('umkm.index') }}">Dokumen</a>
-                            </li>
-                        @endif
-                        @if($showKategori)
+                        <!-- Menu Dokumen dengan 3 sub-menu berdasarkan role penginput -->
+                        <li class="{{ $menu == 'dokumen' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('umkm.index') }}?role=all">
+                                 Semua Dokumen
+                            </a>
+                        </li>
+                        <li class="{{ $menu == 'dokumen_user' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('umkm.index') }}?role=user">
+                                 Tata Usaha
+                            </a>
+                        </li>
+                        <li class="{{ $menu == 'dokumen_user' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('umkm.index') }}?role=user">
+                                 Pelayanan & Verdokjal
+                            </a>
+                        </li>
+                        <li class="{{ $menu == 'dokumen_inteldaktim' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('umkm.index') }}?role=inteldaktim">
+                                 Inteldaktim
+                            </a>
+                        </li>
+                       
+                    </ul>
+                     @if($showKategori)
                             <li class="{{ $menu == 'jenis_usaha' ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('jenis_usaha.index') }}">Kategori Dokumen</a>
+                                <a class="nav-link" href="{{ route('jenis_usaha.index') }}">
+                                    <i class="fas fa-tags"></i> Kategori Dokumen
+                                </a>
                             </li>
                         @endif
                         @if($showKegiatan)
                             <li class="{{ $menu == 'pembinaan' ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('pembinaan.index') }}">Kegiatan</a>
+                                <a class="nav-link" href="{{ route('pembinaan.index') }}">
+                                    <i class="fas fa-calendar-alt"></i> Kegiatan
+                                </a>
                             </li>
                         @endif
-                    </ul>
                 </li>
             @endif
 
-            <!-- DOKUMEN (untuk user & inteldaktim tanpa master data) -->
-            @if($showDokumen && !$hasMasterData)
-                <li class="{{ $menu == 'dokumen' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('umkm.index') }}">
-                        <i class="fas fa-file-alt"></i> <span>Dokumen</span>
+            <!-- MENU DOKUMEN UNTUK USER (hanya lihat dokumen user) -->
+            @if($role == 'user')
+                <li class="nav-item {{ $menu == 'dokumen' ? 'active' : '' }}">
+                    <a href="{{ route('umkm.index') }}" class="nav-link">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Dokumen</span>
                     </a>
                 </li>
             @endif
 
-            <!-- KEGIATAN (untuk inteldaktim tanpa master data) -->
-            @if($showKegiatan && $role == 'inteldaktim' && !$hasMasterData)
-                <li class="{{ $menu == 'pembinaan' ? 'active' : '' }}">
+            <!-- MENU DOKUMEN UNTUK INTELDAKTIM (hanya lihat dokumen inteldaktim) -->
+            @if($role == 'inteldaktim')
+                <li class="nav-item {{ $menu == 'dokumen' ? 'active' : '' }}">
+                    <a href="{{ route('umkm.index') }}" class="nav-link">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Dokumen</span>
+                    </a>
+                </li>
+                <!-- Kegiatan untuk inteldaktim -->
+                <li class="nav-item {{ $menu == 'pembinaan' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('pembinaan.index') }}">
-                        <i class="fas fa-calendar-alt"></i> <span>Kegiatan</span>
+                        <i class="fas fa-calendar-alt"></i> 
+                        <span>Kegiatan</span>
                     </a>
                 </li>
             @endif
 
             <!-- DATA AKUN (khusus admin) -->
             @if($showAkun)
-                <li class="{{ $menu == 'akun' ? 'active' : '' }}">
+                <li class="nav-item {{ $menu == 'akun' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('akun.index') }}">
-                        <i class="fas fa-users-cog"></i> <span>Data Akun</span>
+                        <i class="fas fa-users-cog"></i> 
+                        <span>Data Akun</span>
                     </a>
                 </li>
             @endif

@@ -16,47 +16,50 @@ class DokumenController extends Controller
      * Menampilkan semua data dokumen
      */
 
-    public function index()
-    {
-        $menu = $this->menu;
-
-        $user = Auth::user();
-        $kategori = JenisUsaha::all();
-
-        // Admin & Kepala Kantor melihat semua dokumen
-        if (in_array($user->role, ['admin', 'kepala_kantor'])) {
-            $datas = Dokumen::with(['kategori', 'user'])
-                ->latest()
-                ->get();
+    public function index(Request $request)
+{
+    $menu = $this->menu;
+    $user = Auth::user();
+    $kategori = JenisUsaha::all();
+    
+    // Ambil parameter filter role dari URL
+    $filterRole = $request->get('role');
+    
+    // Query dasar
+    $query = Dokumen::with(['kategori', 'user']);
+    
+    // Admin & Kepala Kantor
+    if (in_array($user->role, ['admin', 'kepala_kantor'])) {
+        // Jika ada filter role
+        if ($filterRole && $filterRole != 'all') {
+            // Filter berdasarkan role user yang menginput dokumen
+            $query->whereHas('user', function($q) use ($filterRole) {
+                $q->where('role', $filterRole);
+            });
         }
-
-        // Inteldakim hanya melihat dokumen miliknya
-        elseif ($user->role == 'inteldaktim') {
-            $datas = Dokumen::with(['kategori', 'user'])
-                ->where('user_id', $user->id)
-                ->latest()
-                ->get();
-        }
-
-        // User (TU / Pelayanan & Verdokjal) hanya melihat dokumen miliknya
-        else {
-            $datas = Dokumen::with(['kategori', 'user'])
-                ->where('user_id', $user->id)
-                ->latest()
-                ->get();
-        }
-
-        // Menentukan view berdasarkan role
-        $view = match ($user->role) {
-            'admin'            => 'pages.admin.umkm.index',
-            'kepala_kantor'    => 'pages.admin.umkm.index',
-            'inteldaktim'      => 'pages.admin.umkm.inteldaktim',
-            'user'             => 'pages.admin.umkm.user',
-            default            => abort(403),
-        };
-
-        return view($view, compact('datas', 'menu', 'kategori'));
+        // Jika tidak ada filter atau 'all', tampilkan semua
+        $datas = $query->latest()->get();
     }
+    // Inteldaktim hanya melihat dokumen miliknya
+    elseif ($user->role == 'inteldaktim') {
+        $datas = $query->where('user_id', $user->id)->latest()->get();
+    }
+    // User (TU / Pelayanan & Verdokjal) hanya melihat dokumen miliknya
+    else {
+        $datas = $query->where('user_id', $user->id)->latest()->get();
+    }
+    
+    // Menentukan view berdasarkan role
+    $view = match ($user->role) {
+        'admin'            => 'pages.admin.umkm.index',
+        'kepala_kantor'    => 'pages.admin.umkm.index',
+        'inteldaktim'      => 'pages.admin.umkm.inteldaktim',
+        'user'             => 'pages.admin.umkm.user',
+        default            => abort(403),
+    };
+    
+    return view($view, compact('datas', 'menu', 'kategori', 'filterRole'));
+}
 
     public function create()
     {
