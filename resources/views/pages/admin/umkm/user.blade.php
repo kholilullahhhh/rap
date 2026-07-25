@@ -903,7 +903,7 @@
                                             </td>
                                             <td>
                                                 <span style="font-weight: 500; color: var(--secondary); font-size: 12px;">
-                                                    {{ $dokumen->kategori->nama_jenis ?? '-' }}
+                                                    {{ $dokumen->kategori->nama ?? '-' }}
                                                 </span>
                                             </td>
                                             <td>
@@ -932,7 +932,7 @@
                                                     </span>
                                                 @else
                                                     <span class="badge-status obsolete">
-                                                        <i class="bi bi-exclamation-triangle-fill"></i> Obsolete
+                                                        <i class="bi bi-x-circle"></i> Obsolete
                                                     </span>
                                                 @endif
                                             </td>
@@ -1035,7 +1035,20 @@ $(document).ready(function() {
                 targets: [0, 5, 6, 7, 8],
                 orderable: false,
             },
-            
+            {
+                targets: 6,
+                render: function(data, type, row) {
+                    if (data === 'draft') {
+                        return '<span class="badge-status draft"><i class="bi bi-pencil"></i> Draft</span>';
+                    } else if (data === 'review') {
+                        return '<span class="badge-status review"><i class="bi bi-eye"></i> Review</span>';
+                    } else if (data === 'approved') {
+                        return '<span class="badge-status approved"><i class="bi bi-check-circle-fill"></i> Approved</span>';
+                    } else {
+                        return '<span class="badge-status obsolete"><i class="bi bi-x-circle"></i> Obsolete</span>';
+                    }
+                }
+            }
         ],
         drawCallback: function() {
             $('[data-tooltip]').each(function() {});

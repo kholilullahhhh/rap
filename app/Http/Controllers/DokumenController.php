@@ -15,15 +15,47 @@ class DokumenController extends Controller
     /**
      * Menampilkan semua data dokumen
      */
+
     public function index()
     {
         $menu = $this->menu;
 
-        $datas = Dokumen::with(['kategori', 'user'])
-            ->latest()
-            ->get();
+        $user = Auth::user();
+        $kategori = JenisUsaha::all();
 
-        return view('pages.admin.umkm.index', compact('datas', 'menu'));
+        // Admin & Kepala Kantor melihat semua dokumen
+        if (in_array($user->role, ['admin', 'kepala_kantor'])) {
+            $datas = Dokumen::with(['kategori', 'user'])
+                ->latest()
+                ->get();
+        }
+
+        // Inteldakim hanya melihat dokumen miliknya
+        elseif ($user->role == 'inteldaktim') {
+            $datas = Dokumen::with(['kategori', 'user'])
+                ->where('user_id', $user->id)
+                ->latest()
+                ->get();
+        }
+
+        // User (TU / Pelayanan & Verdokjal) hanya melihat dokumen miliknya
+        else {
+            $datas = Dokumen::with(['kategori', 'user'])
+                ->where('user_id', $user->id)
+                ->latest()
+                ->get();
+        }
+
+        // Menentukan view berdasarkan role
+        $view = match ($user->role) {
+            'admin'            => 'pages.admin.umkm.index',
+            'kepala_kantor'    => 'pages.admin.umkm.index',
+            'inteldaktim'      => 'pages.admin.inteldaktim.index',
+            'user'             => 'pages.admin.user.index',
+            default            => abort(403),
+        };
+
+        return view($view, compact('datas', 'menu', 'kategori'));
     }
 
     public function create()
@@ -165,7 +197,7 @@ class DokumenController extends Controller
         $dokumen->delete();
 
         return redirect()->route('umkm.index')
-                ->with('message', 'Data berhasil dihapus');
+            ->with('message', 'Data berhasil dihapus');
     }
 
     /**
