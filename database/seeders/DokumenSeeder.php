@@ -147,7 +147,7 @@ class DokumenSeeder extends Seeder
                 'judul' => 'Dokumen Administrasi '.$i,
                 // 'deskripsi' => 'Contoh dokumen administrasi nomor '.$i,
                 'file_path' => 'dokumen/DOC-001.pdf',
-                // 'tanggal_dokumen' => now()->subDays(rand(1,180))->format('Y-m-d'),
+                'tanggal_dokumen' => now()->subDays(rand(1,180))->format('Y-m-d'),
                 // 'versi' => rand(1,3).'.'.rand(0,9),
                 // 'status' => collect([
                 //     'draft',
