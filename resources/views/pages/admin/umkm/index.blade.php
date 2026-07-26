@@ -1,1087 +1,1565 @@
 @extends('layouts.app', ['title' => 'Data Dokumen'])
 
 @section('content')
-@push('styles')
-<link rel="stylesheet" href="{{ asset('library/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('library/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('library/sweetalert2/dist/sweetalert2.min.css') }}">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    @push('styles')
+        <link rel="stylesheet" href="{{ asset('library/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('library/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('library/sweetalert2/dist/sweetalert2.min.css') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
-<style>
-    :root {
-        --primary: #4F46E5;
-        --primary-light: #EEF2FF;
-        --success: #10B981;
-        --warning: #F59E0B;
-        --danger: #EF4444;
-        --info: #3B82F6;
-        --secondary: #64748B;
-        --dark: #0F172A;
-        --fc1: #F59E0B;
-        --fc2: #3B82F6;
-        --fc3: #10B981;
-        --fc4: #EF4444;
-        --fc5: #8B5CF6;
-        --fc6: #EC4899;
-        --fc7: #14B8A6;
-        --fc8: #F97316;
-    }
-    body { font-family: 'Inter', sans-serif; background: #F1F5F9; }
-    .main-content { padding: 15px 25px; }
+        <style>
+            :root {
+                --primary: #4F46E5;
+                --primary-light: #EEF2FF;
+                --success: #10B981;
+                --warning: #F59E0B;
+                --danger: #EF4444;
+                --info: #3B82F6;
+                --secondary: #64748B;
+                --dark: #0F172A;
+                --fc1: #F59E0B;
+                --fc2: #3B82F6;
+                --fc3: #10B981;
+                --fc4: #EF4444;
+                --fc5: #8B5CF6;
+                --fc6: #EC4899;
+                --fc7: #14B8A6;
+                --fc8: #F97316;
+            }
 
-    /* Header */
-    .section-header {
-        padding: 0 0 20px 0;
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    .section-header h1 {
-        font-size: 22px;
-        font-weight: 700;
-        color: var(--dark);
-        margin: 0;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    .section-header h1 i { color: var(--primary); }
-    .header-subtitle {
-        font-size: 13px;
-        color: var(--secondary);
-        margin-top: 2px;
-    }
-    .section-header-breadcrumb {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 13px;
-    }
-    .section-header-breadcrumb .breadcrumb-item a {
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 500;
-    }
-    .section-header-breadcrumb .breadcrumb-item.active {
-        color: var(--dark);
-        font-weight: 600;
-    }
+            body {
+                font-family: 'Inter', sans-serif;
+                background: #F1F5F9;
+            }
 
-    /* Card */
-    .card {
-        border: none;
-        border-radius: 16px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-        background: white;
-        transition: all 0.3s ease;
-    }
-    .card:hover { box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-    .card-header {
-        background: white;
-        border-bottom: 1px solid #F1F5F9;
-        padding: 14px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    .card-header h4 {
-        font-size: 15px;
-        font-weight: 600;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    .card-header h4 i { color: var(--primary); }
-    .card-body { padding: 18px 20px 20px; }
+            .main-content {
+                padding: 15px 25px;
+            }
 
-    /* Button */
-    .btn-primary-custom {
-        background: linear-gradient(135deg, #4F46E5, #7C3AED);
-        color: white;
-        border: none;
-        padding: 7px 18px;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 13px;
-        transition: all 0.3s ease;
-        box-shadow: 0 3px 12px rgba(79,70,229,0.2);
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        cursor: pointer;
-        text-decoration: none;
-    }
-    .btn-primary-custom:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(79,70,229,0.3);
-        color: white;
-        text-decoration: none;
-    }
-    .btn-secondary-custom {
-        background: #F1F5F9;
-        color: var(--dark);
-        border: 1px solid #E2E8F0;
-        padding: 7px 18px;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 13px;
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        cursor: pointer;
-        text-decoration: none;
-    }
-    .btn-secondary-custom:hover {
-        background: #E2E8F0;
-        color: var(--dark);
-        text-decoration: none;
-    }
-    .btn-folder-create {
-        background: var(--fc1);
-        color: white;
-        border: none;
-        padding: 5px 14px;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 12px;
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        cursor: pointer;
-    }
-    .btn-folder-create:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(245,158,11,0.3);
-        color: white;
-    }
+            /* Header */
+            .section-header {
+                padding: 0 0 20px 0;
+                margin-bottom: 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
 
-    /* Folder Grid */
-    .folder-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 16px;
-        margin-bottom: 24px;
-    }
-    .folder-card {
-        background: white;
-        border: 2px solid #F1F5F9;
-        border-radius: 12px;
-        padding: 16px 14px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        position: relative;
-        text-align: center;
-    }
-    .folder-card:hover {
-        border-color: var(--primary);
-        transform: translateY(-4px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    }
-    .folder-card.active {
-        border-color: var(--primary);
-        background: var(--primary-light);
-    }
-    .folder-card .folder-icon {
-        font-size: 40px;
-        margin-bottom: 8px;
-        display: block;
-        transition: all 0.3s ease;
-    }
-    .folder-card:hover .folder-icon {
-        transform: scale(1.05);
-    }
-    .folder-card .folder-name {
-        font-weight: 600;
-        font-size: 14px;
-        color: var(--dark);
-        margin-bottom: 2px;
-    }
-    .folder-card .folder-count {
-        font-size: 11px;
-        color: var(--secondary);
-    }
-    .folder-card .folder-actions {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        display: flex;
-        gap: 4px;
-        opacity: 0;
-        transition: all 0.3s ease;
-    }
-    .folder-card:hover .folder-actions {
-        opacity: 1;
-    }
-    .folder-card .folder-actions .btn-folder-action {
-        width: 24px;
-        height: 24px;
-        border-radius: 6px;
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 11px;
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
-    .folder-card .folder-actions .btn-folder-action.edit-folder {
-        background: #FEF3C7;
-        color: #92400E;
-    }
-    .folder-card .folder-actions .btn-folder-action.edit-folder:hover {
-        background: #F59E0B;
-        color: white;
-    }
-    .folder-card .folder-actions .btn-folder-action.delete-folder {
-        background: #FEE2E2;
-        color: #991B1B;
-    }
-    .folder-card .folder-actions .btn-folder-action.delete-folder:hover {
-        background: #EF4444;
-        color: white;
-    }
+            .section-header h1 {
+                font-size: 22px;
+                font-weight: 700;
+                color: var(--dark);
+                margin: 0;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
 
-    .folder-color-1 .folder-icon { color: var(--fc1); }
-    .folder-color-2 .folder-icon { color: var(--fc2); }
-    .folder-color-3 .folder-icon { color: var(--fc3); }
-    .folder-color-4 .folder-icon { color: var(--fc4); }
-    .folder-color-5 .folder-icon { color: var(--fc5); }
-    .folder-color-6 .folder-icon { color: var(--fc6); }
-    .folder-color-7 .folder-icon { color: var(--fc7); }
-    .folder-color-8 .folder-icon { color: var(--fc8); }
+            .section-header h1 i {
+                color: var(--primary);
+            }
 
-    .folder-color-1.active { border-color: var(--fc1); background: #FFFBEB; }
-    .folder-color-2.active { border-color: var(--fc2); background: #EFF6FF; }
-    .folder-color-3.active { border-color: var(--fc3); background: #ECFDF5; }
-    .folder-color-4.active { border-color: var(--fc4); background: #FEF2F2; }
-    .folder-color-5.active { border-color: var(--fc5); background: #F5F3FF; }
-    .folder-color-6.active { border-color: var(--fc6); background: #FDF2F8; }
-    .folder-color-7.active { border-color: var(--fc7); background: #ECFDF5; }
-    .folder-color-8.active { border-color: var(--fc8); background: #FFF7ED; }
+            .header-subtitle {
+                font-size: 13px;
+                color: var(--secondary);
+                margin-top: 2px;
+            }
 
-    .folder-empty {
-        grid-column: 1 / -1;
-        text-align: center;
-        padding: 30px 20px;
-        background: #FAFBFC;
-        border-radius: 12px;
-        border: 2px dashed #E2E8F0;
-    }
-    .folder-empty i {
-        font-size: 36px;
-        color: #CBD5E1;
-        margin-bottom: 10px;
-        display: block;
-    }
-    .folder-empty h6 {
-        font-size: 15px;
-        color: var(--dark);
-        margin-bottom: 4px;
-    }
-    .folder-empty p {
-        font-size: 13px;
-        color: var(--secondary);
-        margin-bottom: 12px;
-    }
+            .section-header-breadcrumb {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 13px;
+            }
 
-    /* Breadcrumb Folder */
-    .folder-breadcrumb {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding: 10px 14px;
-        background: #F8FAFC;
-        border-radius: 8px;
-        margin-bottom: 16px;
-        flex-wrap: wrap;
-    }
-    .folder-breadcrumb .breadcrumb-item {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 13px;
-        color: var(--secondary);
-        cursor: default;
-    }
-    .folder-breadcrumb .breadcrumb-item a {
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 500;
-        cursor: pointer;
-    }
-    .folder-breadcrumb .breadcrumb-item a:hover {
-        text-decoration: underline;
-    }
-    .folder-breadcrumb .breadcrumb-item.active {
-        color: var(--dark);
-        font-weight: 600;
-    }
-    .folder-breadcrumb .breadcrumb-separator {
-        color: #CBD5E1;
-    }
+            .section-header-breadcrumb .breadcrumb-item a {
+                color: var(--primary);
+                text-decoration: none;
+                font-weight: 500;
+            }
 
-    /* Action Buttons */
-    .action-buttons { display: flex; gap: 4px; align-items: center; justify-content: center; }
-    .btn-action {
-        width: 30px;
-        height: 30px;
-        border-radius: 8px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        border: none;
-        font-size: 13px;
-        text-decoration: none;
-        padding: 0;
-        cursor: pointer;
-    }
-    .btn-action:hover { transform: translateY(-2px); text-decoration: none; }
-    .btn-action.edit { background: #FEF3C7; color: #92400E; }
-    .btn-action.edit:hover { background: #F59E0B; color: white; box-shadow: 0 3px 12px rgba(245,158,11,0.3); }
-    .btn-action.delete { background: #FEE2E2; color: #991B1B; }
-    .btn-action.delete:hover { background: #EF4444; color: white; box-shadow: 0 3px 12px rgba(239,68,68,0.3); }
-    .btn-action.view { background: #E0F2FE; color: #0369A1; }
-    .btn-action.view:hover { background: #3B82F6; color: white; box-shadow: 0 3px 12px rgba(59,130,246,0.3); }
-    .btn-action.move { background: #E0E7FF; color: #3730A3; }
-    .btn-action.move:hover { background: #4F46E5; color: white; box-shadow: 0 3px 12px rgba(79,70,229,0.3); }
-    .btn-action.download { background: #D1FAE5; color: #065F46; }
-    .btn-action.download:hover { background: #10B981; color: white; box-shadow: 0 3px 12px rgba(16,185,129,0.3); }
+            .section-header-breadcrumb .breadcrumb-item.active {
+                color: var(--dark);
+                font-weight: 600;
+            }
 
-    /* Badge */
-    .badge-status {
-        padding: 3px 10px;
-        border-radius: 50px;
-        font-size: 11px;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        white-space: nowrap;
-    }
-    .badge-status.draft { background: #FEF3C7; color: #92400E; }
-    .badge-status.review { background: #DBEAFE; color: #1E40AF; }
-    .badge-status.approved { background: #D1FAE5; color: #065F46; }
-    .badge-status.obsolete { background: #FEE2E2; color: #991B1B; }
+            /* Card */
+            .card {
+                border: none;
+                border-radius: 16px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+                background: white;
+                transition: all 0.3s ease;
+            }
 
-    .version-badge {
-        background: var(--primary-light);
-        color: var(--primary);
-        padding: 2px 10px;
-        border-radius: 50px;
-        font-size: 11px;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 3px;
-    }
+            .card:hover {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            }
 
-    /* Table */
-    .table { font-size: 13px; margin-bottom: 0; width: 100% !important; }
-    .table thead th {
-        background: #F8FAFC;
-        color: var(--secondary);
-        font-weight: 600;
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.4px;
-        padding: 8px 12px;
-        border-bottom: 2px solid #E2E8F0;
-        white-space: nowrap;
-    }
-    .table tbody td { padding: 8px 12px; vertical-align: middle; border-bottom: 1px solid #F1F5F9; }
-    .table tbody tr:hover { background: var(--primary-light); }
-    .table tbody tr:last-child td { border-bottom: none; }
+            .card-header {
+                background: white;
+                border-bottom: 1px solid #F1F5F9;
+                padding: 14px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
 
-    .row-number {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 26px;
-        height: 26px;
-        background: var(--primary-light);
-        color: var(--primary);
-        border-radius: 6px;
-        font-weight: 700;
-        font-size: 12px;
-    }
-    .doc-title { font-weight: 600; color: var(--dark); display: block; font-size: 13px; }
-    .doc-meta { font-size: 11px; color: var(--secondary); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+            .card-header h4 {
+                font-size: 15px;
+                font-weight: 600;
+                margin: 0;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
 
-    /* Stats */
-    .stat-card {
-        background: #F8FAFC;
-        border-radius: 8px;
-        padding: 10px 14px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        transition: all 0.3s ease;
-        border: 1px solid #F1F5F9;
-    }
-    .stat-card:hover {
-        background: white;
-        border-color: var(--primary);
-        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    }
-    .stat-icon {
-        width: 38px;
-        height: 38px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 16px;
-        flex-shrink: 0;
-    }
-    .stat-icon.primary { background: var(--primary-light); color: var(--primary); }
-    .stat-icon.success { background: #D1FAE5; color: var(--success); }
-    .stat-icon.warning { background: #FEF3C7; color: var(--warning); }
-    .stat-icon.info { background: #DBEAFE; color: var(--info); }
-    .stat-info h6 {
-        font-size: 10px;
-        font-weight: 500;
-        color: var(--secondary);
-        margin: 0 0 1px 0;
-        text-transform: uppercase;
-        letter-spacing: 0.4px;
-    }
-    .stat-info .value { font-size: 18px; font-weight: 700; color: var(--dark); line-height: 1.2; }
+            .card-header h4 i {
+                color: var(--primary);
+            }
 
-    /* DataTable */
-    .dataTables_wrapper .dataTables_filter { float: right !important; margin-bottom: 12px; margin-left: 12px; }
-    .dataTables_wrapper .dataTables_length { float: left !important; margin-bottom: 12px; }
-    .dataTables_wrapper .dataTables_filter label { font-weight: 500; color: var(--secondary); font-size: 13px; display: flex; align-items: center; gap: 8px; margin-bottom: 0; }
-    .dataTables_wrapper .dataTables_filter input {
-        border: 2px solid #E2E8F0;
-        border-radius: 8px;
-        padding: 5px 12px;
-        font-size: 13px;
-        transition: all 0.3s ease;
-        min-width: 200px;
-        height: 32px;
-        margin-left: 0;
-        font-family: 'Inter', sans-serif;
-    }
-    .dataTables_wrapper .dataTables_filter input:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
-        outline: none;
-    }
-    .dataTables_wrapper .dataTables_length label {
-        font-weight: 500;
-        color: var(--secondary);
-        font-size: 13px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        margin-bottom: 0;
-    }
-    .dataTables_wrapper .dataTables_length select {
-        border: 2px solid #E2E8F0;
-        border-radius: 8px;
-        padding: 4px 10px;
-        font-size: 13px;
-        height: 32px;
-        font-family: 'Inter', sans-serif;
-    }
-    .dataTables_wrapper .dataTables_length select:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
-        outline: none;
-    }
+            .card-body {
+                padding: 18px 20px 20px;
+            }
 
-    .dataTables_info { padding-top: 12px !important; font-size: 13px; color: var(--secondary); float: left !important; }
-    .dataTables_paginate { padding-top: 12px !important; float: right !important; }
-    .dataTables_paginate .paginate_button {
-        padding: 4px 12px !important;
-        margin: 0 2px !important;
-        border-radius: 6px !important;
-        border: 1px solid #E2E8F0 !important;
-        color: var(--secondary) !important;
-        font-weight: 500 !important;
-        font-size: 12px !important;
-        transition: all 0.3s ease !important;
-        background: white !important;
-    }
-    .dataTables_paginate .paginate_button.current {
-        background: var(--primary) !important;
-        color: white !important;
-        border-color: var(--primary) !important;
-    }
-    .dataTables_paginate .paginate_button:hover {
-        background: var(--primary-light) !important;
-        border-color: var(--primary) !important;
-        color: var(--primary) !important;
-    }
+            /* Button */
+            .btn-primary-custom {
+                background: linear-gradient(135deg, #4F46E5, #7C3AED);
+                color: white;
+                border: none;
+                padding: 7px 18px;
+                border-radius: 50px;
+                font-weight: 600;
+                font-size: 13px;
+                transition: all 0.3s ease;
+                box-shadow: 0 3px 12px rgba(79, 70, 229, 0.2);
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                cursor: pointer;
+                text-decoration: none;
+            }
 
-    /* Empty State */
-    .empty-state { text-align: center; padding: 40px 20px; }
-    .empty-state i { font-size: 48px; color: #CBD5E1; margin-bottom: 16px; }
-    .empty-state h5 { font-size: 18px; font-weight: 600; color: var(--dark); margin-bottom: 6px; }
-    .empty-state p { color: var(--secondary); font-size: 13px; }
+            .btn-primary-custom:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3);
+                color: white;
+                text-decoration: none;
+            }
 
-    /* Modal */
-    .modal-content {
-        border-radius: 16px;
-        border: none;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-    }
-    .modal-header {
-        border-bottom: 1px solid #F1F5F9;
-        padding: 16px 20px;
-    }
-    .modal-header .modal-title {
-        font-size: 17px;
-        font-weight: 700;
-        color: var(--dark);
-    }
-    .modal-body {
-        padding: 20px;
-    }
-    .modal-footer {
-        border-top: 1px solid #F1F5F9;
-        padding: 14px 20px;
-    }
-    .form-control {
-        border: 2px solid #E2E8F0;
-        border-radius: 8px;
-        padding: 8px 14px;
-        font-size: 13px;
-        transition: all 0.3s ease;
-        font-family: 'Inter', sans-serif;
-    }
-    .form-control:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
-    }
-    .form-label {
-        font-weight: 600;
-        font-size: 13px;
-        color: var(--dark);
-        margin-bottom: 4px;
-    }
-    .color-option {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        border: 3px solid transparent;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: inline-block;
-        margin-right: 6px;
-    }
-    .color-option:hover { transform: scale(1.1); }
-    .color-option.active {
-        border-color: var(--dark);
-        box-shadow: 0 0 0 2px white, 0 0 0 4px var(--dark);
-    }
+            .btn-secondary-custom {
+                background: #F1F5F9;
+                color: var(--dark);
+                border: 1px solid #E2E8F0;
+                padding: 7px 18px;
+                border-radius: 50px;
+                font-weight: 600;
+                font-size: 13px;
+                transition: all 0.3s ease;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                cursor: pointer;
+                text-decoration: none;
+            }
 
-    /* Tooltip */
-    [data-tooltip] { position: relative; cursor: pointer; }
-    [data-tooltip]:before {
-        content: attr(data-tooltip);
-        position: absolute;
-        bottom: calc(100% + 6px);
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 4px 10px;
-        background: var(--dark);
-        color: white;
-        border-radius: 4px;
-        font-size: 11px;
-        white-space: nowrap;
-        opacity: 0;
-        pointer-events: none;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        z-index: 1000;
-    }
-    [data-tooltip]:hover:before { opacity: 1; }
+            .btn-secondary-custom:hover {
+                background: #E2E8F0;
+                color: var(--dark);
+                text-decoration: none;
+            }
 
-    .delete-form { display: inline-block; margin: 0; }
+            .btn-folder-create {
+                background: var(--fc1);
+                color: white;
+                border: none;
+                padding: 5px 14px;
+                border-radius: 50px;
+                font-weight: 600;
+                font-size: 12px;
+                transition: all 0.3s ease;
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                cursor: pointer;
+            }
 
-    /* Animation */
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(15px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .fade-in-up { animation: fadeInUp 0.5s ease forwards; }
+            .btn-folder-create:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+                color: white;
+            }
 
-    /* Toast notification */
-    .toast-container {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 9999;
-    }
-    .toast {
-        background: white;
-        border-radius: 12px;
-        padding: 14px 20px;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        min-width: 280px;
-        max-width: 400px;
-        animation: slideInRight 0.4s ease;
-        border-left: 4px solid var(--primary);
-    }
-    .toast.success { border-left-color: var(--success); }
-    .toast.error { border-left-color: var(--danger); }
-    .toast.warning { border-left-color: var(--warning); }
-    .toast .toast-icon { font-size: 20px; }
-    .toast.success .toast-icon { color: var(--success); }
-    .toast.error .toast-icon { color: var(--danger); }
-    .toast.warning .toast-icon { color: var(--warning); }
-    .toast .toast-body { flex: 1; }
-    .toast .toast-body .toast-title { font-weight: 600; font-size: 14px; color: var(--dark); }
-    .toast .toast-body .toast-message { font-size: 13px; color: var(--secondary); }
-    .toast .toast-close {
-        background: none;
-        border: none;
-        font-size: 18px;
-        color: #CBD5E1;
-        cursor: pointer;
-        padding: 0 4px;
-    }
-    .toast .toast-close:hover { color: var(--dark); }
+            /* Folder Grid */
+            .folder-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 16px;
+                margin-bottom: 24px;
+            }
 
-    @keyframes slideInRight {
-        from { transform: translateX(100%); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
+            .folder-card {
+                background: white;
+                border: 2px solid #F1F5F9;
+                border-radius: 12px;
+                padding: 16px 14px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                position: relative;
+                text-align: center;
+            }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-        .main-content { padding: 10px 15px; }
-        .section-header { flex-direction: column; align-items: flex-start !important; gap: 8px; }
-        .section-header h1 { font-size: 19px; }
-        .card-body { padding: 14px 16px 16px; }
-        .card-header { padding: 12px 16px; }
-        .folder-grid {
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 12px;
-        }
-        .folder-card { padding: 12px 10px; }
-        .folder-card .folder-icon { font-size: 32px; }
-        .dataTables_wrapper .dataTables_filter { float: none !important; margin-left: 0; width: 100%; }
-        .dataTables_wrapper .dataTables_length { float: none !important; margin-bottom: 8px; width: 100%; }
-        .dataTables_wrapper .dataTables_filter input { min-width: 100%; width: 100%; }
-        .dataTables_wrapper .dataTables_filter label { width: 100%; flex-direction: column; align-items: stretch; }
-        .dataTables_wrapper .dataTables_length label { width: 100%; }
-        .dataTables_info { float: none !important; text-align: center; }
-        .dataTables_paginate { float: none !important; text-align: center; margin-top: 8px; }
-        .action-buttons { flex-wrap: wrap; gap: 3px; }
-        .stat-card { padding: 8px 12px; }
-        .stat-info .value { font-size: 16px; }
-        .table-responsive { overflow-x: auto; }
-        .folder-breadcrumb { padding: 8px 12px; font-size: 12px; }
-    }
-    @media (max-width: 480px) {
-        .section-header-breadcrumb { font-size: 11px; }
-        .folder-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
-    }
-</style>
-@endpush
+            .folder-card:hover {
+                border-color: var(--primary);
+                transform: translateY(-4px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            }
 
-<div class="main-content">
-    <section class="section">
+            .folder-card.active {
+                border-color: var(--primary);
+                background: var(--primary-light);
+            }
 
-        <!-- Header -->
-        <div class="section-header fade-in-up">
-            <div>
-                <h1><i class="bi bi-folder2-open"></i> Data Dokumen</h1>
-                <p class="header-subtitle"><i class="bi bi-database me-1"></i> Kelola dan pantau semua dokumen administrasi</p>
-            </div>
-            <div class="header-actions">
-                <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="bi bi-house-door"></i> Dashboard</a></div>
-                    <div class="breadcrumb-item active"><i class="bi bi-folder2-open"></i> Data Dokumen</div>
+            .folder-card .folder-icon {
+                font-size: 40px;
+                margin-bottom: 8px;
+                display: block;
+                transition: all 0.3s ease;
+            }
+
+            .folder-card:hover .folder-icon {
+                transform: scale(1.05);
+            }
+
+            .folder-card .folder-name {
+                font-weight: 600;
+                font-size: 14px;
+                color: var(--dark);
+                margin-bottom: 2px;
+            }
+
+            .folder-card .folder-count {
+                font-size: 11px;
+                color: var(--secondary);
+            }
+
+            .folder-card .folder-actions {
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                display: flex;
+                gap: 4px;
+                opacity: 0;
+                transition: all 0.3s ease;
+            }
+
+            .folder-card:hover .folder-actions {
+                opacity: 1;
+            }
+
+            .folder-card .folder-actions .btn-folder-action {
+                width: 24px;
+                height: 24px;
+                border-radius: 6px;
+                border: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 11px;
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+
+            .folder-card .folder-actions .btn-folder-action.edit-folder {
+                background: #FEF3C7;
+                color: #92400E;
+            }
+
+            .folder-card .folder-actions .btn-folder-action.edit-folder:hover {
+                background: #F59E0B;
+                color: white;
+            }
+
+            .folder-card .folder-actions .btn-folder-action.delete-folder {
+                background: #FEE2E2;
+                color: #991B1B;
+            }
+
+            .folder-card .folder-actions .btn-folder-action.delete-folder:hover {
+                background: #EF4444;
+                color: white;
+            }
+
+            .folder-color-1 .folder-icon {
+                color: var(--fc1);
+            }
+
+            .folder-color-2 .folder-icon {
+                color: var(--fc2);
+            }
+
+            .folder-color-3 .folder-icon {
+                color: var(--fc3);
+            }
+
+            .folder-color-4 .folder-icon {
+                color: var(--fc4);
+            }
+
+            .folder-color-5 .folder-icon {
+                color: var(--fc5);
+            }
+
+            .folder-color-6 .folder-icon {
+                color: var(--fc6);
+            }
+
+            .folder-color-7 .folder-icon {
+                color: var(--fc7);
+            }
+
+            .folder-color-8 .folder-icon {
+                color: var(--fc8);
+            }
+
+            .folder-color-1.active {
+                border-color: var(--fc1);
+                background: #FFFBEB;
+            }
+
+            .folder-color-2.active {
+                border-color: var(--fc2);
+                background: #EFF6FF;
+            }
+
+            .folder-color-3.active {
+                border-color: var(--fc3);
+                background: #ECFDF5;
+            }
+
+            .folder-color-4.active {
+                border-color: var(--fc4);
+                background: #FEF2F2;
+            }
+
+            .folder-color-5.active {
+                border-color: var(--fc5);
+                background: #F5F3FF;
+            }
+
+            .folder-color-6.active {
+                border-color: var(--fc6);
+                background: #FDF2F8;
+            }
+
+            .folder-color-7.active {
+                border-color: var(--fc7);
+                background: #ECFDF5;
+            }
+
+            .folder-color-8.active {
+                border-color: var(--fc8);
+                background: #FFF7ED;
+            }
+
+            .folder-empty {
+                grid-column: 1 / -1;
+                text-align: center;
+                padding: 30px 20px;
+                background: #FAFBFC;
+                border-radius: 12px;
+                border: 2px dashed #E2E8F0;
+            }
+
+            .folder-empty i {
+                font-size: 36px;
+                color: #CBD5E1;
+                margin-bottom: 10px;
+                display: block;
+            }
+
+            .folder-empty h6 {
+                font-size: 15px;
+                color: var(--dark);
+                margin-bottom: 4px;
+            }
+
+            .folder-empty p {
+                font-size: 13px;
+                color: var(--secondary);
+                margin-bottom: 12px;
+            }
+
+            /* Breadcrumb Folder */
+            .folder-breadcrumb {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                padding: 10px 14px;
+                background: #F8FAFC;
+                border-radius: 8px;
+                margin-bottom: 16px;
+                flex-wrap: wrap;
+            }
+
+            .folder-breadcrumb .breadcrumb-item {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                font-size: 13px;
+                color: var(--secondary);
+                cursor: default;
+            }
+
+            .folder-breadcrumb .breadcrumb-item a {
+                color: var(--primary);
+                text-decoration: none;
+                font-weight: 500;
+                cursor: pointer;
+            }
+
+            .folder-breadcrumb .breadcrumb-item a:hover {
+                text-decoration: underline;
+            }
+
+            .folder-breadcrumb .breadcrumb-item.active {
+                color: var(--dark);
+                font-weight: 600;
+            }
+
+            .folder-breadcrumb .breadcrumb-separator {
+                color: #CBD5E1;
+            }
+
+            /* Action Buttons */
+            .action-buttons {
+                display: flex;
+                gap: 4px;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .btn-action {
+                width: 30px;
+                height: 30px;
+                border-radius: 8px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+                border: none;
+                font-size: 13px;
+                text-decoration: none;
+                padding: 0;
+                cursor: pointer;
+            }
+
+            .btn-action:hover {
+                transform: translateY(-2px);
+                text-decoration: none;
+            }
+
+            .btn-action.edit {
+                background: #FEF3C7;
+                color: #92400E;
+            }
+
+            .btn-action.edit:hover {
+                background: #F59E0B;
+                color: white;
+                box-shadow: 0 3px 12px rgba(245, 158, 11, 0.3);
+            }
+
+            .btn-action.delete {
+                background: #FEE2E2;
+                color: #991B1B;
+            }
+
+            .btn-action.delete:hover {
+                background: #EF4444;
+                color: white;
+                box-shadow: 0 3px 12px rgba(239, 68, 68, 0.3);
+            }
+
+            .btn-action.view {
+                background: #E0F2FE;
+                color: #0369A1;
+            }
+
+            .btn-action.view:hover {
+                background: #3B82F6;
+                color: white;
+                box-shadow: 0 3px 12px rgba(59, 130, 246, 0.3);
+            }
+
+            .btn-action.move {
+                background: #E0E7FF;
+                color: #3730A3;
+            }
+
+            .btn-action.move:hover {
+                background: #4F46E5;
+                color: white;
+                box-shadow: 0 3px 12px rgba(79, 70, 229, 0.3);
+            }
+
+            .btn-action.download {
+                background: #D1FAE5;
+                color: #065F46;
+            }
+
+            .btn-action.download:hover {
+                background: #10B981;
+                color: white;
+                box-shadow: 0 3px 12px rgba(16, 185, 129, 0.3);
+            }
+
+            /* Badge */
+            .badge-status {
+                padding: 3px 10px;
+                border-radius: 50px;
+                font-size: 11px;
+                font-weight: 600;
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                white-space: nowrap;
+            }
+
+            .badge-status.draft {
+                background: #FEF3C7;
+                color: #92400E;
+            }
+
+            .badge-status.review {
+                background: #DBEAFE;
+                color: #1E40AF;
+            }
+
+            .badge-status.approved {
+                background: #D1FAE5;
+                color: #065F46;
+            }
+
+            .badge-status.obsolete {
+                background: #FEE2E2;
+                color: #991B1B;
+            }
+
+            .version-badge {
+                background: var(--primary-light);
+                color: var(--primary);
+                padding: 2px 10px;
+                border-radius: 50px;
+                font-size: 11px;
+                font-weight: 600;
+                display: inline-flex;
+                align-items: center;
+                gap: 3px;
+            }
+
+            /* Table */
+            .table {
+                font-size: 13px;
+                margin-bottom: 0;
+                width: 100% !important;
+            }
+
+            .table thead th {
+                background: #F8FAFC;
+                color: var(--secondary);
+                font-weight: 600;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: 0.4px;
+                padding: 8px 12px;
+                border-bottom: 2px solid #E2E8F0;
+                white-space: nowrap;
+            }
+
+            .table tbody td {
+                padding: 8px 12px;
+                vertical-align: middle;
+                border-bottom: 1px solid #F1F5F9;
+            }
+
+            .table tbody tr:hover {
+                background: var(--primary-light);
+            }
+
+            .table tbody tr:last-child td {
+                border-bottom: none;
+            }
+
+            .row-number {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 26px;
+                height: 26px;
+                background: var(--primary-light);
+                color: var(--primary);
+                border-radius: 6px;
+                font-weight: 700;
+                font-size: 12px;
+            }
+
+            .doc-title {
+                font-weight: 600;
+                color: var(--dark);
+                display: block;
+                font-size: 13px;
+            }
+
+            .doc-meta {
+                font-size: 11px;
+                color: var(--secondary);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            /* Stats */
+            .stat-card {
+                background: #F8FAFC;
+                border-radius: 8px;
+                padding: 10px 14px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                transition: all 0.3s ease;
+                border: 1px solid #F1F5F9;
+            }
+
+            .stat-card:hover {
+                background: white;
+                border-color: var(--primary);
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+            }
+
+            .stat-icon {
+                width: 38px;
+                height: 38px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                flex-shrink: 0;
+            }
+
+            .stat-icon.primary {
+                background: var(--primary-light);
+                color: var(--primary);
+            }
+
+            .stat-icon.success {
+                background: #D1FAE5;
+                color: var(--success);
+            }
+
+            .stat-icon.warning {
+                background: #FEF3C7;
+                color: var(--warning);
+            }
+
+            .stat-icon.info {
+                background: #DBEAFE;
+                color: var(--info);
+            }
+
+            .stat-info h6 {
+                font-size: 10px;
+                font-weight: 500;
+                color: var(--secondary);
+                margin: 0 0 1px 0;
+                text-transform: uppercase;
+                letter-spacing: 0.4px;
+            }
+
+            .stat-info .value {
+                font-size: 18px;
+                font-weight: 700;
+                color: var(--dark);
+                line-height: 1.2;
+            }
+
+            /* DataTable */
+            .dataTables_wrapper .dataTables_filter {
+                float: right !important;
+                margin-bottom: 12px;
+                margin-left: 12px;
+            }
+
+            .dataTables_wrapper .dataTables_length {
+                float: left !important;
+                margin-bottom: 12px;
+            }
+
+            .dataTables_wrapper .dataTables_filter label {
+                font-weight: 500;
+                color: var(--secondary);
+                font-size: 13px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 0;
+            }
+
+            .dataTables_wrapper .dataTables_filter input {
+                border: 2px solid #E2E8F0;
+                border-radius: 8px;
+                padding: 5px 12px;
+                font-size: 13px;
+                transition: all 0.3s ease;
+                min-width: 200px;
+                height: 32px;
+                margin-left: 0;
+                font-family: 'Inter', sans-serif;
+            }
+
+            .dataTables_wrapper .dataTables_filter input:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+                outline: none;
+            }
+
+            .dataTables_wrapper .dataTables_length label {
+                font-weight: 500;
+                color: var(--secondary);
+                font-size: 13px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                margin-bottom: 0;
+            }
+
+            .dataTables_wrapper .dataTables_length select {
+                border: 2px solid #E2E8F0;
+                border-radius: 8px;
+                padding: 4px 10px;
+                font-size: 13px;
+                height: 32px;
+                font-family: 'Inter', sans-serif;
+            }
+
+            .dataTables_wrapper .dataTables_length select:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+                outline: none;
+            }
+
+            .dataTables_info {
+                padding-top: 12px !important;
+                font-size: 13px;
+                color: var(--secondary);
+                float: left !important;
+            }
+
+            .dataTables_paginate {
+                padding-top: 12px !important;
+                float: right !important;
+            }
+
+            .dataTables_paginate .paginate_button {
+                padding: 4px 12px !important;
+                margin: 0 2px !important;
+                border-radius: 6px !important;
+                border: 1px solid #E2E8F0 !important;
+                color: var(--secondary) !important;
+                font-weight: 500 !important;
+                font-size: 12px !important;
+                transition: all 0.3s ease !important;
+                background: white !important;
+            }
+
+            .dataTables_paginate .paginate_button.current {
+                background: var(--primary) !important;
+                color: white !important;
+                border-color: var(--primary) !important;
+            }
+
+            .dataTables_paginate .paginate_button:hover {
+                background: var(--primary-light) !important;
+                border-color: var(--primary) !important;
+                color: var(--primary) !important;
+            }
+
+            /* Empty State */
+            .empty-state {
+                text-align: center;
+                padding: 40px 20px;
+            }
+
+            .empty-state i {
+                font-size: 48px;
+                color: #CBD5E1;
+                margin-bottom: 16px;
+            }
+
+            .empty-state h5 {
+                font-size: 18px;
+                font-weight: 600;
+                color: var(--dark);
+                margin-bottom: 6px;
+            }
+
+            .empty-state p {
+                color: var(--secondary);
+                font-size: 13px;
+            }
+
+            /* Modal */
+            .modal-content {
+                border-radius: 16px;
+                border: none;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            }
+
+            .modal-header {
+                border-bottom: 1px solid #F1F5F9;
+                padding: 16px 20px;
+            }
+
+            .modal-header .modal-title {
+                font-size: 17px;
+                font-weight: 700;
+                color: var(--dark);
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .modal-footer {
+                border-top: 1px solid #F1F5F9;
+                padding: 14px 20px;
+            }
+
+            .form-control {
+                border: 2px solid #E2E8F0;
+                border-radius: 8px;
+                padding: 8px 14px;
+                font-size: 13px;
+                transition: all 0.3s ease;
+                font-family: 'Inter', sans-serif;
+            }
+
+            .form-control:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            }
+
+            .form-label {
+                font-weight: 600;
+                font-size: 13px;
+                color: var(--dark);
+                margin-bottom: 4px;
+            }
+
+            .color-option {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                border: 3px solid transparent;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: inline-block;
+                margin-right: 6px;
+            }
+
+            .color-option:hover {
+                transform: scale(1.1);
+            }
+
+            .color-option.active {
+                border-color: var(--dark);
+                box-shadow: 0 0 0 2px white, 0 0 0 4px var(--dark);
+            }
+
+            /* Tooltip */
+            [data-tooltip] {
+                position: relative;
+                cursor: pointer;
+            }
+
+            [data-tooltip]:before {
+                content: attr(data-tooltip);
+                position: absolute;
+                bottom: calc(100% + 6px);
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 4px 10px;
+                background: var(--dark);
+                color: white;
+                border-radius: 4px;
+                font-size: 11px;
+                white-space: nowrap;
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.3s ease;
+                font-weight: 500;
+                z-index: 1000;
+            }
+
+            [data-tooltip]:hover:before {
+                opacity: 1;
+            }
+
+            .delete-form {
+                display: inline-block;
+                margin: 0;
+            }
+
+            /* Animation */
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(15px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .fade-in-up {
+                animation: fadeInUp 0.5s ease forwards;
+            }
+
+            /* Toast notification */
+            .toast-container {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+            }
+
+            .toast {
+                background: white;
+                border-radius: 12px;
+                padding: 14px 20px;
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                min-width: 280px;
+                max-width: 400px;
+                animation: slideInRight 0.4s ease;
+                border-left: 4px solid var(--primary);
+            }
+
+            .toast.success {
+                border-left-color: var(--success);
+            }
+
+            .toast.error {
+                border-left-color: var(--danger);
+            }
+
+            .toast.warning {
+                border-left-color: var(--warning);
+            }
+
+            .toast .toast-icon {
+                font-size: 20px;
+            }
+
+            .toast.success .toast-icon {
+                color: var(--success);
+            }
+
+            .toast.error .toast-icon {
+                color: var(--danger);
+            }
+
+            .toast.warning .toast-icon {
+                color: var(--warning);
+            }
+
+            .toast .toast-body {
+                flex: 1;
+            }
+
+            .toast .toast-body .toast-title {
+                font-weight: 600;
+                font-size: 14px;
+                color: var(--dark);
+            }
+
+            .toast .toast-body .toast-message {
+                font-size: 13px;
+                color: var(--secondary);
+            }
+
+            .toast .toast-close {
+                background: none;
+                border: none;
+                font-size: 18px;
+                color: #CBD5E1;
+                cursor: pointer;
+                padding: 0 4px;
+            }
+
+            .toast .toast-close:hover {
+                color: var(--dark);
+            }
+
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+
+            /* Responsive */
+            @media (max-width: 768px) {
+                .main-content {
+                    padding: 10px 15px;
+                }
+
+                .section-header {
+                    flex-direction: column;
+                    align-items: flex-start !important;
+                    gap: 8px;
+                }
+
+                .section-header h1 {
+                    font-size: 19px;
+                }
+
+                .card-body {
+                    padding: 14px 16px 16px;
+                }
+
+                .card-header {
+                    padding: 12px 16px;
+                }
+
+                .folder-grid {
+                    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                    gap: 12px;
+                }
+
+                .folder-card {
+                    padding: 12px 10px;
+                }
+
+                .folder-card .folder-icon {
+                    font-size: 32px;
+                }
+
+                .dataTables_wrapper .dataTables_filter {
+                    float: none !important;
+                    margin-left: 0;
+                    width: 100%;
+                }
+
+                .dataTables_wrapper .dataTables_length {
+                    float: none !important;
+                    margin-bottom: 8px;
+                    width: 100%;
+                }
+
+                .dataTables_wrapper .dataTables_filter input {
+                    min-width: 100%;
+                    width: 100%;
+                }
+
+                .dataTables_wrapper .dataTables_filter label {
+                    width: 100%;
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+
+                .dataTables_wrapper .dataTables_length label {
+                    width: 100%;
+                }
+
+                .dataTables_info {
+                    float: none !important;
+                    text-align: center;
+                }
+
+                .dataTables_paginate {
+                    float: none !important;
+                    text-align: center;
+                    margin-top: 8px;
+                }
+
+                .action-buttons {
+                    flex-wrap: wrap;
+                    gap: 3px;
+                }
+
+                .stat-card {
+                    padding: 8px 12px;
+                }
+
+                .stat-info .value {
+                    font-size: 16px;
+                }
+
+                .table-responsive {
+                    overflow-x: auto;
+                }
+
+                .folder-breadcrumb {
+                    padding: 8px 12px;
+                    font-size: 12px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .section-header-breadcrumb {
+                    font-size: 11px;
+                }
+
+                .folder-grid {
+                    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                }
+            }
+        </style>
+    @endpush
+
+    <div class="main-content">
+        <section class="section">
+
+            <!-- Header -->
+            <div class="section-header fade-in-up">
+                <div>
+                    <h1><i class="bi bi-folder2-open"></i> Data Dokumen</h1>
+                    <p class="header-subtitle"><i class="bi bi-database me-1"></i> Kelola dan pantau semua dokumen
+                        administrasi</p>
+                </div>
+                <div class="header-actions">
+                    <div class="section-header-breadcrumb">
+                        <div class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="bi bi-house-door"></i>
+                                Dashboard</a></div>
+                        <div class="breadcrumb-item active"><i class="bi bi-folder2-open"></i> Data Dokumen</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="section-body">
-            <div class="row">
-                <div class="col-12">
+            <div class="section-body">
+                <div class="row">
+                    <div class="col-12">
 
-                    <div class="card fade-in-up">
-                        <div class="card-header">
-                            <h4><i class="bi bi-folder2"></i> Folder & Dokumen</h4>
-                            <div class="card-header-action d-flex flex-wrap gap-2">
-                                <button type="button" class="btn-folder-create" data-toggle="modal" data-target="#modalCreateFolder">
-                                    <i class="bi bi-folder-plus" ></i> Buat Folder
-                                </button>
-                                <a href="{{ route('umkm.create') }}" class="btn-primary-custom">
-                                    <i class="bi bi-plus-circle"></i> Tambah Data
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="card-body">
-
-                            <!-- Folder Grid -->
-                            <div class="folder-grid" id="folderGrid">
-                                @forelse($folders ?? [] as $folder)
-                                <div class="folder-card folder-color-{{ $folder->color ?? 1 }} {{ request('folder') == $folder->id ? 'active' : '' }}" 
-                                     data-folder-id="{{ $folder->id }}"
-                                     onclick="filterByFolder({{ $folder->id }})">
-                                    <div class="folder-actions">
-                                        <button class="btn-folder-action edit-folder" data-tooltip="Edit Folder" onclick="event.stopPropagation(); editFolder({{ $folder->id }}, '{{ $folder->name }}', {{ $folder->color ?? 1 }})">
-                                            <i class="bi bi-pencil"></i>
-                                        </button>
-                                        <button class="btn-folder-action delete-folder" data-tooltip="Hapus Folder" onclick="event.stopPropagation(); deleteFolder({{ $folder->id }})">
-                                            <i class="bi bi-trash3"></i>
-                                        </button>
-                                    </div>
-                                    <span class="folder-icon"><i class="bi bi-folder2"></i></span>
-                                    <div class="folder-name">{{ $folder->name }}</div>
-                                    <div class="folder-count">{{ $folder->dokumen_count ?? 0 }} dokumen</div>
-                                </div>
-                                @empty
-                                <div class="folder-empty">
-                                    <i class="bi bi-folder2-open"></i>
-                                    <h6>Belum Ada Folder</h6>
-                                    <p>Buat folder untuk mengelompokkan dokumen Anda</p>
-                                    <button type="button" class="btn-folder-create" data-toggle="modal" data-target="#modalCreateFolder">
-                                        <i class="bi bi-folder-plus"></i> Buat Folder Pertama
+                        <div class="card fade-in-up">
+                            <div class="card-header">
+                                <h4><i class="bi bi-folder2"></i> Folder & Dokumen</h4>
+                                <div class="card-header-action d-flex flex-wrap gap-2">
+                                    <button type="button" class="btn-folder-create" data-toggle="modal"
+                                        data-target="#modalCreateFolder">
+                                        <i class="bi bi-folder-plus"></i> Buat Folder
                                     </button>
-                                </div>
-                                @endforelse
-                            </div>
-
-                            <!-- Folder Breadcrumb -->
-                            @if(request('folder') && isset($currentFolder))
-                            <div class="folder-breadcrumb">
-                                <span class="breadcrumb-item">
-                                    <a href="{{ route('umkm.index') }}"><i class="bi bi-folder2-open"></i> Semua</a>
-                                </span>
-                                <span class="breadcrumb-separator">/</span>
-                                <span class="breadcrumb-item active">
-                                    <i class="bi bi-folder2"></i> {{ $currentFolder->name ?? 'Folder' }}
-                                </span>
-                                <span class="breadcrumb-item ms-auto">
-                                    <a href="{{ route('umkm.index') }}" class="btn btn-sm btn-secondary-custom" style="padding:2px 12px;font-size:11px;">
-                                        <i class="bi bi-x"></i> Hapus Filter
+                                    <a href="{{ route('umkm.create') }}" class="btn-primary-custom">
+                                        <i class="bi bi-plus-circle"></i> Tambah Data
                                     </a>
-                                </span>
-                            </div>
-                            @endif
-
-                            <!-- Stats -->
-                            <div class="row g-3 mb-3">
-                                <div class="col-md-3 col-sm-6">
-                                    <div class="stat-card">
-                                        <div class="stat-icon primary"><i class="bi bi-files"></i></div>
-                                        <div class="stat-info"><h6>Total</h6><div class="value">{{ $datas->count() }}</div></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <div class="stat-card">
-                                        <div class="stat-icon success"><i class="bi bi-check-circle"></i></div>
-                                        <div class="stat-info"><h6>Approved</h6><div class="value">{{ $datas->where('status', 'approved')->count() }}</div></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <div class="stat-card">
-                                        <div class="stat-icon warning"><i class="bi bi-clock-history"></i></div>
-                                        <div class="stat-info"><h6>Review & Draft</h6><div class="value">{{ $datas->whereIn('status', ['review', 'draft'])->count() }}</div></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <div class="stat-card">
-                                        <div class="stat-icon info"><i class="bi bi-file-pdf"></i></div>
-                                        <div class="stat-info"><h6>Dengan File</h6><div class="value">{{ $datas->whereNotNull('file_path')->count() }}</div></div>
-                                    </div>
                                 </div>
                             </div>
 
-                            <!-- Table -->
-                            <div class="table-responsive">
-                                <table class="table table-striped" id="table-dokumen">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:30px;">#</th>
-                                            <th style="min-width:150px;">Judul</th>
-                                            <th style="min-width:100px;">Kategori</th>
-                                            <th style="min-width:85px;">Tanggal</th>
-                                            <th style="width:45px;">File</th>
-                                            <th style="width:130px;">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse($datas as $index => $dokumen)
-                                        <tr>
-                                            <td><span class="row-number"></span></td>
-                                            <td>
-                                                <span class="doc-title">{{ Str::limit($dokumen->judul, 40) }}</span>
-                                                <span class="doc-meta">
-                                                    <span><i class="bi bi-person"></i> {{ $dokumen->user->name ?? 'Unknown' }}</span>
-                                                    @if($dokumen->folder_id)
-                                                    <span><i class="bi bi-folder2"></i> {{ $dokumen->folder->name ?? '' }}</span>
-                                                    @endif
-                                                    <span class="version-badge"><i class="bi bi-tag"></i> v{{ $dokumen->versi }}</span>
-                                                    @php
-                                                        $statusMap = [
-                                                            'draft' => ['class' => 'draft', 'icon' => 'bi bi-pencil', 'label' => 'Draft'],
-                                                            'review' => ['class' => 'review', 'icon' => 'bi bi-eye', 'label' => 'Review'],
-                                                            'approved' => ['class' => 'approved', 'icon' => 'bi bi-check-circle-fill', 'label' => 'Approved'],
-                                                            'obsolete' => ['class' => 'obsolete', 'icon' => 'bi bi-exclamation-triangle-fill', 'label' => 'Obsolete']
-                                                        ];
-                                                        $status = $statusMap[$dokumen->status] ?? $statusMap['draft'];
-                                                    @endphp
-                                                    <span class="badge-status {{ $status['class'] }}">
-                                                        <i class="{{ $status['icon'] }}"></i> {{ $status['label'] }}
-                                                    </span>
-                                                </span>
-                                            </td>
-                                            <td><span style="font-weight:500;color:var(--secondary);font-size:11px;">{{ $dokumen->kategori->nama_jenis ?? '-' }}</span></td>
-                                            <td><span style="font-size:11px;">{{ date('d-m-Y', strtotime($dokumen->tanggal_dokumen)) }}</span></td>
-                                            <td>
-                                                @if($dokumen->file_path)
-                                                    <a href="{{ asset('storage/'.$dokumen->file_path) }}" target="_blank" class="btn-action view" data-tooltip="Lihat File">
-                                                        <i class="bi bi-file-earmark-pdf"></i>
-                                                    </a>
-                                                @else
-                                                    <span style="color:#CBD5E1;font-size:11px;">-</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <a href="{{ route('umkm.edit', $dokumen->id) }}" class="btn-action edit" data-tooltip="Edit">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </a>
-                                                    @if($dokumen->file_path)
-                                                    {{-- <a href="{{ route('umkm.download', $dokumen->id) }}" class="btn-action download" data-tooltip="Download" target="_blank">
+                            <div class="card-body">
+
+                                <!-- Folder Grid -->
+                                <div class="folder-grid" id="folderGrid">
+                                    @forelse($folders ?? [] as $folder)
+                                        <div class="folder-card folder-color-{{ $folder->color ?? 1 }} {{ request('folder') == $folder->id ? 'active' : '' }}"
+                                            data-folder-id="{{ $folder->id }}"
+                                            onclick="filterByFolder({{ $folder->id }})">
+                                            <div class="folder-actions">
+                                                <button class="btn-folder-action edit-folder" data-tooltip="Edit Folder"
+                                                    onclick="event.stopPropagation(); editFolder({{ $folder->id }}, '{{ $folder->name }}', {{ $folder->color ?? 1 }})">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <button class="btn-folder-action delete-folder" data-tooltip="Hapus Folder"
+                                                    onclick="event.stopPropagation(); deleteFolder({{ $folder->id }})">
+                                                    <i class="bi bi-trash3"></i>
+                                                </button>
+                                            </div>
+                                            <span class="folder-icon"><i class="bi bi-folder2"></i></span>
+                                            <div class="folder-name">{{ $folder->name }}</div>
+                                            <div class="folder-count">{{ $folder->dokumen_count ?? 0 }} dokumen</div>
+                                        </div>
+                                    @empty
+                                        <div class="folder-empty">
+                                            <i class="bi bi-folder2-open"></i>
+                                            <h6>Belum Ada Folder</h6>
+                                            <p>Buat folder untuk mengelompokkan dokumen Anda</p>
+                                            <button type="button" class="btn-folder-create" data-toggle="modal"
+                                                data-target="#modalCreateFolder">
+                                                <i class="bi bi-folder-plus"></i> Buat Folder Pertama
+                                            </button>
+                                        </div>
+                                    @endforelse
+                                </div>
+
+                                <!-- Folder Breadcrumb -->
+                                @if (request('folder') && isset($currentFolder))
+                                    <div class="folder-breadcrumb">
+                                        <span class="breadcrumb-item">
+                                            <a href="{{ route('umkm.index') }}"><i class="bi bi-folder2-open"></i>
+                                                Semua</a>
+                                        </span>
+                                        <span class="breadcrumb-separator">/</span>
+                                        <span class="breadcrumb-item active">
+                                            <i class="bi bi-folder2"></i> {{ $currentFolder->name ?? 'Folder' }}
+                                        </span>
+                                        <span class="breadcrumb-item ms-auto">
+                                            <a href="{{ route('umkm.index') }}" class="btn btn-sm btn-secondary-custom"
+                                                style="padding:2px 12px;font-size:11px;">
+                                                <i class="bi bi-x"></i> Hapus Filter
+                                            </a>
+                                        </span>
+                                    </div>
+                                @endif
+
+                                <!-- Stats -->
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stat-card">
+                                            <div class="stat-icon primary"><i class="bi bi-files"></i></div>
+                                            <div class="stat-info">
+                                                <h6>Total</h6>
+                                                <div class="value">{{ $datas->count() }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stat-card">
+                                            <div class="stat-icon success"><i class="bi bi-check-circle"></i></div>
+                                            <div class="stat-info">
+                                                <h6>Approved</h6>
+                                                <div class="value">{{ $datas->where('status', 'approved')->count() }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stat-card">
+                                            <div class="stat-icon warning"><i class="bi bi-clock-history"></i></div>
+                                            <div class="stat-info">
+                                                <h6>Review & Draft</h6>
+                                                <div class="value">
+                                                    {{ $datas->whereIn('status', ['review', 'draft'])->count() }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stat-card">
+                                            <div class="stat-icon info"><i class="bi bi-file-pdf"></i></div>
+                                            <div class="stat-info">
+                                                <h6>Dengan File</h6>
+                                                <div class="value">{{ $datas->whereNotNull('file_path')->count() }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Table -->
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="table-dokumen">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:30px;">#</th>
+                                                <th style="min-width:150px;">Judul</th>
+                                                <th style="min-width:100px;">Kategori</th>
+                                                <th style="min-width:85px;">Tanggal</th>
+                                                <th style="width:45px;">File</th>
+                                                <th style="width:130px;">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse($datas as $index => $dokumen)
+                                                <tr>
+                                                    <td><span class="row-number"></span></td>
+                                                    <td>
+                                                        <span
+                                                            class="doc-title">{{ Str::limit($dokumen->judul, 40) }}</span>
+                                                        <span class="doc-meta">
+                                                            <span><i class="bi bi-person"></i>
+                                                                {{ $dokumen->user->name ?? 'Unknown' }}</span>
+                                                            @if ($dokumen->folder_id)
+                                                                <span><i class="bi bi-folder2"></i>
+                                                                    {{ $dokumen->folder->name ?? '' }}</span>
+                                                            @endif
+                                                        </span>
+                                                    </td>
+                                                    <td><span
+                                                            style="font-weight:500;color:var(--secondary);font-size:11px;">{{ $dokumen->kategori->nama_jenis ?? '-' }}</span>
+                                                    </td>
+                                                    <td><span
+                                                            style="font-size:11px;">{{ date('d-m-Y', strtotime($dokumen->tanggal_dokumen)) }}</span>
+                                                    </td>
+                                                    <td>
+                                                        @if ($dokumen->file_path)
+                                                            <a href="{{ route('umkm.view', $dokumen->id) }}"
+                                                                target="_blank" class="btn-action view"
+                                                                data-tooltip="Lihat File">
+                                                                <i class="bi bi-eye"></i>
+                                                            </a>
+                                                        @else
+                                                            <span style="color:#CBD5E1;font-size:11px;">-</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <div class="action-buttons">
+                                                            <a href="{{ route('umkm.edit', $dokumen->id) }}"
+                                                                class="btn-action edit" data-tooltip="Edit">
+                                                                <i class="bi bi-pencil"></i>
+                                                            </a>
+                                                            @if ($dokumen->file_path)
+                                                                {{-- <a href="{{ route('umkm.download', $dokumen->id) }}" class="btn-action download" data-tooltip="Download" target="_blank">
                                                         <i class="bi bi-download"></i>
                                                     </a> --}}
-                                                    @endif
-                                                    <button type="button" class="btn-action move" data-tooltip="Pindah Folder" onclick="moveDocument({{ $dokumen->id }})">
-                                                        <i class="bi bi-arrow-right"></i>
-                                                    </button>
-                                                    <form action="{{ route('umkm.hapus', $dokumen->id) }}" method="POST" class="delete-form">
-                                                        @csrf @method('DELETE')
-                                                        <button type="button" class="btn-action delete delete-btn" data-tooltip="Hapus">
-                                                            <i class="bi bi-trash3"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td colspan="6">
-                                                <div class="empty-state">
-                                                    <i class="bi bi-inbox"></i>
-                                                    <h5>Belum Ada Dokumen</h5>
-                                                    <p>Mulai tambahkan dokumen pertama Anda</p>
-                                                    <a href="{{ route('umkm.create') }}" class="btn-primary-custom" style="display:inline-flex;margin-top:8px;">
-                                                        <i class="bi bi-plus-circle"></i> Tambah Dokumen
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                                                            @endif
+                                                            <button type="button" class="btn-action move"
+                                                                data-tooltip="Pindah Folder"
+                                                                onclick="moveDocument({{ $dokumen->id }})">
+                                                                <i class="bi bi-arrow-right"></i>
+                                                            </button>
+                                                            <form action="{{ route('umkm.hapus', $dokumen->id) }}"
+                                                                method="POST" class="delete-form">
+                                                                @csrf @method('DELETE')
+                                                                <button type="button"
+                                                                    class="btn-action delete delete-btn"
+                                                                    data-tooltip="Hapus">
+                                                                    <i class="bi bi-trash3"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="6">
+                                                        <div class="empty-state">
+                                                            <i class="bi bi-inbox"></i>
+                                                            <h5>Belum Ada Dokumen</h5>
+                                                            <p>Mulai tambahkan dokumen pertama Anda</p>
+                                                            <a href="{{ route('umkm.create') }}"
+                                                                class="btn-primary-custom"
+                                                                style="display:inline-flex;margin-top:8px;">
+                                                                <i class="bi bi-plus-circle"></i> Tambah Dokumen
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+
                             </div>
-
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </section>
-</div>
+        </section>
+    </div>
 
-<!-- Modal Create Folder -->
-<div class="modal fade" id="modalCreateFolder" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-folder-plus text-primary"></i> Buat Folder Baru</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="formCreateFolder" action="{{ route('umkm.folder.store') }}" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Nama Folder</label>
-                        <input type="text" name="name" class="form-control" placeholder="Masukkan nama folder..." required>
+    <!-- Modal Create Folder -->
+    <div class="modal fade" id="modalCreateFolder" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-folder-plus text-primary"></i> Buat Folder Baru</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="formCreateFolder" action="{{ route('umkm.folder.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Nama Folder</label>
+                            <input type="text" name="name" class="form-control"
+                                placeholder="Masukkan nama folder..." required>
+                        </div>
+                        <div>
+                            <label class="form-label">Warna Folder</label>
+                            <div class="color-options" style="display:flex;gap:6px;flex-wrap:wrap;">
+                                @for ($i = 1; $i <= 8; $i++)
+                                    <label class="color-option"
+                                        style="background:var(--fc{{ $i }});{{ $i == 1 ? 'border-color:var(--dark);' : '' }}"
+                                        onclick="selectColor(this, {{ $i }})">
+                                        <input type="radio" name="color" value="{{ $i }}"
+                                            {{ $i == 1 ? 'checked' : '' }} style="display:none;">
+                                    </label>
+                                @endfor
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <label class="form-label">Warna Folder</label>
-                        <div class="color-options" style="display:flex;gap:6px;flex-wrap:wrap;">
-                            @for($i = 1; $i <= 8; $i++)
-                            <label class="color-option" style="background:var(--fc{{ $i }});{{ $i == 1 ? 'border-color:var(--dark);' : '' }}" onclick="selectColor(this, {{ $i }})">
-                                <input type="radio" name="color" value="{{ $i }}" {{ $i == 1 ? 'checked' : '' }} style="display:none;">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Buat Folder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Folder -->
+    <div class="modal fade" id="modalEditFolder" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-pencil-square text-warning"></i> Edit Folder</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="formEditFolder" action="" method="POST">
+                    @csrf @method('PUT')
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Nama Folder</label>
+                            <input type="text" name="name" id="editFolderName" class="form-control" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Warna Folder</label>
+                            <div class="color-options" style="display:flex;gap:6px;flex-wrap:wrap;">
+                                @for ($i = 1; $i <= 8; $i++)
+                                    <label class="color-option" style="background:var(--fc{{ $i }});"
+                                        onclick="selectColor(this, {{ $i }})">
+                                        <input type="radio" name="color" value="{{ $i }}"
+                                            style="display:none;">
+                                    </label>
+                                @endfor
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-warning text-white">Update Folder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Move Document -->
+    <div class="modal fade" id="modalMoveDocument" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-arrow-right-circle text-primary"></i> Pindahkan Dokumen</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="formMoveDocument" action="" method="POST">
+                    @csrf @method('PUT')
+                    <div class="modal-body">
+                        <p style="font-size:13px;color:var(--secondary);margin-bottom:12px;">Pilih folder tujuan untuk
+                            dokumen ini:</p>
+                        <div class="mb-3">
+                            <label class="form-label">Pilih Folder</label>
+                            <select name="folder_id" class="form-control" required>
+                                <option value="">Pilih Folder...</option>
+                                @foreach ($folders ?? [] as $folder)
+                                    <option value="{{ $folder->id }}">{{ $folder->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" name="remove_from_folder" value="1" class="form-check-input"
+                                id="removeFromFolder">
+                            <label class="form-check-label" for="removeFromFolder"
+                                style="font-size:13px;color:var(--secondary);">
+                                Hapus dari folder saat ini (pindahkan ke root)
                             </label>
-                            @endfor
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Buat Folder</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Edit Folder -->
-<div class="modal fade" id="modalEditFolder" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-pencil-square text-warning"></i> Edit Folder</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Pindahkan</button>
+                    </div>
+                </form>
             </div>
-            <form id="formEditFolder" action="" method="POST">
-                @csrf @method('PUT')
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Nama Folder</label>
-                        <input type="text" name="name" id="editFolderName" class="form-control" required>
-                    </div>
-                    <div>
-                        <label class="form-label">Warna Folder</label>
-                        <div class="color-options" style="display:flex;gap:6px;flex-wrap:wrap;">
-                            @for($i = 1; $i <= 8; $i++)
-                            <label class="color-option" style="background:var(--fc{{ $i }});" onclick="selectColor(this, {{ $i }})">
-                                <input type="radio" name="color" value="{{ $i }}" style="display:none;">
-                            </label>
-                            @endfor
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-warning text-white">Update Folder</button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
 
-<!-- Modal Move Document -->
-<div class="modal fade" id="modalMoveDocument" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-arrow-right-circle text-primary"></i> Pindahkan Dokumen</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="formMoveDocument" action="" method="POST">
-                @csrf @method('PUT')
-                <div class="modal-body">
-                    <p style="font-size:13px;color:var(--secondary);margin-bottom:12px;">Pilih folder tujuan untuk dokumen ini:</p>
-                    <div class="mb-3">
-                        <label class="form-label">Pilih Folder</label>
-                        <select name="folder_id" class="form-control" required>
-                            <option value="">Pilih Folder...</option>
-                            @foreach($folders ?? [] as $folder)
-                            <option value="{{ $folder->id }}">{{ $folder->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" name="remove_from_folder" value="1" class="form-check-input" id="removeFromFolder">
-                        <label class="form-check-label" for="removeFromFolder" style="font-size:13px;color:var(--secondary);">
-                            Hapus dari folder saat ini (pindahkan ke root)
-                        </label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Pindahkan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.18/dist/sweetalert2.all.min.js"></script>
+        <script src="{{ asset('library/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('library/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('library/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
 
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.18/dist/sweetalert2.all.min.js"></script>
-<script src="{{ asset('library/datatables/media/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('library/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('library/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
+        <script>
+            $(document).ready(function() {
+                var table = $('#table-dokumen').DataTable({
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    info: true,
+                    autoWidth: false,
+                    pageLength: 10,
+                    lengthMenu: [10, 25, 50, 100],
+                    drawCallback: function(settings) {
+                        let api = this.api();
+                        let start = api.page.info().start;
+                        api.column(0, {
+                            page: 'current'
+                        }).nodes().each(function(cell, i) {
+                            cell.querySelector('.row-number').innerHTML = start + i + 1;
+                        });
+                    },
+                    language: {
+                        url: 'https://cdn.datatables.net/plug-ins/2.1.0/i18n/id.json',
+                        search: '<i class="bi bi-search me-1"></i>Cari',
+                        searchPlaceholder: 'Cari dokumen...',
+                        lengthMenu: 'Tampilkan _MENU_',
+                        info: 'Menampilkan _START_-_END_ dari _TOTAL_ data',
+                        infoEmpty: 'Tidak ada data',
+                        zeroRecords: 'Data tidak ditemukan',
+                    },
+                    dom: '<"top"lf>rt<"bottom"ip>',
+                    columnDefs: [{
+                        targets: [0, 4, 5],
+                        orderable: false
+                    }]
+                });
 
-<script>
-$(document).ready(function() {
-    var table = $('#table-dokumen').DataTable({
-        paging: true,
-        searching: true,
-        ordering: true,
-        info: true,
-        autoWidth: false,
-        pageLength: 10,
-        lengthMenu: [10, 25, 50, 100],
-        drawCallback: function(settings) {
-            let api = this.api();
-            let start = api.page.info().start;
-            api.column(0, { page: 'current' }).nodes().each(function(cell, i) {
-                cell.querySelector('.row-number').innerHTML = start + i + 1;
-            });
-        },
-        language: {
-            url: 'https://cdn.datatables.net/plug-ins/2.1.0/i18n/id.json',
-            search: '<i class="bi bi-search me-1"></i>Cari',
-            searchPlaceholder: 'Cari dokumen...',
-            lengthMenu: 'Tampilkan _MENU_',
-            info: 'Menampilkan _START_-_END_ dari _TOTAL_ data',
-            infoEmpty: 'Tidak ada data',
-            zeroRecords: 'Data tidak ditemukan',
-        },
-        dom: '<"top"lf>rt<"bottom"ip>',
-        columnDefs: [
-            { targets: [0,4,5], orderable: false }
-        ]
-    });
+                $('.dataTables_filter input').attr('placeholder', 'Cari dokumen...').addClass(
+                    'form-control form-control-sm');
+                $('.dataTables_length select').addClass('form-control form-control-sm');
 
-    $('.dataTables_filter input').attr('placeholder', 'Cari dokumen...').addClass('form-control form-control-sm');
-    $('.dataTables_length select').addClass('form-control form-control-sm');
+                function handleResponsive() {
+                    if ($(window).width() < 768) {
+                        $('.dataTables_filter input').css('min-width', '100%');
+                        $('.dataTables_filter').css('margin-left', '0');
+                    } else {
+                        $('.dataTables_filter input').css('min-width', '200px');
+                    }
+                }
+                handleResponsive();
+                $(window).resize(handleResponsive);
 
-    function handleResponsive() {
-        if ($(window).width() < 768) {
-            $('.dataTables_filter input').css('min-width', '100%');
-            $('.dataTables_filter').css('margin-left', '0');
-        } else {
-            $('.dataTables_filter input').css('min-width', '200px');
-        }
-    }
-    handleResponsive();
-    $(window).resize(handleResponsive);
+                // Delete document
+                $('.delete-btn').click(function(e) {
+                    e.preventDefault();
+                    let form = $(this).closest('form');
+                    let docTitle = $(this).closest('tr').find('.doc-title').text().trim();
 
-    // Delete document
-    $('.delete-btn').click(function(e) {
-        e.preventDefault();
-        let form = $(this).closest('form');
-        let docTitle = $(this).closest('tr').find('.doc-title').text().trim();
-
-        Swal.fire({
-            title: 'Hapus Dokumen?',
-            html: `
+                    Swal.fire({
+                        title: 'Hapus Dokumen?',
+                        html: `
                 <div style="text-align:left;padding:6px 0;">
                     <p style="margin-bottom:6px;color:#64748B;font-size:14px;">
                         <i class="bi bi-file-earmark-text" style="color:#4F46E5;"></i>
@@ -1092,76 +1570,80 @@ $(document).ready(function() {
                     </p>
                 </div>
             `,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Hapus',
-            cancelButtonText: 'Batal',
-            reverseButtons: true,
-            customClass: {
-                confirmButton: 'btn btn-danger px-4 py-2',
-                cancelButton: 'btn btn-secondary px-4 py-2',
-            },
-            buttonsStyling: false
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    title: 'Menghapus...',
-                    text: 'Mohon tunggu',
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    didOpen: () => { Swal.showLoading(); }
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Hapus',
+                        cancelButtonText: 'Batal',
+                        reverseButtons: true,
+                        customClass: {
+                            confirmButton: 'btn btn-danger px-4 py-2',
+                            cancelButton: 'btn btn-secondary px-4 py-2',
+                        },
+                        buttonsStyling: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: 'Menghapus...',
+                                text: 'Mohon tunggu',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                }
+                            });
+
+                            $.ajax({
+                                url: form.attr('action'),
+                                type: 'POST',
+                                data: form.serialize(),
+                                success: function(response) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil!',
+                                        text: 'Dokumen berhasil dihapus',
+                                        timer: 1200,
+                                        showConfirmButton: false,
+                                    }).then(() => {
+                                        location.reload();
+                                    });
+                                },
+                                error: function(xhr) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal!',
+                                        text: 'Terjadi kesalahan',
+                                        confirmButtonColor: '#4F46E5',
+                                        confirmButtonText: 'OK'
+                                    });
+                                }
+                            });
+                        }
+                    });
                 });
 
-                $.ajax({
-                    url: form.attr('action'),
-                    type: 'POST',
-                    data: form.serialize(),
-                    success: function(response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil!',
-                            text: 'Dokumen berhasil dihapus',
-                            timer: 1200,
-                            showConfirmButton: false,
-                        }).then(() => { location.reload(); });
-                    },
-                    error: function(xhr) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal!',
-                            text: 'Terjadi kesalahan',
-                            confirmButtonColor: '#4F46E5',
-                            confirmButtonText: 'OK'
-                        });
-                    }
-                });
-            }
-        });
-    });
+                // Flash messages with Toast
+                @if (session('message'))
+                    showToast('success', 'Sukses!', '{{ session('message') }}');
+                @endif
 
-    // Flash messages with Toast
-    @if(session('message'))
-        showToast('success', 'Sukses!', '{{ session("message") }}');
-    @endif
+                @if (session('error'))
+                    showToast('error', 'Gagal!', '{{ session('error') }}');
+                @endif
 
-    @if(session('error'))
-        showToast('error', 'Gagal!', '{{ session("error") }}');
-    @endif
+                @if (session('folder_success'))
+                    showToast('success', 'Berhasil!', '{{ session('folder_success') }}');
+                @endif
+            });
 
-    @if(session('folder_success'))
-        showToast('success', 'Berhasil!', '{{ session("folder_success") }}');
-    @endif
-});
+            // ===== TOAST FUNCTION =====
+            function showToast(type, title, message) {
+                const icons = {
+                    success: 'bi-check-circle-fill',
+                    error: 'bi-x-circle-fill',
+                    warning: 'bi-exclamation-triangle-fill'
+                };
 
-// ===== TOAST FUNCTION =====
-function showToast(type, title, message) {
-    const icons = {
-        success: 'bi-check-circle-fill',
-        error: 'bi-x-circle-fill',
-        warning: 'bi-exclamation-triangle-fill'
-    };
-    
-    const toast = `
+                const toast = `
         <div class="toast ${type}">
             <span class="toast-icon"><i class="bi ${icons[type] || icons.success}"></i></span>
             <div class="toast-body">
@@ -1171,118 +1653,122 @@ function showToast(type, title, message) {
             <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
         </div>
     `;
-    
-    let container = document.querySelector('.toast-container');
-    if (!container) {
-        container = document.createElement('div');
-        container.className = 'toast-container';
-        document.body.appendChild(container);
-    }
-    
-    container.insertAdjacentHTML('beforeend', toast);
-    
-    setTimeout(() => {
-        const toastEl = container.lastElementChild;
-        if (toastEl) {
-            toastEl.style.opacity = '0';
-            toastEl.style.transform = 'translateX(100%)';
-            setTimeout(() => toastEl.remove(), 400);
-        }
-    }, 4000);
-}
 
-// ===== FOLDER FUNCTIONS =====
-
-// Filter by folder
-function filterByFolder(folderId) {
-    window.location.href = "{{ route('umkm.index') }}?folder=" + folderId;
-}
-
-// Select color
-function selectColor(element, value) {
-    document.querySelectorAll('.color-option').forEach(el => {
-        el.classList.remove('active');
-        el.style.borderColor = 'transparent';
-    });
-    element.classList.add('active');
-    element.style.borderColor = 'var(--dark)';
-    element.querySelector('input[type="radio"]').checked = true;
-}
-
-// Edit folder
-function editFolder(id, name, color) {
-    $('#modalEditFolder').modal('show');
-    $('#formEditFolder').attr('action', "{{ route('umkm.folder.update', '') }}/" + id);
-    $('#editFolderName').val(name);
-    
-    document.querySelectorAll('#modalEditFolder .color-option').forEach(el => {
-        el.classList.remove('active');
-        el.style.borderColor = 'transparent';
-        let radio = el.querySelector('input[type="radio"]');
-        if (radio.value == color) {
-            el.classList.add('active');
-            el.style.borderColor = 'var(--dark)';
-            radio.checked = true;
-        }
-    });
-}
-
-// Delete folder
-function deleteFolder(id) {
-    Swal.fire({
-        title: 'Hapus Folder?',
-        text: 'Dokumen dalam folder ini akan tetap ada dan pindah ke root',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Hapus',
-        cancelButtonText: 'Batal',
-        reverseButtons: true,
-        customClass: {
-            confirmButton: 'btn btn-danger px-4 py-2',
-            cancelButton: 'btn btn-secondary px-4 py-2',
-        },
-        buttonsStyling: false
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: "{{ route('umkm.folder.delete', '') }}/" + id,
-                type: 'DELETE',
-                data: { _token: '{{ csrf_token() }}' },
-                success: function(response) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil!',
-                        text: response.message || 'Folder berhasil dihapus',
-                        timer: 1500,
-                        showConfirmButton: false,
-                    }).then(() => { location.reload(); });
-                },
-                error: function(xhr) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal!',
-                        text: xhr.responseJSON?.message || 'Terjadi kesalahan',
-                        confirmButtonColor: '#4F46E5',
-                        confirmButtonText: 'OK'
-                    });
+                let container = document.querySelector('.toast-container');
+                if (!container) {
+                    container = document.createElement('div');
+                    container.className = 'toast-container';
+                    document.body.appendChild(container);
                 }
+
+                container.insertAdjacentHTML('beforeend', toast);
+
+                setTimeout(() => {
+                    const toastEl = container.lastElementChild;
+                    if (toastEl) {
+                        toastEl.style.opacity = '0';
+                        toastEl.style.transform = 'translateX(100%)';
+                        setTimeout(() => toastEl.remove(), 400);
+                    }
+                }, 4000);
+            }
+
+            // ===== FOLDER FUNCTIONS =====
+
+            // Filter by folder
+            function filterByFolder(folderId) {
+                window.location.href = "{{ route('umkm.index') }}?folder=" + folderId;
+            }
+
+            // Select color
+            function selectColor(element, value) {
+                document.querySelectorAll('.color-option').forEach(el => {
+                    el.classList.remove('active');
+                    el.style.borderColor = 'transparent';
+                });
+                element.classList.add('active');
+                element.style.borderColor = 'var(--dark)';
+                element.querySelector('input[type="radio"]').checked = true;
+            }
+
+            // Edit folder
+            function editFolder(id, name, color) {
+                $('#modalEditFolder').modal('show');
+                $('#formEditFolder').attr('action', "{{ route('umkm.folder.update', '') }}/" + id);
+                $('#editFolderName').val(name);
+
+                document.querySelectorAll('#modalEditFolder .color-option').forEach(el => {
+                    el.classList.remove('active');
+                    el.style.borderColor = 'transparent';
+                    let radio = el.querySelector('input[type="radio"]');
+                    if (radio.value == color) {
+                        el.classList.add('active');
+                        el.style.borderColor = 'var(--dark)';
+                        radio.checked = true;
+                    }
+                });
+            }
+
+            // Delete folder
+            function deleteFolder(id) {
+                Swal.fire({
+                    title: 'Hapus Folder?',
+                    text: 'Dokumen dalam folder ini akan tetap ada dan pindah ke root',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Hapus',
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true,
+                    customClass: {
+                        confirmButton: 'btn btn-danger px-4 py-2',
+                        cancelButton: 'btn btn-secondary px-4 py-2',
+                    },
+                    buttonsStyling: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "{{ route('umkm.folder.delete', '') }}/" + id,
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil!',
+                                    text: response.message || 'Folder berhasil dihapus',
+                                    timer: 1500,
+                                    showConfirmButton: false,
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            },
+                            error: function(xhr) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal!',
+                                    text: xhr.responseJSON?.message || 'Terjadi kesalahan',
+                                    confirmButtonColor: '#4F46E5',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+
+            // Move document
+            function moveDocument(id) {
+                $('#modalMoveDocument').modal('show');
+                $('#formMoveDocument').attr('action', "{{ route('umkm.document.move', '') }}/" + id);
+            }
+
+            // Animation on load
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('.fade-in-up').forEach((el, i) => {
+                    el.style.animationDelay = (i * 0.08) + 's';
+                });
             });
-        }
-    });
-}
-
-// Move document
-function moveDocument(id) {
-    $('#modalMoveDocument').modal('show');
-    $('#formMoveDocument').attr('action', "{{ route('umkm.document.move', '') }}/" + id);
-}
-
-// Animation on load
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.fade-in-up').forEach((el, i) => {
-        el.style.animationDelay = (i * 0.08) + 's';
-    });
-});
-</script>
-@endpush
+        </script>
+    @endpush
 @endsection

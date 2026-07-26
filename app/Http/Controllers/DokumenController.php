@@ -81,6 +81,23 @@ class DokumenController extends Controller
         ));
     }
 
+    public function viewFile($id)
+{
+    $dokumen = Dokumen::findOrFail($id);
+
+    if (!$dokumen->file_path) {
+        abort(404);
+    }
+
+    $path = storage_path('app/public/' . $dokumen->file_path);
+
+    if (!file_exists($path)) {
+        abort(404);
+    }
+
+    return response()->file($path);
+}   
+
     // ===== FOLDER METHODS =====
 
     /**

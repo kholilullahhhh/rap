@@ -140,6 +140,8 @@ Route::group(
                 Route::put('/update/{id}', 'DokumenController@update')
                     ->name('umkm.update');
                 Route::delete('/hapus/{id}', 'DokumenController@destroy')->name('umkm.hapus');
+                Route::get('/dokumen/view/{id}', [DokumenController::class, 'viewFile'])
+    ->name('umkm.view');
 
                 Route::post('/folder/store', [DokumenController::class, 'storeFolder'])->name('umkm.folder.store');
                 Route::put('/folder/update/{id}', [DokumenController::class, 'updateFolder'])->name('umkm.folder.update');
