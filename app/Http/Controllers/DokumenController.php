@@ -186,13 +186,13 @@ class DokumenController extends Controller
     {
         $request->validate([
             'kategori_id' => 'required|exists:jenis_usahas,id',
-            'nomor_dokumen' => 'required|string|unique:dokumens',
+            // 'nomor_dokumen' => 'required|string|unique:dokumens',
             'judul' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
+            // 'deskripsi' => 'nullable|string',
             'file_path' => 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:10240',
             'tanggal_dokumen' => 'required|date',
-            'versi' => 'nullable|string|max:20',
-            'status' => 'nullable|in:draft,review,approved,obsolete',
+            // 'versi' => 'nullable|string|max:20',
+            // 'status' => 'nullable|in:draft,review,approved,obsolete',
             'folder_id' => 'nullable|exists:folders,id',
         ]);
 

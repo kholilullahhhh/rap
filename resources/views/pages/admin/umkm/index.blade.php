@@ -18,11 +18,14 @@
         --info: #3B82F6;
         --secondary: #64748B;
         --dark: #0F172A;
-        --folder-color-1: #F59E0B;
-        --folder-color-2: #3B82F6;
-        --folder-color-3: #10B981;
-        --folder-color-4: #EF4444;
-        --folder-color-5: #8B5CF6;
+        --fc1: #F59E0B;
+        --fc2: #3B82F6;
+        --fc3: #10B981;
+        --fc4: #EF4444;
+        --fc5: #8B5CF6;
+        --fc6: #EC4899;
+        --fc7: #14B8A6;
+        --fc8: #F97316;
     }
     body { font-family: 'Inter', sans-serif; background: #F1F5F9; }
     .main-content { padding: 15px 25px; }
@@ -142,7 +145,7 @@
         text-decoration: none;
     }
     .btn-folder-create {
-        background: var(--folder-color-1);
+        background: var(--fc1);
         color: white;
         border: none;
         padding: 5px 14px;
@@ -247,16 +250,6 @@
         color: white;
     }
 
-    .folder-colors {
-        --fc1: #F59E0B;
-        --fc2: #3B82F6;
-        --fc3: #10B981;
-        --fc4: #EF4444;
-        --fc5: #8B5CF6;
-        --fc6: #EC4899;
-        --fc7: #14B8A6;
-        --fc8: #F97316;
-    }
     .folder-color-1 .folder-icon { color: var(--fc1); }
     .folder-color-2 .folder-icon { color: var(--fc2); }
     .folder-color-3 .folder-icon { color: var(--fc3); }
@@ -361,6 +354,8 @@
     .btn-action.view:hover { background: #3B82F6; color: white; box-shadow: 0 3px 12px rgba(59,130,246,0.3); }
     .btn-action.move { background: #E0E7FF; color: #3730A3; }
     .btn-action.move:hover { background: #4F46E5; color: white; box-shadow: 0 3px 12px rgba(79,70,229,0.3); }
+    .btn-action.download { background: #D1FAE5; color: #065F46; }
+    .btn-action.download:hover { background: #10B981; color: white; box-shadow: 0 3px 12px rgba(16,185,129,0.3); }
 
     /* Badge */
     .badge-status {
@@ -622,6 +617,52 @@
     }
     .fade-in-up { animation: fadeInUp 0.5s ease forwards; }
 
+    /* Toast notification */
+    .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+    }
+    .toast {
+        background: white;
+        border-radius: 12px;
+        padding: 14px 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 280px;
+        max-width: 400px;
+        animation: slideInRight 0.4s ease;
+        border-left: 4px solid var(--primary);
+    }
+    .toast.success { border-left-color: var(--success); }
+    .toast.error { border-left-color: var(--danger); }
+    .toast.warning { border-left-color: var(--warning); }
+    .toast .toast-icon { font-size: 20px; }
+    .toast.success .toast-icon { color: var(--success); }
+    .toast.error .toast-icon { color: var(--danger); }
+    .toast.warning .toast-icon { color: var(--warning); }
+    .toast .toast-body { flex: 1; }
+    .toast .toast-body .toast-title { font-weight: 600; font-size: 14px; color: var(--dark); }
+    .toast .toast-body .toast-message { font-size: 13px; color: var(--secondary); }
+    .toast .toast-close {
+        background: none;
+        border: none;
+        font-size: 18px;
+        color: #CBD5E1;
+        cursor: pointer;
+        padding: 0 4px;
+    }
+    .toast .toast-close:hover { color: var(--dark); }
+
+    @keyframes slideInRight {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
         .main-content { padding: 10px 15px; }
@@ -681,7 +722,7 @@
                             <h4><i class="bi bi-folder2"></i> Folder & Dokumen</h4>
                             <div class="card-header-action d-flex flex-wrap gap-2">
                                 <button type="button" class="btn-folder-create" data-toggle="modal" data-target="#modalCreateFolder">
-                                    <i class="bi bi-folder-plus"></i> Buat Folder
+                                    <i class="bi bi-folder-plus" ></i> Buat Folder
                                 </button>
                                 <a href="{{ route('umkm.create') }}" class="btn-primary-custom">
                                     <i class="bi bi-plus-circle"></i> Tambah Data
@@ -722,7 +763,7 @@
                             </div>
 
                             <!-- Folder Breadcrumb -->
-                            @if(request('folder'))
+                            @if(request('folder') && isset($currentFolder))
                             <div class="folder-breadcrumb">
                                 <span class="breadcrumb-item">
                                     <a href="{{ route('umkm.index') }}"><i class="bi bi-folder2-open"></i> Semua</a>
@@ -773,21 +814,17 @@
                                     <thead>
                                         <tr>
                                             <th style="width:30px;">#</th>
-                                            {{-- <th style="min-width:70px;">No Dokumen</th> --}}
                                             <th style="min-width:150px;">Judul</th>
                                             <th style="min-width:100px;">Kategori</th>
                                             <th style="min-width:85px;">Tanggal</th>
-                                            {{-- <th style="width:65px;">Versi</th> --}}
-                                            {{-- <th style="width:85px;">Status</th> --}}
                                             <th style="width:45px;">File</th>
-                                            <th style="width:95px;">Aksi</th>
+                                            <th style="width:130px;">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($datas as $index => $dokumen)
                                         <tr>
                                             <td><span class="row-number"></span></td>
-                                            {{-- <td><span style="font-weight:600;color:var(--dark);font-size:11px;">{{ $dokumen->nomor_dokumen }}</span></td> --}}
                                             <td>
                                                 <span class="doc-title">{{ Str::limit($dokumen->judul, 40) }}</span>
                                                 <span class="doc-meta">
@@ -795,25 +832,23 @@
                                                     @if($dokumen->folder_id)
                                                     <span><i class="bi bi-folder2"></i> {{ $dokumen->folder->name ?? '' }}</span>
                                                     @endif
+                                                    <span class="version-badge"><i class="bi bi-tag"></i> v{{ $dokumen->versi }}</span>
+                                                    @php
+                                                        $statusMap = [
+                                                            'draft' => ['class' => 'draft', 'icon' => 'bi bi-pencil', 'label' => 'Draft'],
+                                                            'review' => ['class' => 'review', 'icon' => 'bi bi-eye', 'label' => 'Review'],
+                                                            'approved' => ['class' => 'approved', 'icon' => 'bi bi-check-circle-fill', 'label' => 'Approved'],
+                                                            'obsolete' => ['class' => 'obsolete', 'icon' => 'bi bi-exclamation-triangle-fill', 'label' => 'Obsolete']
+                                                        ];
+                                                        $status = $statusMap[$dokumen->status] ?? $statusMap['draft'];
+                                                    @endphp
+                                                    <span class="badge-status {{ $status['class'] }}">
+                                                        <i class="{{ $status['icon'] }}"></i> {{ $status['label'] }}
+                                                    </span>
                                                 </span>
                                             </td>
                                             <td><span style="font-weight:500;color:var(--secondary);font-size:11px;">{{ $dokumen->kategori->nama_jenis ?? '-' }}</span></td>
                                             <td><span style="font-size:11px;">{{ date('d-m-Y', strtotime($dokumen->tanggal_dokumen)) }}</span></td>
-                                            {{-- <td><span class="version-badge"><i class="bi bi-tag"></i> v{{ $dokumen->versi }}</span></td> --}}
-                                            {{-- <td>
-                                                @php
-                                                    $statusMap = [
-                                                        'draft' => ['class' => 'draft', 'icon' => 'bi bi-pencil', 'label' => 'Draft'],
-                                                        'review' => ['class' => 'review', 'icon' => 'bi bi-eye', 'label' => 'Review'],
-                                                        'approved' => ['class' => 'approved', 'icon' => 'bi bi-check-circle-fill', 'label' => 'Approved'],
-                                                        'obsolete' => ['class' => 'obsolete', 'icon' => 'bi bi-exclamation-triangle-fill', 'label' => 'Obsolete']
-                                                    ];
-                                                    $status = $statusMap[$dokumen->status] ?? $statusMap['draft'];
-                                                @endphp
-                                                <span class="badge-status {{ $status['class'] }}">
-                                                    <i class="{{ $status['icon'] }}"></i> {{ $status['label'] }}
-                                                </span>
-                                            </td> --}}
                                             <td>
                                                 @if($dokumen->file_path)
                                                     <a href="{{ asset('storage/'.$dokumen->file_path) }}" target="_blank" class="btn-action view" data-tooltip="Lihat File">
@@ -828,11 +863,14 @@
                                                     <a href="{{ route('umkm.edit', $dokumen->id) }}" class="btn-action edit" data-tooltip="Edit">
                                                         <i class="bi bi-pencil"></i>
                                                     </a>
-                                                    @if($dokumen->folder_id)
+                                                    @if($dokumen->file_path)
+                                                    {{-- <a href="{{ route('umkm.download', $dokumen->id) }}" class="btn-action download" data-tooltip="Download" target="_blank">
+                                                        <i class="bi bi-download"></i>
+                                                    </a> --}}
+                                                    @endif
                                                     <button type="button" class="btn-action move" data-tooltip="Pindah Folder" onclick="moveDocument({{ $dokumen->id }})">
                                                         <i class="bi bi-arrow-right"></i>
                                                     </button>
-                                                    @endif
                                                     <form action="{{ route('umkm.hapus', $dokumen->id) }}" method="POST" class="delete-form">
                                                         @csrf @method('DELETE')
                                                         <button type="button" class="btn-action delete delete-btn" data-tooltip="Hapus">
@@ -844,7 +882,7 @@
                                         </tr>
                                         @empty
                                         <tr>
-                                            <td colspan="9">
+                                            <td colspan="6">
                                                 <div class="empty-state">
                                                     <i class="bi bi-inbox"></i>
                                                     <h5>Belum Ada Dokumen</h5>
@@ -1017,7 +1055,7 @@ $(document).ready(function() {
         },
         dom: '<"top"lf>rt<"bottom"ip>',
         columnDefs: [
-            { targets: [0,5,6,7,8], orderable: false }
+            { targets: [0,4,5], orderable: false }
         ]
     });
 
@@ -1101,29 +1139,57 @@ $(document).ready(function() {
         });
     });
 
-    // Flash messages
+    // Flash messages with Toast
     @if(session('message'))
-        Swal.fire({
-            icon: 'success',
-            title: 'Sukses!',
-            text: '{{ session("message") }}',
-            timer: 2500,
-            showConfirmButton: true,
-            confirmButtonColor: '#4F46E5',
-            confirmButtonText: 'OK'
-        });
+        showToast('success', 'Sukses!', '{{ session("message") }}');
     @endif
 
     @if(session('error'))
-        Swal.fire({
-            icon: 'error',
-            title: 'Gagal!',
-            text: '{{ session("error") }}',
-            confirmButtonColor: '#4F46E5',
-            confirmButtonText: 'OK'
-        });
+        showToast('error', 'Gagal!', '{{ session("error") }}');
+    @endif
+
+    @if(session('folder_success'))
+        showToast('success', 'Berhasil!', '{{ session("folder_success") }}');
     @endif
 });
+
+// ===== TOAST FUNCTION =====
+function showToast(type, title, message) {
+    const icons = {
+        success: 'bi-check-circle-fill',
+        error: 'bi-x-circle-fill',
+        warning: 'bi-exclamation-triangle-fill'
+    };
+    
+    const toast = `
+        <div class="toast ${type}">
+            <span class="toast-icon"><i class="bi ${icons[type] || icons.success}"></i></span>
+            <div class="toast-body">
+                <div class="toast-title">${title}</div>
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+        </div>
+    `;
+    
+    let container = document.querySelector('.toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+    
+    container.insertAdjacentHTML('beforeend', toast);
+    
+    setTimeout(() => {
+        const toastEl = container.lastElementChild;
+        if (toastEl) {
+            toastEl.style.opacity = '0';
+            toastEl.style.transform = 'translateX(100%)';
+            setTimeout(() => toastEl.remove(), 400);
+        }
+    }, 4000);
+}
 
 // ===== FOLDER FUNCTIONS =====
 
@@ -1210,17 +1276,6 @@ function moveDocument(id) {
     $('#modalMoveDocument').modal('show');
     $('#formMoveDocument').attr('action', "{{ route('umkm.document.move', '') }}/" + id);
 }
-
-// Folder create success handler
-@if(session('folder_success'))
-    Swal.fire({
-        icon: 'success',
-        title: 'Berhasil!',
-        text: '{{ session("folder_success") }}',
-        timer: 2000,
-        showConfirmButton: false,
-    });
-@endif
 
 // Animation on load
 document.addEventListener('DOMContentLoaded', function() {
