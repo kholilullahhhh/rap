@@ -183,7 +183,7 @@
 
                                             <input
                                                 type="file"
-                                                name="file"
+                                                name="file_path"
                                                 class="form-control">
 
                                             <small class="text-muted">
