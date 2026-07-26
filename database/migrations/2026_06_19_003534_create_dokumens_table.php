@@ -14,14 +14,15 @@ return new class extends Migration
         Schema::create('dokumens', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kategori_id')->constrained('jenis_usahas')->onDelete('cascade');
-
+            $table->foreignId('folder_id')
+                  ->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
 
             $table->string('nomor_dokumen')->unique();
             $table->string('judul');
             $table->longText('deskripsi')->nullable();
 
-            $table->string('file_path');
+            $table->string('file_path')->nullable();
             $table->date('tanggal_dokumen');
             $table->string('versi', 20)->default('1.0');
 

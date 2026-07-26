@@ -23,6 +23,8 @@ class Agenda extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    
+
     // public function report()
     // {
     //     return $this->hasOne(Report::class);

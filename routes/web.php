@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\AbsenController;
 use App\Http\Controllers\User\JadwalController;
+use App\Http\Controllers\DokumenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -139,6 +140,11 @@ Route::group(
                 Route::put('/update/{id}', 'DokumenController@update')
                     ->name('umkm.update');
                 Route::delete('/hapus/{id}', 'DokumenController@destroy')->name('umkm.hapus');
+
+                Route::post('/folder/store', [DokumenController::class, 'storeFolder'])->name('umkm.folder.store');
+                Route::put('/folder/update/{id}', [DokumenController::class, 'updateFolder'])->name('umkm.folder.update');
+                Route::delete('/folder/delete/{id}', [DokumenController::class, 'deleteFolder'])->name('umkm.folder.delete');
+                Route::put('/document/move/{id}', [DokumenController::class, 'moveDocument'])->name('umkm.document.move');
 
 
                 // Route::get('/', 'UmkmController@index')->name('umkm.index');

@@ -18,6 +18,11 @@
         --info: #3B82F6;
         --secondary: #64748B;
         --dark: #0F172A;
+        --folder-color-1: #F59E0B;
+        --folder-color-2: #3B82F6;
+        --folder-color-3: #10B981;
+        --folder-color-4: #EF4444;
+        --folder-color-5: #8B5CF6;
     }
     body { font-family: 'Inter', sans-serif; background: #F1F5F9; }
     .main-content { padding: 15px 25px; }
@@ -116,6 +121,220 @@
         color: white;
         text-decoration: none;
     }
+    .btn-secondary-custom {
+        background: #F1F5F9;
+        color: var(--dark);
+        border: 1px solid #E2E8F0;
+        padding: 7px 18px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 13px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .btn-secondary-custom:hover {
+        background: #E2E8F0;
+        color: var(--dark);
+        text-decoration: none;
+    }
+    .btn-folder-create {
+        background: var(--folder-color-1);
+        color: white;
+        border: none;
+        padding: 5px 14px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 12px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+    }
+    .btn-folder-create:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(245,158,11,0.3);
+        color: white;
+    }
+
+    /* Folder Grid */
+    .folder-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+    .folder-card {
+        background: white;
+        border: 2px solid #F1F5F9;
+        border-radius: 12px;
+        padding: 16px 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        text-align: center;
+    }
+    .folder-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+    .folder-card.active {
+        border-color: var(--primary);
+        background: var(--primary-light);
+    }
+    .folder-card .folder-icon {
+        font-size: 40px;
+        margin-bottom: 8px;
+        display: block;
+        transition: all 0.3s ease;
+    }
+    .folder-card:hover .folder-icon {
+        transform: scale(1.05);
+    }
+    .folder-card .folder-name {
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--dark);
+        margin-bottom: 2px;
+    }
+    .folder-card .folder-count {
+        font-size: 11px;
+        color: var(--secondary);
+    }
+    .folder-card .folder-actions {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        display: flex;
+        gap: 4px;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+    .folder-card:hover .folder-actions {
+        opacity: 1;
+    }
+    .folder-card .folder-actions .btn-folder-action {
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .folder-card .folder-actions .btn-folder-action.edit-folder {
+        background: #FEF3C7;
+        color: #92400E;
+    }
+    .folder-card .folder-actions .btn-folder-action.edit-folder:hover {
+        background: #F59E0B;
+        color: white;
+    }
+    .folder-card .folder-actions .btn-folder-action.delete-folder {
+        background: #FEE2E2;
+        color: #991B1B;
+    }
+    .folder-card .folder-actions .btn-folder-action.delete-folder:hover {
+        background: #EF4444;
+        color: white;
+    }
+
+    .folder-colors {
+        --fc1: #F59E0B;
+        --fc2: #3B82F6;
+        --fc3: #10B981;
+        --fc4: #EF4444;
+        --fc5: #8B5CF6;
+        --fc6: #EC4899;
+        --fc7: #14B8A6;
+        --fc8: #F97316;
+    }
+    .folder-color-1 .folder-icon { color: var(--fc1); }
+    .folder-color-2 .folder-icon { color: var(--fc2); }
+    .folder-color-3 .folder-icon { color: var(--fc3); }
+    .folder-color-4 .folder-icon { color: var(--fc4); }
+    .folder-color-5 .folder-icon { color: var(--fc5); }
+    .folder-color-6 .folder-icon { color: var(--fc6); }
+    .folder-color-7 .folder-icon { color: var(--fc7); }
+    .folder-color-8 .folder-icon { color: var(--fc8); }
+
+    .folder-color-1.active { border-color: var(--fc1); background: #FFFBEB; }
+    .folder-color-2.active { border-color: var(--fc2); background: #EFF6FF; }
+    .folder-color-3.active { border-color: var(--fc3); background: #ECFDF5; }
+    .folder-color-4.active { border-color: var(--fc4); background: #FEF2F2; }
+    .folder-color-5.active { border-color: var(--fc5); background: #F5F3FF; }
+    .folder-color-6.active { border-color: var(--fc6); background: #FDF2F8; }
+    .folder-color-7.active { border-color: var(--fc7); background: #ECFDF5; }
+    .folder-color-8.active { border-color: var(--fc8); background: #FFF7ED; }
+
+    .folder-empty {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 30px 20px;
+        background: #FAFBFC;
+        border-radius: 12px;
+        border: 2px dashed #E2E8F0;
+    }
+    .folder-empty i {
+        font-size: 36px;
+        color: #CBD5E1;
+        margin-bottom: 10px;
+        display: block;
+    }
+    .folder-empty h6 {
+        font-size: 15px;
+        color: var(--dark);
+        margin-bottom: 4px;
+    }
+    .folder-empty p {
+        font-size: 13px;
+        color: var(--secondary);
+        margin-bottom: 12px;
+    }
+
+    /* Breadcrumb Folder */
+    .folder-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 14px;
+        background: #F8FAFC;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+    }
+    .folder-breadcrumb .breadcrumb-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 13px;
+        color: var(--secondary);
+        cursor: default;
+    }
+    .folder-breadcrumb .breadcrumb-item a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        cursor: pointer;
+    }
+    .folder-breadcrumb .breadcrumb-item a:hover {
+        text-decoration: underline;
+    }
+    .folder-breadcrumb .breadcrumb-item.active {
+        color: var(--dark);
+        font-weight: 600;
+    }
+    .folder-breadcrumb .breadcrumb-separator {
+        color: #CBD5E1;
+    }
 
     /* Action Buttons */
     .action-buttons { display: flex; gap: 4px; align-items: center; justify-content: center; }
@@ -140,6 +359,8 @@
     .btn-action.delete:hover { background: #EF4444; color: white; box-shadow: 0 3px 12px rgba(239,68,68,0.3); }
     .btn-action.view { background: #E0F2FE; color: #0369A1; }
     .btn-action.view:hover { background: #3B82F6; color: white; box-shadow: 0 3px 12px rgba(59,130,246,0.3); }
+    .btn-action.move { background: #E0E7FF; color: #3730A3; }
+    .btn-action.move:hover { background: #4F46E5; color: white; box-shadow: 0 3px 12px rgba(79,70,229,0.3); }
 
     /* Badge */
     .badge-status {
@@ -314,6 +535,62 @@
     .empty-state h5 { font-size: 18px; font-weight: 600; color: var(--dark); margin-bottom: 6px; }
     .empty-state p { color: var(--secondary); font-size: 13px; }
 
+    /* Modal */
+    .modal-content {
+        border-radius: 16px;
+        border: none;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    .modal-header {
+        border-bottom: 1px solid #F1F5F9;
+        padding: 16px 20px;
+    }
+    .modal-header .modal-title {
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--dark);
+    }
+    .modal-body {
+        padding: 20px;
+    }
+    .modal-footer {
+        border-top: 1px solid #F1F5F9;
+        padding: 14px 20px;
+    }
+    .form-control {
+        border: 2px solid #E2E8F0;
+        border-radius: 8px;
+        padding: 8px 14px;
+        font-size: 13px;
+        transition: all 0.3s ease;
+        font-family: 'Inter', sans-serif;
+    }
+    .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+    }
+    .form-label {
+        font-weight: 600;
+        font-size: 13px;
+        color: var(--dark);
+        margin-bottom: 4px;
+    }
+    .color-option {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-block;
+        margin-right: 6px;
+    }
+    .color-option:hover { transform: scale(1.1); }
+    .color-option.active {
+        border-color: var(--dark);
+        box-shadow: 0 0 0 2px white, 0 0 0 4px var(--dark);
+    }
+
     /* Tooltip */
     [data-tooltip] { position: relative; cursor: pointer; }
     [data-tooltip]:before {
@@ -337,8 +614,6 @@
     [data-tooltip]:hover:before { opacity: 1; }
 
     .delete-form { display: inline-block; margin: 0; }
-    .row.g-3 { --bs-gutter-y: 0.5rem; --bs-gutter-x: 0.5rem; }
-    .mb-4 { margin-bottom: 0.75rem !important; }
 
     /* Animation */
     @keyframes fadeInUp {
@@ -354,6 +629,12 @@
         .section-header h1 { font-size: 19px; }
         .card-body { padding: 14px 16px 16px; }
         .card-header { padding: 12px 16px; }
+        .folder-grid {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+        }
+        .folder-card { padding: 12px 10px; }
+        .folder-card .folder-icon { font-size: 32px; }
         .dataTables_wrapper .dataTables_filter { float: none !important; margin-left: 0; width: 100%; }
         .dataTables_wrapper .dataTables_length { float: none !important; margin-bottom: 8px; width: 100%; }
         .dataTables_wrapper .dataTables_filter input { min-width: 100%; width: 100%; }
@@ -365,8 +646,12 @@
         .stat-card { padding: 8px 12px; }
         .stat-info .value { font-size: 16px; }
         .table-responsive { overflow-x: auto; }
+        .folder-breadcrumb { padding: 8px 12px; font-size: 12px; }
     }
-    @media (max-width: 480px) { .section-header-breadcrumb { font-size: 11px; } }
+    @media (max-width: 480px) {
+        .section-header-breadcrumb { font-size: 11px; }
+        .folder-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    }
 </style>
 @endpush
 
@@ -376,13 +661,13 @@
         <!-- Header -->
         <div class="section-header fade-in-up">
             <div>
-                <h1><i class="bi bi-file-earmark-text"></i> Data Dokumen</h1>
+                <h1><i class="bi bi-folder2-open"></i> Data Dokumen</h1>
                 <p class="header-subtitle"><i class="bi bi-database me-1"></i> Kelola dan pantau semua dokumen administrasi</p>
             </div>
             <div class="header-actions">
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="bi bi-house-door"></i> Dashboard</a></div>
-                    <div class="breadcrumb-item active"><i class="bi bi-file-earmark-text"></i> Data Dokumen</div>
+                    <div class="breadcrumb-item active"><i class="bi bi-folder2-open"></i> Data Dokumen</div>
                 </div>
             </div>
         </div>
@@ -393,8 +678,11 @@
 
                     <div class="card fade-in-up">
                         <div class="card-header">
-                            <h4><i class="bi bi-list-ul"></i> Daftar Dokumen</h4>
-                            <div class="card-header-action">
+                            <h4><i class="bi bi-folder2"></i> Folder & Dokumen</h4>
+                            <div class="card-header-action d-flex flex-wrap gap-2">
+                                <button type="button" class="btn-folder-create" data-toggle="modal" data-target="#modalCreateFolder">
+                                    <i class="bi bi-folder-plus"></i> Buat Folder
+                                </button>
                                 <a href="{{ route('umkm.create') }}" class="btn-primary-custom">
                                     <i class="bi bi-plus-circle"></i> Tambah Data
                                 </a>
@@ -402,6 +690,54 @@
                         </div>
 
                         <div class="card-body">
+
+                            <!-- Folder Grid -->
+                            <div class="folder-grid" id="folderGrid">
+                                @forelse($folders ?? [] as $folder)
+                                <div class="folder-card folder-color-{{ $folder->color ?? 1 }} {{ request('folder') == $folder->id ? 'active' : '' }}" 
+                                     data-folder-id="{{ $folder->id }}"
+                                     onclick="filterByFolder({{ $folder->id }})">
+                                    <div class="folder-actions">
+                                        <button class="btn-folder-action edit-folder" data-tooltip="Edit Folder" onclick="event.stopPropagation(); editFolder({{ $folder->id }}, '{{ $folder->name }}', {{ $folder->color ?? 1 }})">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button class="btn-folder-action delete-folder" data-tooltip="Hapus Folder" onclick="event.stopPropagation(); deleteFolder({{ $folder->id }})">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
+                                    </div>
+                                    <span class="folder-icon"><i class="bi bi-folder2"></i></span>
+                                    <div class="folder-name">{{ $folder->name }}</div>
+                                    <div class="folder-count">{{ $folder->dokumen_count ?? 0 }} dokumen</div>
+                                </div>
+                                @empty
+                                <div class="folder-empty">
+                                    <i class="bi bi-folder2-open"></i>
+                                    <h6>Belum Ada Folder</h6>
+                                    <p>Buat folder untuk mengelompokkan dokumen Anda</p>
+                                    <button type="button" class="btn-folder-create" data-toggle="modal" data-target="#modalCreateFolder">
+                                        <i class="bi bi-folder-plus"></i> Buat Folder Pertama
+                                    </button>
+                                </div>
+                                @endforelse
+                            </div>
+
+                            <!-- Folder Breadcrumb -->
+                            @if(request('folder'))
+                            <div class="folder-breadcrumb">
+                                <span class="breadcrumb-item">
+                                    <a href="{{ route('umkm.index') }}"><i class="bi bi-folder2-open"></i> Semua</a>
+                                </span>
+                                <span class="breadcrumb-separator">/</span>
+                                <span class="breadcrumb-item active">
+                                    <i class="bi bi-folder2"></i> {{ $currentFolder->name ?? 'Folder' }}
+                                </span>
+                                <span class="breadcrumb-item ms-auto">
+                                    <a href="{{ route('umkm.index') }}" class="btn btn-sm btn-secondary-custom" style="padding:2px 12px;font-size:11px;">
+                                        <i class="bi bi-x"></i> Hapus Filter
+                                    </a>
+                                </span>
+                            </div>
+                            @endif
 
                             <!-- Stats -->
                             <div class="row g-3 mb-3">
@@ -451,12 +787,14 @@
                                         @forelse($datas as $index => $dokumen)
                                         <tr>
                                             <td><span class="row-number"></span></td>
-                                             
                                             <td><span style="font-weight:600;color:var(--dark);font-size:11px;">{{ $dokumen->nomor_dokumen }}</span></td>
                                             <td>
                                                 <span class="doc-title">{{ Str::limit($dokumen->judul, 40) }}</span>
                                                 <span class="doc-meta">
                                                     <span><i class="bi bi-person"></i> {{ $dokumen->user->name ?? 'Unknown' }}</span>
+                                                    @if($dokumen->folder_id)
+                                                    <span><i class="bi bi-folder2"></i> {{ $dokumen->folder->name ?? '' }}</span>
+                                                    @endif
                                                 </span>
                                             </td>
                                             <td><span style="font-weight:500;color:var(--secondary);font-size:11px;">{{ $dokumen->kategori->nama_jenis ?? '-' }}</span></td>
@@ -490,6 +828,11 @@
                                                     <a href="{{ route('umkm.edit', $dokumen->id) }}" class="btn-action edit" data-tooltip="Edit">
                                                         <i class="bi bi-pencil"></i>
                                                     </a>
+                                                    @if($dokumen->folder_id)
+                                                    <button type="button" class="btn-action move" data-tooltip="Pindah Folder" onclick="moveDocument({{ $dokumen->id }})">
+                                                        <i class="bi bi-arrow-right"></i>
+                                                    </button>
+                                                    @endif
                                                     <form action="{{ route('umkm.hapus', $dokumen->id) }}" method="POST" class="delete-form">
                                                         @csrf @method('DELETE')
                                                         <button type="button" class="btn-action delete delete-btn" data-tooltip="Hapus">
@@ -527,6 +870,119 @@
     </section>
 </div>
 
+<!-- Modal Create Folder -->
+<div class="modal fade" id="modalCreateFolder" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-folder-plus text-primary"></i> Buat Folder Baru</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formCreateFolder" action="{{ route('umkm.folder.store') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nama Folder</label>
+                        <input type="text" name="name" class="form-control" placeholder="Masukkan nama folder..." required>
+                    </div>
+                    <div>
+                        <label class="form-label">Warna Folder</label>
+                        <div class="color-options" style="display:flex;gap:6px;flex-wrap:wrap;">
+                            @for($i = 1; $i <= 8; $i++)
+                            <label class="color-option" style="background:var(--fc{{ $i }});{{ $i == 1 ? 'border-color:var(--dark);' : '' }}" onclick="selectColor(this, {{ $i }})">
+                                <input type="radio" name="color" value="{{ $i }}" {{ $i == 1 ? 'checked' : '' }} style="display:none;">
+                            </label>
+                            @endfor
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Buat Folder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit Folder -->
+<div class="modal fade" id="modalEditFolder" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-pencil-square text-warning"></i> Edit Folder</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formEditFolder" action="" method="POST">
+                @csrf @method('PUT')
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nama Folder</label>
+                        <input type="text" name="name" id="editFolderName" class="form-control" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Warna Folder</label>
+                        <div class="color-options" style="display:flex;gap:6px;flex-wrap:wrap;">
+                            @for($i = 1; $i <= 8; $i++)
+                            <label class="color-option" style="background:var(--fc{{ $i }});" onclick="selectColor(this, {{ $i }})">
+                                <input type="radio" name="color" value="{{ $i }}" style="display:none;">
+                            </label>
+                            @endfor
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-warning text-white">Update Folder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Move Document -->
+<div class="modal fade" id="modalMoveDocument" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-arrow-right-circle text-primary"></i> Pindahkan Dokumen</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formMoveDocument" action="" method="POST">
+                @csrf @method('PUT')
+                <div class="modal-body">
+                    <p style="font-size:13px;color:var(--secondary);margin-bottom:12px;">Pilih folder tujuan untuk dokumen ini:</p>
+                    <div class="mb-3">
+                        <label class="form-label">Pilih Folder</label>
+                        <select name="folder_id" class="form-control" required>
+                            <option value="">Pilih Folder...</option>
+                            @foreach($folders ?? [] as $folder)
+                            <option value="{{ $folder->id }}">{{ $folder->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" name="remove_from_folder" value="1" class="form-check-input" id="removeFromFolder">
+                        <label class="form-check-label" for="removeFromFolder" style="font-size:13px;color:var(--secondary);">
+                            Hapus dari folder saat ini (pindahkan ke root)
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Pindahkan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.18/dist/sweetalert2.all.min.js"></script>
 <script src="{{ asset('library/datatables/media/js/jquery.dataTables.min.js') }}"></script>
@@ -535,51 +991,39 @@
 
 <script>
 $(document).ready(function() {
-    // Fix: Hapus kode yang error
-    // var table = $('#datatable').DataTable({ ... }); // Ini error karena tidak ada #datatable
-    
     var table = $('#table-dokumen').DataTable({
-    paging: true,
-    searching: true,
-    ordering: true,
-    info: true,
-    autoWidth: false,
-    pageLength: 10,
-    lengthMenu: [10, 25, 50, 100],
+        paging: true,
+        searching: true,
+        ordering: true,
+        info: true,
+        autoWidth: false,
+        pageLength: 10,
+        lengthMenu: [10, 25, 50, 100],
+        drawCallback: function(settings) {
+            let api = this.api();
+            let start = api.page.info().start;
+            api.column(0, { page: 'current' }).nodes().each(function(cell, i) {
+                cell.querySelector('.row-number').innerHTML = start + i + 1;
+            });
+        },
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/2.1.0/i18n/id.json',
+            search: '<i class="bi bi-search me-1"></i>Cari',
+            searchPlaceholder: 'Cari dokumen...',
+            lengthMenu: 'Tampilkan _MENU_',
+            info: 'Menampilkan _START_-_END_ dari _TOTAL_ data',
+            infoEmpty: 'Tidak ada data',
+            zeroRecords: 'Data tidak ditemukan',
+        },
+        dom: '<"top"lf>rt<"bottom"ip>',
+        columnDefs: [
+            { targets: [0,5,6,7,8], orderable: false }
+        ]
+    });
 
-    drawCallback: function(settings) {
-        let api = this.api();
-
-        let start = api.page.info().start;
-
-        api.column(0, { page: 'current' }).nodes().each(function(cell, i) {
-            cell.querySelector('.row-number').innerHTML = start + i + 1;
-        });
-    },
-
-    language: {
-        url: 'https://cdn.datatables.net/plug-ins/2.1.0/i18n/id.json',
-        search: '<i class="bi bi-search me-1"></i>Cari',
-        searchPlaceholder: 'Cari dokumen...',
-        lengthMenu: 'Tampilkan _MENU_',
-        info: 'Menampilkan _START_-_END_ dari _TOTAL_ data',
-        infoEmpty: 'Tidak ada data',
-        zeroRecords: 'Data tidak ditemukan',
-    },
-
-    dom: '<"top"lf>rt<"bottom"ip>',
-    columnDefs: [
-        { targets: [0,5,6,7,8], orderable: false }
-    ]
-});
-
-   
-
-    // Custom styling
     $('.dataTables_filter input').attr('placeholder', 'Cari dokumen...').addClass('form-control form-control-sm');
     $('.dataTables_length select').addClass('form-control form-control-sm');
 
-    // Responsive
     function handleResponsive() {
         if ($(window).width() < 768) {
             $('.dataTables_filter input').css('min-width', '100%');
@@ -591,7 +1035,7 @@ $(document).ready(function() {
     handleResponsive();
     $(window).resize(handleResponsive);
 
-    // Delete with SweetAlert2
+    // Delete document
     $('.delete-btn').click(function(e) {
         e.preventDefault();
         let form = $(this).closest('form');
@@ -680,6 +1124,103 @@ $(document).ready(function() {
         });
     @endif
 });
+
+// ===== FOLDER FUNCTIONS =====
+
+// Filter by folder
+function filterByFolder(folderId) {
+    window.location.href = "{{ route('umkm.index') }}?folder=" + folderId;
+}
+
+// Select color
+function selectColor(element, value) {
+    document.querySelectorAll('.color-option').forEach(el => {
+        el.classList.remove('active');
+        el.style.borderColor = 'transparent';
+    });
+    element.classList.add('active');
+    element.style.borderColor = 'var(--dark)';
+    element.querySelector('input[type="radio"]').checked = true;
+}
+
+// Edit folder
+function editFolder(id, name, color) {
+    $('#modalEditFolder').modal('show');
+    $('#formEditFolder').attr('action', "{{ route('umkm.folder.update', '') }}/" + id);
+    $('#editFolderName').val(name);
+    
+    document.querySelectorAll('#modalEditFolder .color-option').forEach(el => {
+        el.classList.remove('active');
+        el.style.borderColor = 'transparent';
+        let radio = el.querySelector('input[type="radio"]');
+        if (radio.value == color) {
+            el.classList.add('active');
+            el.style.borderColor = 'var(--dark)';
+            radio.checked = true;
+        }
+    });
+}
+
+// Delete folder
+function deleteFolder(id) {
+    Swal.fire({
+        title: 'Hapus Folder?',
+        text: 'Dokumen dalam folder ini akan tetap ada dan pindah ke root',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Hapus',
+        cancelButtonText: 'Batal',
+        reverseButtons: true,
+        customClass: {
+            confirmButton: 'btn btn-danger px-4 py-2',
+            cancelButton: 'btn btn-secondary px-4 py-2',
+        },
+        buttonsStyling: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "{{ route('umkm.folder.delete', '') }}/" + id,
+                type: 'DELETE',
+                data: { _token: '{{ csrf_token() }}' },
+                success: function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: response.message || 'Folder berhasil dihapus',
+                        timer: 1500,
+                        showConfirmButton: false,
+                    }).then(() => { location.reload(); });
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: xhr.responseJSON?.message || 'Terjadi kesalahan',
+                        confirmButtonColor: '#4F46E5',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        }
+    });
+}
+
+// Move document
+function moveDocument(id) {
+    $('#modalMoveDocument').modal('show');
+    $('#formMoveDocument').attr('action', "{{ route('umkm.document.move', '') }}/" + id);
+}
+
+// Folder create success handler
+@if(session('folder_success'))
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: '{{ session("folder_success") }}',
+        timer: 2000,
+        showConfirmButton: false,
+    });
+@endif
 
 // Animation on load
 document.addEventListener('DOMContentLoaded', function() {

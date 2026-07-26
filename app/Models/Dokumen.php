@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Dokumen extends Model
 {
     use HasFactory;
@@ -12,6 +13,7 @@ class Dokumen extends Model
     protected $fillable = [
         'kategori_id',
         'user_id',
+        'folder_id',
         'nomor_dokumen',
         'judul',
         'deskripsi',
@@ -30,9 +32,8 @@ class Dokumen extends Model
      */
     public function kategori()
     {
-        return $this->belongsTo(JenisUsaha::class);
+        return $this->belongsTo(JenisUsaha::class, 'kategori_id');
     }
-
 
     /**
      * Relasi ke user pengunggah
@@ -40,5 +41,38 @@ class Dokumen extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Relasi ke folder
+     */
+    
+    public function folder()
+    {
+        return $this->belongsTo(Folder::class);
+    }
+
+    /**
+     * Scope untuk filter berdasarkan folder
+     */
+    public function scopeInFolder($query, $folderId)
+    {
+        return $query->where('folder_id', $folderId);
+    }
+
+    /**
+     * Scope untuk filter berdasarkan user
+     */
+    public function scopeByUser($query, $userId)
+    {
+        return $query->where('user_id', $userId);
+    }
+
+    /**
+     * Scope untuk filter berdasarkan status
+     */
+    public function scopeByStatus($query, $status)
+    {
+        return $query->where('status', $status);
     }
 }

@@ -103,12 +103,12 @@
                                                     Pilih Kategori
                                                 </option>
 
-                                                @foreach($jenisUsahas as $kategori)
+                                                @foreach($kategori as $kategoris)
                                                 <option
-                                                    value="{{ $kategori->id }}"
-                                                    {{ old('kategori_id') == $kategori->id ? 'selected' : '' }}>
+                                                    value="{{ $kategoris->id }}"
+                                                    {{ old('kategori_id') == $kategoris->id ? 'selected' : '' }}>
 
-                                                    {{ $kategori->nama_jenis }}
+                                                    {{ $kategoris->nama_jenis }}
 
                                                 </option>
                                                 @endforeach
