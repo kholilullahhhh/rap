@@ -773,12 +773,12 @@
                                     <thead>
                                         <tr>
                                             <th style="width:30px;">#</th>
-                                            <th style="min-width:70px;">No Dokumen</th>
+                                            {{-- <th style="min-width:70px;">No Dokumen</th> --}}
                                             <th style="min-width:150px;">Judul</th>
                                             <th style="min-width:100px;">Kategori</th>
                                             <th style="min-width:85px;">Tanggal</th>
-                                            <th style="width:65px;">Versi</th>
-                                            <th style="width:85px;">Status</th>
+                                            {{-- <th style="width:65px;">Versi</th> --}}
+                                            {{-- <th style="width:85px;">Status</th> --}}
                                             <th style="width:45px;">File</th>
                                             <th style="width:95px;">Aksi</th>
                                         </tr>
@@ -787,7 +787,7 @@
                                         @forelse($datas as $index => $dokumen)
                                         <tr>
                                             <td><span class="row-number"></span></td>
-                                            <td><span style="font-weight:600;color:var(--dark);font-size:11px;">{{ $dokumen->nomor_dokumen }}</span></td>
+                                            {{-- <td><span style="font-weight:600;color:var(--dark);font-size:11px;">{{ $dokumen->nomor_dokumen }}</span></td> --}}
                                             <td>
                                                 <span class="doc-title">{{ Str::limit($dokumen->judul, 40) }}</span>
                                                 <span class="doc-meta">
@@ -799,8 +799,8 @@
                                             </td>
                                             <td><span style="font-weight:500;color:var(--secondary);font-size:11px;">{{ $dokumen->kategori->nama_jenis ?? '-' }}</span></td>
                                             <td><span style="font-size:11px;">{{ date('d-m-Y', strtotime($dokumen->tanggal_dokumen)) }}</span></td>
-                                            <td><span class="version-badge"><i class="bi bi-tag"></i> v{{ $dokumen->versi }}</span></td>
-                                            <td>
+                                            {{-- <td><span class="version-badge"><i class="bi bi-tag"></i> v{{ $dokumen->versi }}</span></td> --}}
+                                            {{-- <td>
                                                 @php
                                                     $statusMap = [
                                                         'draft' => ['class' => 'draft', 'icon' => 'bi bi-pencil', 'label' => 'Draft'],
@@ -813,7 +813,7 @@
                                                 <span class="badge-status {{ $status['class'] }}">
                                                     <i class="{{ $status['icon'] }}"></i> {{ $status['label'] }}
                                                 </span>
-                                            </td>
+                                            </td> --}}
                                             <td>
                                                 @if($dokumen->file_path)
                                                     <a href="{{ asset('storage/'.$dokumen->file_path) }}" target="_blank" class="btn-action view" data-tooltip="Lihat File">

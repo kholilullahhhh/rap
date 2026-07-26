@@ -60,7 +60,7 @@
 
                                     <div class="col-md-6">
 
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label>
                                                 Nomor Dokumen
                                                 <span class="text-danger">*</span>
@@ -72,7 +72,7 @@
                                                 class="form-control"
                                                 value="{{ old('nomor_dokumen') }}"
                                                 required>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="form-group">
                                             <label>
@@ -116,25 +116,12 @@
                                             </select>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label>
-                                                Tanggal Dokumen
-                                                <span class="text-danger">*</span>
-                                            </label>
-
-                                            <input
-                                                type="date"
-                                                name="tanggal_dokumen"
-                                                class="form-control"
-                                                value="{{ old('tanggal_dokumen') }}"
-                                                required>
-                                        </div>
-
+                                       
                                     </div>
 
                                     <div class="col-md-6">
 
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label>
                                                 Versi Dokumen
                                             </label>
@@ -144,9 +131,9 @@
                                                 name="versi"
                                                 class="form-control"
                                                 value="{{ old('versi','1.0') }}">
-                                        </div>
+                                        </div> --}}
 
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label>
                                                 Status Dokumen
                                                 <span class="text-danger">*</span>
@@ -174,7 +161,22 @@
                                                 </option>
 
                                             </select>
+                                        </div> --}}
+
+                                         <div class="form-group">
+                                            <label>
+                                                Tanggal Dokumen
+                                                <span class="text-danger">*</span>
+                                            </label>
+
+                                            <input
+                                                type="date"
+                                                name="tanggal_dokumen"
+                                                class="form-control"
+                                                value="{{ old('tanggal_dokumen') }}"
+                                                required>
                                         </div>
+
 
                                         <div class="form-group">
                                             <label>
@@ -195,7 +197,7 @@
 
                                 </div>
 
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label>
                                         Deskripsi
                                     </label>
@@ -204,7 +206,7 @@
                                         name="deskripsi"
                                         rows="5"
                                         class="form-control">{{ old('deskripsi') }}</textarea>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group text-center mt-4">
 

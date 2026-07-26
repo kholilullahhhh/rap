@@ -14,13 +14,13 @@ class Dokumen extends Model
         'kategori_id',
         'user_id',
         'folder_id',
-        'nomor_dokumen',
+        // 'nomor_dokumen',
         'judul',
-        'deskripsi',
+        // 'deskripsi',
         'file_path',
         'tanggal_dokumen',
-        'versi',
-        'status'
+        // 'versi',
+        // 'status'
     ];
 
     protected $casts = [
@@ -46,7 +46,7 @@ class Dokumen extends Model
     /**
      * Relasi ke folder
      */
-    
+
     public function folder()
     {
         return $this->belongsTo(Folder::class);

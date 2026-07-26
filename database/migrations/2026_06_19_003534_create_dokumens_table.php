@@ -18,20 +18,20 @@ return new class extends Migration
                   ->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
 
-            $table->string('nomor_dokumen')->unique();
+            // $table->string('nomor_dokumen')->unique();
             $table->string('judul');
-            $table->longText('deskripsi')->nullable();
+            // $table->longText('deskripsi')->nullable();
 
             $table->string('file_path')->nullable();
             $table->date('tanggal_dokumen');
-            $table->string('versi', 20)->default('1.0');
+            // $table->string('versi', 20)->default('1.0');
 
-            $table->enum('status', [
-                'draft',
-                'review',
-                'approved',
-                'obsolete'
-            ])->default('draft');
+            // $table->enum('status', [
+            //     'draft',
+            //     'review',
+            //     'approved',
+            //     'obsolete'
+            // ])->default('draft');
 
             $table->timestamps();
         });

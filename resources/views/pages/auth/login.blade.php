@@ -589,9 +589,9 @@
 
             <!-- Register Link -->
             <div class="login-footer">
-                <a href="{{ route('register') }}">
+                {{-- <a href="{{ route('register') }}">
                     <i class="fas fa-chevron-left"></i> Belum Punya Akun? Regist
-                </a>
+                </a> --}}
                 <span class="footer-divider">|</span>
                 <a href="/">
                     <i class="fas fa-home"></i> Kembali ke Beranda
