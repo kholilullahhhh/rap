@@ -589,11 +589,11 @@
                             <div class="d-flex align-items-start justify-content-between">
                                 <div>
                                     <div class="card-label">Versi Dokumen</div>
-                                    <div class="card-value">{{ number_format($totalVersi) }}</div>
+                                    {{-- <div class="card-value">{{ number_format($totalVersi) }}</div> --}}
                                     <div class="stat-footer">
                                         <span class="text-muted">
                                             <i class="bi bi-arrow-repeat me-1"></i>
-                                            {{ $dokumenRevisi }} revisi, {{ $dokumenDenganFile }} dengan file
+                                            {{-- {{ $dokumenRevisi }} revisi, {{ $dokumenDenganFile }} dengan file --}}
                                         </span>
                                     </div>
                                 </div>
@@ -617,15 +617,15 @@
                                     <div class="d-flex gap-2 flex-wrap">
                                         <div class="mini-stat">
                                             <span class="status-badge bg-success">✓ Approved</span>
-                                            <span class="fw-bold ms-2">{{ $dokumenAktif }}</span>
+                                            {{-- <span class="fw-bold ms-2">{{ $dokumenAktif }}</span> --}}
                                         </div>
                                         <div class="mini-stat">
                                             <span class="status-badge bg-warning">⟳ Review</span>
-                                            <span class="fw-bold ms-2">{{ $dokumenPending }}</span>
+                                            {{-- <span class="fw-bold ms-2">{{ $dokumenPending }}</span> --}}
                                         </div>
                                         <div class="mini-stat">
                                             <span class="status-badge bg-danger">✎ Draft</span>
-                                            <span class="fw-bold ms-2">{{ $dokumenArsip }}</span>
+                                            {{-- <span class="fw-bold ms-2">{{ $dokumenArsip }}</span> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -781,9 +781,9 @@
                                                     <span class="badge-upload">{{ $stat['uploads'] }}</span>
                                                 </td>
                                                 <td class="text-center">
-                                                    <span class="badge-revision">{{ $stat['revisions'] }}</span>
+                                                    {{-- <span class="badge-revision">{{ $stat['revisions'] }}</span> --}}
                                                 </td>
-                                                <td class="text-end fw-bold">{{ $stat['total'] }}</td>
+                                                {{-- <td class="text-end fw-bold">{{ $stat['total'] }}</td> --}}
                                             </tr>
                                         @empty
                                             <tr>

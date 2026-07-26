@@ -223,11 +223,11 @@ class DokumenController extends Controller
     public function edit($id)
     {
         $menu = $this->menu;
-        $dokumen = Dokumen::where('user_id', Auth::id())->findOrFail($id);
+        $data = Dokumen::where('user_id', Auth::id())->findOrFail($id);
         $kategori = JenisUsaha::all();
         $folders = Folder::where('user_id', Auth::id())->get();
 
-        return view('pages.admin.umkm.edit', compact('menu', 'dokumen', 'kategori', 'folders'));
+        return view('pages.admin.umkm.edit', compact('menu', 'data', 'kategori', 'folders'));
     }
 
     /**
@@ -239,13 +239,13 @@ class DokumenController extends Controller
 
         $request->validate([
             'kategori_id' => 'required|exists:jenis_usahas,id',
-            'nomor_dokumen' => 'required|string|unique:dokumens,nomor_dokumen,' . $id,
+            // 'nomor_dokumen' => 'required|string|unique:dokumens,nomor_dokumen,' . $id,
             'judul' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
+            // 'deskripsi' => 'nullable|string',
             'file_path' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:10240',
             'tanggal_dokumen' => 'required|date',
-            'versi' => 'nullable|string|max:20',
-            'status' => 'nullable|in:draft,review,approved,obsolete',
+            // 'versi' => 'nullable|string|max:20',
+            // 'status' => 'nullable|in:draft,review,approved,obsolete',
             'folder_id' => 'nullable|exists:folders,id',
         ]);
 

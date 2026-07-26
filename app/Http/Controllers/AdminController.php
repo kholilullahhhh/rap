@@ -22,9 +22,9 @@ class AdminController extends Controller
         $totalDokumen = Dokumen::count();
 
         // Dokumen berdasarkan status
-        $dokumenAktif = Dokumen::where('status', 'approved')->count();
-        $dokumenPending = Dokumen::where('status', 'review')->count();
-        $dokumenArsip = Dokumen::where('status', 'draft')->count();
+        // $dokumenAktif = Dokumen::where('status', 'approved')->count();
+        // $dokumenPending = Dokumen::where('status', 'review')->count();
+        // $dokumenArsip = Dokumen::where('status', 'draft')->count();
 
         // Dokumen baru bulan ini
         $dokumenBaru = Dokumen::whereMonth('created_at', date('m'))
@@ -35,10 +35,10 @@ class AdminController extends Controller
         $dokumenHariIni = Dokumen::whereDate('created_at', Carbon::today())->count();
 
         // Dokumen revisi (versi > 1)
-        $dokumenRevisi = Dokumen::where('versi', '>', 1)->count();
+        // $dokumenRevisi = Dokumen::where('versi', '>', 1)->count();
 
         // Total versi dokumen
-        $totalVersi = Dokumen::sum('versi');
+        // $totalVersi = Dokumen::sum('versi');
 
         // Dokumen dengan file
         $dokumenDenganFile = Dokumen::whereNotNull('file_path')->count();
@@ -123,15 +123,15 @@ class AdminController extends Controller
         // Version distribution - FIXED
         $versionData = [];
         $versionLabels = [];
-        $versionGroups = Dokumen::selectRaw('versi, count(*) as total')
-            ->groupBy('versi')
-            ->orderBy('versi')
-            ->get();
+        // $versionGroups = Dokumen::selectRaw('versi, count(*) as total')
+        //     ->groupBy('versi')
+        //     ->orderBy('versi')
+            // ->get();
 
-        foreach ($versionGroups as $group) {
-            $versionLabels[] = 'v' . $group->versi;
-            $versionData[] = $group->total;
-        }
+        // foreach ($versionGroups as $group) {
+        //     $versionLabels[] = 'v' . $group->versi;
+        //     $versionData[] = $group->total;
+        // }
 
         // Monthly statistics - FIXED with proper month names
         $monthlyStats = [];
@@ -143,18 +143,18 @@ class AdminController extends Controller
                 ->whereYear('created_at', $month->year)
                 ->count();
 
-            $revisions = Dokumen::whereMonth('created_at', $month->month)
-                ->whereYear('created_at', $month->year)
-                ->where('versi', '>', 1)
-                ->count();
+            // $revisions = Dokumen::whereMonth('created_at', $month->month)
+            //     ->whereYear('created_at', $month->year)
+            //     ->where('versi', '>', 1)
+            //     ->count();
 
             $monthlyStats[] = [
                 'month' => $monthName,
                 'month_num' => $month->month,
                 'year' => $month->year,
                 'uploads' => $uploads,
-                'revisions' => $revisions,
-                'total' => $uploads + $revisions
+                // 'revisions' => $revisions,
+                // 'total' => $uploads + $revisions
             ];
         }
 
@@ -196,24 +196,24 @@ class AdminController extends Controller
             : 0;
 
         // ========== STATUS DISTRIBUTION FOR CHART ==========
-        $statusData = [
-            'Aktif' => $dokumenAktif,
-            'Pending' => $dokumenPending,
-            'Arsip' => $dokumenArsip
-        ];
+        // $statusData = [
+        //     'Aktif' => $dokumenAktif,
+        //     'Pending' => $dokumenPending,
+        //     'Arsip' => $dokumenArsip
+        // ];
 
         return view('pages.admin.dashboard.index', [
             'menu' => 'dashboard',
 
             // Document data
             'totalDokumen' => $totalDokumen,
-            'dokumenAktif' => $dokumenAktif,
-            'dokumenPending' => $dokumenPending,
-            'dokumenArsip' => $dokumenArsip,
+            // 'dokumenAktif' => $dokumenAktif,
+            // 'dokumenPending' => $dokumenPending,
+            // 'dokumenArsip' => $dokumenArsip,
             'dokumenBaru' => $dokumenBaru,
             'dokumenHariIni' => $dokumenHariIni,
-            'dokumenRevisi' => $dokumenRevisi,
-            'totalVersi' => $totalVersi,
+            // 'dokumenRevisi' => $dokumenRevisi,
+            // 'totalVersi' => $totalVersi,
             'dokumenDenganFile' => $dokumenDenganFile,
             'growthPercentage' => $growthPercentage,
 
@@ -240,7 +240,7 @@ class AdminController extends Controller
             'versionData' => $versionData,
             'versionLabels' => $versionLabels,
             'monthlyStats' => $monthlyStats,
-            'statusData' => $statusData,
+            // 'statusData' => $statusData,
 
             // Activity data
             'uploadBulanIni' => $uploadBulanIni,
