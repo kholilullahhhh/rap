@@ -23,59 +23,61 @@
                 $showDokumen = in_array($role, ['admin', 'user', 'inteldaktim', 'kepala_kantor']);
                 $showKegiatan = in_array($role, ['admin', 'inteldaktim', 'kepala_kantor']);
                 $showKategori = in_array($role, ['admin', 'kepala_kantor']);
-                $showAkun = ($role == 'admin');
+                $showAkun = $role == 'admin';
             @endphp
 
             <!-- MASTER DATA (untuk admin & kepala_kantor) -->
-            @if($hasMasterData)
-                <li class="nav-item dropdown {{ $menu == 'dokumen' || $menu == 'jenis_usaha' || $menu == 'pembinaan' ? 'active' : '' }}">
+            @if ($hasMasterData)
+                <li
+                    class="nav-item dropdown {{ $menu == 'dokumen' || $menu == 'jenis_usaha' || $menu == 'pembinaan' ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown">
                         <i class="fas fa-sitemap"></i>
                         <span>Master Data</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <!-- Menu Dokumen dengan 3 sub-menu berdasarkan role penginput -->
-                        <li class="{{ $menu == 'dokumen' ? 'active' : '' }}">
+                        <li class="{{ request('role', 'all') == 'all' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('umkm.index') }}?role=all">
-                                 Semua Dokumen
+                                Semua Dokumen
                             </a>
                         </li>
-                        <li class="{{ $menu == 'dokumen_user' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('umkm.index') }}?role=user">
-                                 Tata Usaha
+
+                        <li class="{{ request('username') == 'tajuddin' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('umkm.index') }}?username=tajuddin">
+                                Tata Usaha
                             </a>
                         </li>
-                        <li class="{{ $menu == 'dokumen_user' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('umkm.index') }}?role=user">
-                                 Pelayanan & Verdokjal
+
+                        <li class="{{ request('username') == 'zulherman' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('umkm.index') }}?username=zulherman">
+                                Pelayanan & Verdokjal
                             </a>
                         </li>
-                        <li class="{{ $menu == 'dokumen_inteldaktim' ? 'active' : '' }}">
+
+                        <li class="{{ request('role') == 'inteldaktim' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('umkm.index') }}?role=inteldaktim">
-                                 Inteldaktim
+                                Inteldaktim
                             </a>
                         </li>
-                       
                     </ul>
-                     @if($showKategori)
-                            <li class="{{ $menu == 'jenis_usaha' ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('jenis_usaha.index') }}">
-                                    <i class="fas fa-tags"></i> Kategori Dokumen
-                                </a>
-                            </li>
-                        @endif
-                        @if($showKegiatan)
-                            <li class="{{ $menu == 'pembinaan' ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('pembinaan.index') }}">
-                                    <i class="fas fa-calendar-alt"></i> Kegiatan
-                                </a>
-                            </li>
-                        @endif
+                    @if ($showKategori)
+                <li class="{{ $menu == 'jenis_usaha' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('jenis_usaha.index') }}">
+                        <i class="fas fa-tags"></i> Kategori Dokumen
+                    </a>
                 </li>
+            @endif
+            @if ($showKegiatan)
+                <li class="{{ $menu == 'pembinaan' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('pembinaan.index') }}">
+                        <i class="fas fa-calendar-alt"></i> Kegiatan
+                    </a>
+                </li>
+            @endif
+            </li>
             @endif
 
             <!-- MENU DOKUMEN UNTUK USER (hanya lihat dokumen user) -->
-            @if($role == 'user')
+            @if ($role == 'user')
                 <li class="nav-item {{ $menu == 'dokumen' ? 'active' : '' }}">
                     <a href="{{ route('umkm.index') }}" class="nav-link">
                         <i class="fas fa-file-alt"></i>
@@ -85,7 +87,7 @@
             @endif
 
             <!-- MENU DOKUMEN UNTUK INTELDAKTIM (hanya lihat dokumen inteldaktim) -->
-            @if($role == 'inteldaktim')
+            @if ($role == 'inteldaktim')
                 <li class="nav-item {{ $menu == 'dokumen' ? 'active' : '' }}">
                     <a href="{{ route('umkm.index') }}" class="nav-link">
                         <i class="fas fa-file-alt"></i>
@@ -95,17 +97,17 @@
                 <!-- Kegiatan untuk inteldaktim -->
                 <li class="nav-item {{ $menu == 'pembinaan' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('pembinaan.index') }}">
-                        <i class="fas fa-calendar-alt"></i> 
+                        <i class="fas fa-calendar-alt"></i>
                         <span>Kegiatan</span>
                     </a>
                 </li>
             @endif
 
             <!-- DATA AKUN (khusus admin) -->
-            @if($showAkun)
+            @if ($showAkun)
                 <li class="nav-item {{ $menu == 'akun' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('akun.index') }}">
-                        <i class="fas fa-users-cog"></i> 
+                        <i class="fas fa-users-cog"></i>
                         <span>Data Akun</span>
                     </a>
                 </li>
