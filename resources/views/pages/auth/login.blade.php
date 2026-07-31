@@ -571,7 +571,7 @@
                         <option value="kepala_kantor">Kepala Kantor</option>
                         <option value="inteldaktim">TI & Inteldaktim</option>
                         <option value="user">Tata Usaha</option>
-                        <option value="user">Kasubsi Pelayanan & Verdokjal</option>
+                        <option value="user">Pelayanan & Verdokjal</option>
                     </select>
                 </div>
 

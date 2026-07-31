@@ -496,7 +496,7 @@
                         <h1 class="header-title">Dashboard BOSS</h1>
                         <p class="header-subtitle">
                             <i class="bi bi-clock me-1"></i>
-                            Sistem Bantaeng Office Smart Service — Pusat Data dan Dokumen Administrasi
+                            Bantaeng Office Smart Service — Pusat Data dan Dokumen Administrasi
                         </p>
                     </div>
                     <div class="d-flex align-items-center gap-3">
@@ -510,7 +510,7 @@
 
             <!-- Summary Cards -->
             <div class="row g-4 mb-4">
-                <div class="col-xl-3 col-md-6">
+                <div class="col-xl-6 col-md-12">
                     <div class="dashboard-card fade-in-up">
                         <div class="card-body">
                             <div class="d-flex align-items-start justify-content-between">
@@ -539,29 +539,9 @@
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-md-6">
-                    <div class="dashboard-card fade-in-up">
-                        <div class="card-body">
-                            <div class="d-flex align-items-start justify-content-between">
-                                <div>
-                                    <div class="card-label">Total Kategori</div>
-                                    <div class="card-value">{{ number_format($totalKategori) }}</div>
-                                    <div class="stat-footer">
-                                        <span class="text-muted">
-                                            <i class="bi bi-grid-fill me-1"></i>
-                                            Terorganisir dengan baik
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="card-icon-wrapper icon-bg-success">
-                                    <i class="bi bi-folder2-open"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          
 
-                <div class="col-xl-3 col-md-6">
+                <div class="col-xl-6 col-md-12  ">
                     <div class="dashboard-card fade-in-up">
                         <div class="card-body">
                             <div class="d-flex align-items-start justify-content-between">
@@ -577,28 +557,6 @@
                                 </div>
                                 <div class="card-icon-wrapper icon-bg-warning">
                                     <i class="bi bi-people"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <div class="dashboard-card fade-in-up">
-                        <div class="card-body">
-                            <div class="d-flex align-items-start justify-content-between">
-                                <div>
-                                    <div class="card-label">Versi Dokumen</div>
-                                    {{-- <div class="card-value">{{ number_format($totalVersi) }}</div> --}}
-                                    <div class="stat-footer">
-                                        <span class="text-muted">
-                                            <i class="bi bi-arrow-repeat me-1"></i>
-                                            {{-- {{ $dokumenRevisi }} revisi, {{ $dokumenDenganFile }} dengan file --}}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="card-icon-wrapper icon-bg-info">
-                                    <i class="bi bi-arrow-repeat"></i>
                                 </div>
                             </div>
                         </div>

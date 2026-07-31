@@ -527,11 +527,11 @@
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="ts-service-box-bg text-center">
                     <span class="ts-service-icon">
-                        <i class="fas fa-envelope"></i>
+                        <i class="fab fa-instagram"></i>
                     </span>
                     <div class="ts-service-box-content">
-                        <h4>Email Kami</h4>
-                        <p><a href="mailto:dekranasda@gmail.com">dekranasda@gmail.com</a></p>
+                        <h4>Ikuti Kami</h4>
+                        <p><a href="https://www.instagram.com/imigrasi_bantaeng_/" target="_blank">@imigrasi.bantaeng_</a></p>
                     </div>
                 </div>
             </div>
@@ -569,23 +569,7 @@
 
         <div class="gap-40" style="height: 40px;"></div>
 
-        <!-- CTA Section -->
-        <div class="contact-cta" data-aos="fade-up" data-aos-duration="800">
-            <div class="row align-items-center text-center">
-                <div class="col-lg-12">
-                    <h3>Siap Bekerja Sama <span style="color: rgba(255,255,255,0.8);">Dengan Kami?</span></h3>
-                    <p>Hubungi kami sekarang untuk informasi lebih lanjut tentang layanan kami.</p>
-                    <div>
-                        <a href="https://www.instagram.com/imigrasi_bantaeng_/" class="btn-cta-premium" target="_blank">
-                            <i class="fab fa-instagram"></i> Instagram Kami
-                        </a>
-                        <a href="tel:0411000000" class="btn-cta-outline">
-                            <i class="fas fa-phone-alt me-2"></i> Telepon Kami
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
 
     </div>
 </section>

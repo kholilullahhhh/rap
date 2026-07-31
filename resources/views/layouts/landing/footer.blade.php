@@ -9,14 +9,12 @@
                          <img loading="lazy" width="100px"  class="footer-logo" 
                         src="{{ asset('landing/images/footer/logoimig.png') }}" alt="Constra">
                         
-                    <p style="color: rgba(255,255,255,0.75);">BOSS - Backend Office Support System<br> Imigrasi & Pemasyarakatan Bantaeng</p>
+                    <p style="color: rgba(255,255,255,0.75);">BOSS - Bantaeng Office Support System<br> Imigrasi & Pemasyarakatan Bantaeng</p>
                     <div class="footer-social">
                         <ul>
-                            <li><a href="https://www.facebook.com/" aria-label="Facebook" style="color: rgba(255,255,255,0.75);"><i class="fab fa-facebook-f"></i></a></li>
                             <li><a href="https://www.instagram.com/imigrasi_bantaeng_/" aria-label="Instagram" style="color: rgba(255,255,255,0.75);"><i class="fab fa-instagram"></i></a></li>
-                            <li><a href="https://www.tiktok.com/@imigrasi_bantaeng" aria-label="TikTok" style="color: rgba(255,255,255,0.75);"><i class="fab fa-tiktok"></i></a></li>
+                            <li><a href="https://www.tiktok.com/@imigrasi.bantaeng" aria-label="TikTok" style="color: rgba(255,255,255,0.75);"><i class="fab fa-tiktok"></i></a></li>
                             <li><a href="https://www.imigrasi.go.id/" aria-label="LinkedIn" style="color: rgba(255,255,255,0.75);"><i class="fas fa-globe"></i></a></li>
-                            <li><a href="mailto:imigrasi.bantaeng@gmail.com" aria-label="Email" style="color: rgba(255,255,255,0.75);"><i class="fas fa-envelope"></i></a></li>
                         </ul>
                     </div><!-- Footer social end -->
                 </div><!-- Col end -->
@@ -70,7 +68,7 @@
                             Copyright &copy;
                             <script>
                                 document.write(new Date().getFullYear())
-                            </script>, Luluuu
+                            </script>, Kantor Imigrasi Kelas III Non TPI Bantaeng.
                         </span>
                     </div>
                 </div>

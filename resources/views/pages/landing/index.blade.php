@@ -618,7 +618,6 @@
         <div class="container">
             <div class="row text-center">
                 <div class="col-12">
-                    <span class="section-badge"><i class="fas fa-cogs me-1"></i> Fitur</span>
                     <h2 class="section-title">Fitur Sistem <span class="text-navy-light">BOSS</span></h2>
                     <p class="section-subtitle">
                         Dirancang untuk mendukung pengarsipan dokumen secara efisien.
@@ -700,7 +699,7 @@
                                 <div class="card-body">
                                     Sistem BOSS (Backend Office Support System) adalah aplikasi berbasis web untuk mendukung
                                     perencanaan, pelaksanaan, pemantauan, dan evaluasi program perubahan di lingkungan
-                                    Kementerian Imigrasi dan Pemasyarakatan.
+                                    Kantor Imigrasi Kelas III Non TPI Bantaeng
                                 </div>
                             </div>
                         </div>

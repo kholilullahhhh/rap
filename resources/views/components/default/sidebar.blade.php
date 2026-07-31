@@ -35,11 +35,7 @@
                         <span>Master Data</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="{{ request('role', 'all') == 'all' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('umkm.index') }}?role=all">
-                                Semua Dokumen
-                            </a>
-                        </li>
+                        
 
                         <li class="{{ request('username') == 'tajuddin' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('umkm.index') }}?username=tajuddin">
@@ -59,20 +55,6 @@
                             </a>
                         </li>
                     </ul>
-                    @if ($showKategori)
-                <li class="{{ $menu == 'jenis_usaha' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('jenis_usaha.index') }}">
-                        <i class="fas fa-tags"></i> Kategori Dokumen
-                    </a>
-                </li>
-            @endif
-            @if ($showKegiatan)
-                <li class="{{ $menu == 'pembinaan' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('pembinaan.index') }}">
-                        <i class="fas fa-calendar-alt"></i> Kegiatan
-                    </a>
-                </li>
-            @endif
             </li>
             @endif
 

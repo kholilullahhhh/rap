@@ -1276,7 +1276,6 @@
                                             <tr>
                                                 <th style="width:30px;">#</th>
                                                 <th style="min-width:150px;">Judul</th>
-                                                <th style="min-width:100px;">Kategori</th>
                                                 <th style="min-width:85px;">Tanggal</th>
                                                 <th style="width:45px;">File</th>
                                                 <th style="width:130px;">Aksi</th>
@@ -1297,9 +1296,6 @@
                                                                     {{ $dokumen->folder->name ?? '' }}</span>
                                                             @endif
                                                         </span>
-                                                    </td>
-                                                    <td><span
-                                                            style="font-weight:500;color:var(--secondary);font-size:11px;">{{ $dokumen->kategori->nama_jenis ?? '-' }}</span>
                                                     </td>
                                                     <td><span
                                                             style="font-size:11px;">{{ date('d-m-Y', strtotime($dokumen->tanggal_dokumen)) }}</span>
