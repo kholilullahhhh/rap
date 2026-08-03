@@ -570,8 +570,8 @@
                         <option value="admin">Admin</option>
                         <option value="kepala_kantor">Kepala Kantor</option>
                         <option value="inteldaktim">TI & Inteldaktim</option>
-                        <option value="user">Tata Usaha</option>
-                        <option value="user">Pelayanan & Verdokjal</option>
+                        <option value="tu">Tata Usaha</option>
+                        <option value="verdokjal">Pelayanan & Verdokjal</option>
                     </select>
                 </div>
 

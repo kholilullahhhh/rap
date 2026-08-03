@@ -16,7 +16,7 @@
             <div class="col-lg-4 col-md-4 top-social text-center text-md-ri ght">
                 <ul class="list-unstyled">
                     <li>
-                        <a title="TikTok" href="https://www.tiktok.com/@imigrasibantaeng" target="_blank">
+                        <a title="TikTok" href="https://www.tiktok.com/@imigrasi.bantaeng" target="_blank">
                             <span class="social-icon"><i class="fab fa-tiktok"></i></span>
                         </a>    
                         {{-- <a title="Twitter" href="https://twitter.com/themefisher.com">

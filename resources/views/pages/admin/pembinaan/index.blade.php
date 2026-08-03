@@ -31,7 +31,6 @@
                                             <tr>
                                                 <th class="text-center">#</th>
                                                 <th>Nama Kegiatan</th>
-                                                <th>Target</th>
                                                 <th>Tanggal</th>
                                                 <th>Deskripsi</th>
                                                 <th>Hasil</th>
@@ -42,7 +41,6 @@
                                             @foreach ($datas as $i => $data)
                                                 <tr>
                                                     <td>{{ ++$i }}</td>
-                                                    <td>{{ $data->umkm->nama_usaha ?? 'N/A' }}</td>
                                                     <td>{{ $data->judul_pembinaan }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($data->tanggal)->format('d F Y') }}</td>
                                                     <td>{!! Str::limit($data->deskripsi, 50) ?? '-' !!}</td>

@@ -20,7 +20,7 @@
             @php
                 $role = session('role');
                 $hasMasterData = in_array($role, ['admin', 'kepala_kantor']);
-                $showDokumen = in_array($role, ['admin', 'user', 'inteldaktim', 'kepala_kantor']);
+                $showDokumen = in_array($role, ['admin', 'user','verdokjal', 'tu', 'inteldaktim', 'kepala_kantor']);
                 $showKegiatan = in_array($role, ['admin', 'inteldaktim', 'kepala_kantor']);
                 $showKategori = in_array($role, ['admin', 'kepala_kantor']);
                 $showAkun = $role == 'admin';
@@ -37,14 +37,14 @@
                     <ul class="dropdown-menu">
                         
 
-                        <li class="{{ request('username') == 'tajuddin' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('umkm.index') }}?username=tajuddin">
+                        <li class="{{ request('role') == 'tu' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('umkm.index') }}?role=tu">
                                 Tata Usaha
                             </a>
                         </li>
 
-                        <li class="{{ request('username') == 'zulherman' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('umkm.index') }}?username=zulherman">
+                        <li class="{{ request('role') == 'verdokjal' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('umkm.index') }}?role=verdokjal">
                                 Pelayanan & Verdokjal
                             </a>
                         </li>
@@ -59,7 +59,7 @@
             @endif
 
             <!-- MENU DOKUMEN UNTUK USER (hanya lihat dokumen user) -->
-            @if ($role == 'user')
+            @if ($role == 'verdokjal' || $role == 'tu')
                 <li class="nav-item {{ $menu == 'dokumen' ? 'active' : '' }}">
                     <a href="{{ route('umkm.index') }}" class="nav-link">
                         <i class="fas fa-file-alt"></i>

@@ -24,6 +24,7 @@ class DokumenController extends Controller
         $user = Auth::user();
         $kategori = JenisUsaha::all();
 
+
         // Ambil parameter filter
         $filterRole = $request->get('role');
         $folderId = $request->get('folder');
@@ -74,6 +75,7 @@ class DokumenController extends Controller
 
         return view($view, compact(
             'datas',
+            'user',
             'menu',
             'kategori',
             'filterRole',

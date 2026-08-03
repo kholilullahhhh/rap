@@ -791,7 +791,7 @@
                                                         name="jabatan"
                                                         value="{{ old('jabatan') }}"
                                                         required
-                                                        placeholder="Masukkan Jabatan (- jika tidak memiliki UMKM)"
+                                                        placeholder="Masukkan Jabatan (- jika memiliki jabatan khusus)"
                                                         type="text"
                                                         class="form-control @error('jabatan') is-invalid @enderror">
                                                     @error('jabatan')
@@ -830,11 +830,11 @@
                                                         required
                                                         class="form-control role-select @error('role') is-invalid @enderror">
                                                         <option value="">-- Pilih Role Akun --</option>
-                                                        <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Kasubsi pelayanan & verdokjal</option>
-                                                        <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>TI & inteldaktim</option>
-                                                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                                                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Kepala Kantor</option>
-                                                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Tata Usaha</option>
+                                                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option> 
+                                                        <option value="kepala_kantor" {{ old('role') == 'kepala_kantor' ? 'selected' : '' }}>Kepala Kantor</option>
+                                                        <option value="inteldaktim" {{ old('role') == 'inteldaktim' ? 'selected' : '' }}>TI & inteldaktim</option>
+                                                        <option value="verdokjal" {{ old('role') == 'verdokjal' ? 'selected' : '' }}>Kasubsi pelayanan & verdokjal</option>
+                                                        <option value="tu" {{ old('role') == 'tu' ? 'selected' : '' }}>Tata Usaha</option>
                                                     </select>
                                                     @error('role')
                                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -897,7 +897,7 @@
 
                                 <!-- Stats Summary -->
                                 <div class="row g-3 mb-4">
-                                    <div class="col-md-3 col-sm-6">
+                                    <div class="col-md-4 col-sm-8">
                                         <div class="stat-card">
                                             <div class="stat-icon primary">
                                                 <i class="bi bi-people"></i>
@@ -908,7 +908,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-6">
+                                    <div class="col-md-4 col-sm-8">
                                         <div class="stat-card">
                                             <div class="stat-icon success">
                                                 <i class="bi bi-shield-check"></i>
@@ -919,18 +919,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="stat-card">
-                                            <div class="stat-icon warning">
-                                                <i class="bi bi-person"></i>
-                                            </div>
-                                            <div class="stat-info">
-                                                <h6>User</h6>
-                                                <div class="value">{{ $datas->where('role', 'user')->count() }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6">
+                                    <div class="col-md-4 col-sm-8">
                                         <div class="stat-card">
                                             <div class="stat-icon info">
                                                 <i class="bi bi-clock-history"></i>
@@ -982,6 +971,26 @@
                                                             <span class="role-badge admin">
                                                                 <i class="bi bi-shield-check"></i>
                                                                 Admin
+                                                            </span>
+                                                        @elseif($data->role == 'inteldaktim')
+                                                            <span class="role-badge user">
+                                                                <i class="bi bi-person"></i>
+                                                                TI & Inteldaktim
+                                                            </span>
+                                                        @elseif($data->role == 'kepala_kantor')
+                                                            <span class="role-badge user">
+                                                                <i class="bi bi-person"></i>
+                                                                Kepala Kantor
+                                                            </span>
+                                                        @elseif($data->role == 'verdokjal')
+                                                            <span class="role-badge user">
+                                                                <i class="bi bi-person"></i>
+                                                                Verdokjal
+                                                            </span>
+                                                        @elseif($data->role == 'tu')
+                                                            <span class="role-badge user">
+                                                                <i class="bi bi-person"></i>
+                                                                Tata Usaha
                                                             </span>
                                                         @else
                                                             <span class="role-badge user">

@@ -1141,22 +1141,15 @@
             <!-- Header -->
             <div class="section-header fade-in-up">
                 <div>
-                    <h1><i class="bi bi-folder2-open"></i> Data {{ request('role') == 'tu' ? 'Tata Usaha' : '' }}
-                        {{ request('role') == 'verdokjal' ? 'Verdokjal' : '' }}
-                        {{ request('role') == 'inteldaktim' ? 'Inteldaktim' : '' }}</h1>
+                    <h1><i class="bi bi-folder2-open"></i> Data Dokumen</h1>
                     <p class="header-subtitle"><i class="bi bi-database me-1"></i> Kelola dan pantau semua dokumen
-                        administrasi {{ request('role') == 'tu' ? 'Tata Usaha' : '' }}
-                        {{ request('role') == 'verdokjal' ? 'Verdokjal' : '' }}
-                        {{ request('role') == 'inteldaktim' ? 'Inteldaktim' : '' }}</p>
+                        administrasi</p>
                 </div>
                 <div class="header-actions">
                     <div class="section-header-breadcrumb">
                         <div class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="bi bi-house-door"></i>
                                 Dashboard</a></div>
-                        <div class="breadcrumb-item active"><i class="bi bi-folder2-open"></i> Data
-                            {{ request('role') == 'tu' ? 'Tata Usaha' : '' }}
-                            {{ request('role') == 'verdokjal' ? 'Verdokjal' : '' }}
-                            {{ request('role') == 'inteldaktim' ? 'Inteldaktim' : '' }}</div>
+                        <div class="breadcrumb-item active"><i class="bi bi-folder2-open"></i> Data Dokumen</div>
                     </div>
                 </div>
             </div>
@@ -1173,8 +1166,7 @@
                                         data-target="#modalCreateFolder">
                                         <i class="bi bi-folder-plus"></i> Buat Folder
                                     </button>
-                                    <a href="{{ request('folder') ? route('umkm.create', ['folder' => request('folder')]) : route('umkm.create') }}"
-                                        class="btn-primary-custom">
+                                    <a href="{{ request('folder') ? route('umkm.create', ['folder' => request('folder')]) : route('umkm.create') }}" class="btn-primary-custom">
                                         <i class="bi bi-plus-circle"></i> Tambah Data
                                     </a>
                                 </div>
@@ -1480,6 +1472,14 @@
                                     <option value="{{ $folder->id }}">{{ $folder->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" name="remove_from_folder" value="1" class="form-check-input"
+                                id="removeFromFolder">
+                            <label class="form-check-label" for="removeFromFolder"
+                                style="font-size:13px;color:var(--secondary);">
+                                Hapus dari folder saat ini (pindahkan ke root)
+                            </label>
                         </div>
                     </div>
                     <div class="modal-footer">

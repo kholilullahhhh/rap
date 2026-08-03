@@ -37,7 +37,7 @@ class AdminSeeder extends Seeder
                 'username' => 'tajuddin',
                 'password' => Hash::make('12345678'),
                 'jabatan' => 'Kaur Tata Usaha',
-                'role' => 'user',
+                'role' => 'tu',
             ],
 
             [
@@ -53,7 +53,7 @@ class AdminSeeder extends Seeder
                 'username' => 'zulherman',
                 'password' => Hash::make('12345678'),
                 'jabatan' => 'Kasubsi Pelayanan & Verdokjal',
-                'role' => 'user',
+                'role' => 'verdokjal',
             ],
 
         ];
