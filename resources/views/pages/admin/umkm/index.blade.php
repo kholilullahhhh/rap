@@ -1166,7 +1166,7 @@
                                         data-target="#modalCreateFolder">
                                         <i class="bi bi-folder-plus"></i> Buat Folder
                                     </button>
-                                    <a href="{{ route('umkm.create') }}" class="btn-primary-custom">
+                                    <a href="{{ request('folder') ? route('umkm.create', ['folder' => request('folder')]) : route('umkm.create') }}" class="btn-primary-custom">
                                         <i class="bi bi-plus-circle"></i> Tambah Data
                                     </a>
                                 </div>
@@ -1346,7 +1346,7 @@
                                                             <i class="bi bi-inbox"></i>
                                                             <h5>Belum Ada Dokumen</h5>
                                                             <p>Mulai tambahkan dokumen pertama Anda</p>
-                                                            <a href="{{ route('umkm.create') }}"
+                                                            <a href="{{ request('folder') ? route('umkm.create', ['folder' => request('folder')]) : route('umkm.create') }}"
                                                                 class="btn-primary-custom"
                                                                 style="display:inline-flex;margin-top:8px;">
                                                                 <i class="bi bi-plus-circle"></i> Tambah Dokumen

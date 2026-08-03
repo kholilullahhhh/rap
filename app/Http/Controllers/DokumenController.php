@@ -67,7 +67,8 @@ class DokumenController extends Controller
         $view = match ($user->role) {
             'admin', 'kepala_kantor' => 'pages.admin.umkm.index',
             'inteldaktim' => 'pages.admin.umkm.inteldaktim',
-            'user' => 'pages.admin.umkm.user',
+            'verdokjal' => 'pages.admin.umkm.verdokjal',
+            'tu' => 'pages.admin.umkm.tu',
             default => abort(403),
         };
 
@@ -84,6 +85,8 @@ class DokumenController extends Controller
     public function viewFile($id)
 {
     $dokumen = Dokumen::findOrFail($id);
+
+    $this->authorize('view', $dokumen);
 
     if (!$dokumen->file_path) {
         abort(404);
@@ -163,7 +166,9 @@ class DokumenController extends Controller
      */
     public function moveDocument(Request $request, $id)
     {
-        $dokumen = Dokumen::where('user_id', Auth::id())->findOrFail($id);
+        $dokumen = Dokumen::findOrFail($id);
+
+        $this->authorize('update', $dokumen);
 
         $request->validate([
             'folder_id' => 'nullable|exists:folders,id',
@@ -173,6 +178,15 @@ class DokumenController extends Controller
         if ($request->has('remove_from_folder') && $request->remove_from_folder) {
             $dokumen->folder_id = null;
         } else {
+            // Pastikan folder tujuan milik user (jika folder dipilih)
+            if ($request->filled('folder_id')) {
+                $folder = Folder::where('user_id', Auth::id())->find($request->folder_id);
+
+                if (! $folder) {
+                    return back()->withErrors(['folder_id' => 'Folder tidak valid.'])->withInput();
+                }
+            }
+
             $dokumen->folder_id = $request->folder_id;
         }
 
@@ -187,13 +201,16 @@ class DokumenController extends Controller
     /**
      * Show form create dokumen
      */
-    public function create()
+    public function create(Request $request)
     {
         $menu = $this->menu;
         $kategori = JenisUsaha::all();
         $folders = Folder::where('user_id', Auth::id())->get();
 
-        return view('pages.admin.umkm.create', compact('menu', 'kategori', 'folders'));
+        // Folder yang sedang dipilih (dari query "folder" atau input yang gagal validasi)
+        $selectedFolder = $request->query('folder', old('folder_id'));
+
+        return view('pages.admin.umkm.create', compact('menu', 'kategori', 'folders', 'selectedFolder'));
     }
 
     /**
@@ -212,6 +229,15 @@ class DokumenController extends Controller
             // 'status' => 'nullable|in:draft,review,approved,obsolete',
             'folder_id' => 'nullable|exists:folders,id',
         ]);
+
+        // Pastikan folder yang dipilih milik user yang sedang login
+        if ($request->filled('folder_id')) {
+            $folder = Folder::where('user_id', Auth::id())->find($request->folder_id);
+
+            if (! $folder) {
+                return back()->withInput()->withErrors(['folder_id' => 'Folder tidak valid.']);
+            }
+        }
 
         // Upload file
         $file = $request->file('file_path');
@@ -240,7 +266,10 @@ class DokumenController extends Controller
     public function edit($id)
     {
         $menu = $this->menu;
-        $data = Dokumen::where('user_id', Auth::id())->findOrFail($id);
+        $data = Dokumen::findOrFail($id);
+
+        $this->authorize('update', $data);
+
         $kategori = JenisUsaha::all();
         $folders = Folder::where('user_id', Auth::id())->get();
 
@@ -252,7 +281,9 @@ class DokumenController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $dokumen = Dokumen::where('user_id', Auth::id())->findOrFail($id);
+        $dokumen = Dokumen::findOrFail($id);
+
+        $this->authorize('update', $dokumen);
 
         $request->validate([
             'kategori_id' => 'required|exists:jenis_usahas,id',
@@ -263,10 +294,21 @@ class DokumenController extends Controller
             'tanggal_dokumen' => 'required|date',
             // 'versi' => 'nullable|string|max:20',
             // 'status' => 'nullable|in:draft,review,approved,obsolete',
-            'folder_id' => 'nullable|exists:folders,id',
-        ]);
+            ['folder_id' => 'nullable|exists:folders,id'],
+        ])->setAttribute('folder_id', null);
 
         $data = $request->except('file_path');
+
+        // Pastikan folder tujuan milik user (jika folder diubah)
+        if ($request->filled('folder_id')) {
+            $folder = Folder::where('user_id', Auth::id())->find($request->folder_id);
+
+            if (! $folder) {
+                return back()->withErrors(['folder_id' => 'Folder tidak valid.'])->withInput();
+            }
+        }
+
+        $data['folder_id'] = $request->filled('folder_id') ? $request->folder_id : null;
 
         // Upload file baru jika ada
         if ($request->hasFile('file_path')) {
@@ -290,7 +332,9 @@ class DokumenController extends Controller
      */
     public function destroy($id)
     {
-        $dokumen = Dokumen::where('user_id', Auth::id())->findOrFail($id);
+        $dokumen = Dokumen::findOrFail($id);
+
+        $this->authorize('delete', $dokumen);
 
         // Hapus file
         if ($dokumen->file_path) {

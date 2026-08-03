@@ -116,6 +116,39 @@
                                             </select>
                                         </div>
 
+                                        <div class="form-group">
+                                            <label>
+                                                Folder
+                                                <small class="text-muted">(opsional)</small>
+                                            </label>
+
+                                            <select
+                                                name="folder_id"
+                                                class="form-control">
+
+                                                <option value="">
+                                                    Tidak Ada Folder (Root)
+                                                </option>
+
+                                                @foreach($folders as $folder)
+                                                <option
+                                                    value="{{ $folder->id }}"
+                                                    {{ (string) $selectedFolder === (string) $folder->id ? 'selected' : '' }}>
+
+                                                    {{ $folder->name }}
+
+                                                </option>
+                                                @endforeach
+
+                                            </select>
+
+                                            @if(isset($selectedFolder) && $selectedFolder)
+                                            <small class="text-muted">
+                                                Dokumen akan disimpan di folder yang dipilih.
+                                            </small>
+                                            @endif
+                                        </div>
+
                                        
                                     </div>
 
