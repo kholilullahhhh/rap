@@ -1168,7 +1168,10 @@
                         <div class="card fade-in-up">
                             <div class="card-header">
                                 <h4><i class="bi bi-folder2"></i> Folder & Dokumen</h4>
-                                <div class="card-header-action d-flex flex-wrap gap-2">
+
+
+                                {{--ini sementara--}}
+                                {{-- <div class="card-header-action d-flex flex-wrap gap-2">
                                     <button type="button" class="btn-folder-create" data-toggle="modal"
                                         data-target="#modalCreateFolder">
                                         <i class="bi bi-folder-plus"></i> Buat Folder
@@ -1177,7 +1180,9 @@
                                         class="btn-primary-custom">
                                         <i class="bi bi-plus-circle"></i> Tambah Data
                                     </a>
-                                </div>
+                                </div> --}}
+
+
                             </div>
 
                             <div class="card-body">
