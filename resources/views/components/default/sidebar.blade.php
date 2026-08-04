@@ -51,7 +51,7 @@
 
                         <li class="{{ request('role') == 'inteldaktim' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('umkm.index') }}?role=inteldaktim">
-                                Inteldaktim
+                                Inteldakim
                             </a>
                         </li>
                     </ul>

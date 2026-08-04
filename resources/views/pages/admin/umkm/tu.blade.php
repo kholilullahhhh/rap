@@ -1331,15 +1331,7 @@
                                                                 onclick="moveDocument({{ $dokumen->id }})">
                                                                 <i class="bi bi-arrow-right"></i>
                                                             </button>
-                                                            <form action="{{ route('umkm.hapus', $dokumen->id) }}"
-                                                                method="POST" class="delete-form">
-                                                                @csrf @method('DELETE')
-                                                                <button type="button"
-                                                                    class="btn-action delete delete-btn"
-                                                                    data-tooltip="Hapus">
-                                                                    <i class="bi bi-trash3"></i>
-                                                                </button>
-                                                            </form>
+                                                            @include('partials.dokumen-delete-form')
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -1531,7 +1523,7 @@
                     },
                     dom: '<"top"lf>rt<"bottom"ip>',
                     columnDefs: [{
-                        targets: [0, 4, 5],
+                        targets: [0, 4],
                         orderable: false
                     }]
                 });
@@ -1550,76 +1542,6 @@
                 }
                 handleResponsive();
                 $(window).resize(handleResponsive);
-
-                // Delete document
-                $('.delete-btn').click(function(e) {
-                    e.preventDefault();
-                    let form = $(this).closest('form');
-                    let docTitle = $(this).closest('tr').find('.doc-title').text().trim();
-
-                    Swal.fire({
-                        title: 'Hapus Dokumen?',
-                        html: `
-                <div style="text-align:left;padding:6px 0;">
-                    <p style="margin-bottom:6px;color:#64748B;font-size:14px;">
-                        <i class="bi bi-file-earmark-text" style="color:#4F46E5;"></i>
-                        <strong>${docTitle}</strong>
-                    </p>
-                    <p style="color:#EF4444;font-size:13px;margin:0;">
-                        <i class="bi bi-exclamation-triangle"></i> Data akan dihapus permanen!
-                    </p>
-                </div>
-            `,
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'Hapus',
-                        cancelButtonText: 'Batal',
-                        reverseButtons: true,
-                        customClass: {
-                            confirmButton: 'btn btn-danger px-4 py-2',
-                            cancelButton: 'btn btn-secondary px-4 py-2',
-                        },
-                        buttonsStyling: false
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            Swal.fire({
-                                title: 'Menghapus...',
-                                text: 'Mohon tunggu',
-                                allowOutsideClick: false,
-                                allowEscapeKey: false,
-                                didOpen: () => {
-                                    Swal.showLoading();
-                                }
-                            });
-
-                            $.ajax({
-                                url: form.attr('action'),
-                                type: 'POST',
-                                data: form.serialize(),
-                                success: function(response) {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Berhasil!',
-                                        text: 'Dokumen berhasil dihapus',
-                                        timer: 1200,
-                                        showConfirmButton: false,
-                                    }).then(() => {
-                                        location.reload();
-                                    });
-                                },
-                                error: function(xhr) {
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Gagal!',
-                                        text: 'Terjadi kesalahan',
-                                        confirmButtonColor: '#4F46E5',
-                                        confirmButtonText: 'OK'
-                                    });
-                                }
-                            });
-                        }
-                    });
-                });
 
                 // Flash messages with Toast
                 @if (session('message'))
@@ -1772,5 +1694,7 @@
                 });
             });
         </script>
+
+        @include('partials.dokumen-delete-js')
     @endpush
 @endsection

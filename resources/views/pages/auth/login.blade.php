@@ -569,7 +569,7 @@
                         <option value="">— Pilih Role —</option>
                         <option value="admin">Admin</option>
                         <option value="kepala_kantor">Kepala Kantor</option>
-                        <option value="inteldaktim">TI & Inteldaktim</option>
+                        <option value="inteldaktim">TI & Inteldakim</option>
                         <option value="tu">Tata Usaha</option>
                         <option value="verdokjal">Pelayanan & Verdokjal</option>
                     </select>

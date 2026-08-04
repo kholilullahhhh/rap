@@ -15,13 +15,12 @@ Laravel 10 app (PHP ^8.1) on the Stisla admin template, built for an immigration
 ## Auth & sessions (non-standard)
 - Custom session auth, not the Laravel guard flow. `ValidasiUser` middleware (app/Http/Middleware/ValidasiUser.php) just checks `Session('cek')`.
 - `AuthController::login_action` sets session keys `cek`, `user_id`, `name`, `username`, `role`. Don't assume `auth()->user()` works for UI state.
-- The same accounts are seeded into **both** `users` and `admins` tables (AdminSeeder). Roles: `admin`, `kepala_kantor`, `user`, `inteldaktim`. Seed credentials: `admin`/`admin`, others `12345678`.
+- The same accounts are seeded into **both** `users` and `admins` tables (AdminSeeder). Seeded roles: `admin`, `kepala_kantor`, `tu`, `inteldaktim`, `verdokjal` (sidebar also gates on `user` in `$showDokumen`). Seed credentials: `admin`/`admin`, others `12345678`.
 - Sidebar visibility is gated by `session('role')` in resources/views/components/default/sidebar.blade.php.
 
 ## Repo quirks
-- Root `app.php` is a stray exact duplicate of `config/app.php`. Edit `config/app.php`; ignore the root file.
 - `routes/web.php` mixes old string controller syntax (`'AdminController@index'`) with array syntax — both are valid in Laravel 10.
-- **Many routes 500 because the controller doesn't exist**: `KegiatanController`, `IndicatorsController`, `PenilaianController`, `AbsensiController`, `GuruController` (all under `App\Http\Controllers\...`). Also `UserController::detail()` references missing `App\Models\Artikel` and `App\Models\Modul` (only `agenda` path works). Working modules: auth, dashboard, umkm/dokumen/folder, produk, jenis_usaha, pembinaan, akun, jadwal, absen.
+- **Many routes 500 because the controller doesn't exist**: `KegiatanController`, `IndicatorsController`, `PenilaianController`, `AbsensiController`, `GuruController` (all under `App\Http\Controllers\...`). Also `User\UserController::detail()` references missing `App\Models\Artikel` and `App\Models\Modul` (only `agenda` path works). Working modules: auth, dashboard, umkm/dokumen/folder, produk, jenis_usaha, pembinaan, akun, jadwal, absen.
 - `.env` uses DB `docs` (mysql, root, no password) — differs from `.env.example` (`laravel`). Timezone is `Asia/Jakarta`.
 - File uploads use `$file->storeAs('dokumen', ..., 'public')`; `public/storage` is a junction to `storage/app/public` (requires `php artisan storage:link`).
 - `midtrans/midtrans-php` is installed with `config/midtrans.php` but no payment routes use it.

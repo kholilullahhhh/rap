@@ -8,11 +8,21 @@ use App\Models\User;
 class FolderPolicy
 {
     /**
+     * Role yang boleh mengelola seluruh folder (semua user).
+     * Konsisten dengan DokumenPolicy.
+     */
+    private const MANAGER_ROLES = ['admin', 'kepala_kantor'];
+
+    /**
      * Apakah user dapat mengelola folder ini.
-     * Folder bersifat pribadi milik pembuatnya.
+     * Admin/Kepala Kantor: semua folder. Selain itu: hanya punyanya sendiri.
      */
     public function manage(User $user, Folder $folder): bool
     {
+        if (in_array($user->role, self::MANAGER_ROLES, true)) {
+            return true;
+        }
+
         return (int) $user->id === (int) $folder->user_id;
     }
 

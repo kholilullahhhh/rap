@@ -170,7 +170,9 @@ class DokumenController extends Controller
      */
     public function updateFolder(Request $request, $id)
     {
-        $folder = Folder::where('user_id', Auth::id())->findOrFail($id);
+        $folder = Folder::findOrFail($id);
+
+        $this->authorize('update', $folder);
 
         $request->validate([
             'name' => 'required|string|max:100|unique:folders,name,'.$id.',id,user_id,'.Auth::id(),
@@ -190,7 +192,9 @@ class DokumenController extends Controller
      */
     public function deleteFolder($id)
     {
-        $folder = Folder::where('user_id', Auth::id())->findOrFail($id);
+        $folder = Folder::findOrFail($id);
+
+        $this->authorize('delete', $folder);
 
         // Pindahkan dokumen ke root (folder_id = null)
         Dokumen::where('folder_id', $id)->update(['folder_id' => null]);
@@ -338,8 +342,8 @@ class DokumenController extends Controller
             'tanggal_dokumen' => 'required|date',
             // 'versi' => 'nullable|string|max:20',
             // 'status' => 'nullable|in:draft,review,approved,obsolete',
-            ['folder_id' => 'nullable|exists:folders,id'],
-        ])->setAttribute('folder_id', null);
+            'folder_id' => 'nullable|exists:folders,id',
+        ]);
 
         $data = $request->except('file_path');
 
@@ -374,22 +378,37 @@ class DokumenController extends Controller
     /**
      * Delete dokumen
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $dokumen = Dokumen::findOrFail($id);
 
-        $this->authorize('delete', $dokumen);
+        // AJAX dari jQuery selalu mengirim X-Requested-With; pengujian/API
+        // biasanya memakai Accept: application/json.
+        $isAjax = $request->ajax() || $request->wantsJson();
 
-        // Hapus file
-        if ($dokumen->file_path) {
+        // Admin & Kepala Kantor boleh menghapus semua dokumen, selain itu hanya miliknya.
+        $user = Auth::user();
+        $canManage = $user && in_array($user->role, ['admin', 'kepala_kantor'], true);
+        if (! $canManage && (! $user || (int) $user->id !== (int) $dokumen->user_id)) {
+            return $isAjax
+                ? response()->json(['success' => false, 'message' => 'Anda tidak berhak menghapus dokumen ini.'], 403)
+                : abort(403);
+        }
+
+        // Delete file if exists
+        if ($dokumen->file_path && Storage::disk('public')->exists($dokumen->file_path)) {
             Storage::disk('public')->delete($dokumen->file_path);
         }
 
         $dokumen->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Dokumen berhasil dihapus',
-        ]);
+        if ($isAjax) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Dokumen berhasil dihapus',
+            ]);
+        }
+
+        return redirect()->back()->with('message', 'Dokumen berhasil dihapus');
     }
 }

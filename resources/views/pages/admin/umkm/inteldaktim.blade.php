@@ -1166,7 +1166,8 @@
                                         data-target="#modalCreateFolder">
                                         <i class="bi bi-folder-plus"></i> Buat Folder
                                     </button>
-                                    <a href="{{ route('umkm.create', array_filter(['folder' => request('folder'), 'role' => request('role')])) }}" class="btn-primary-custom">
+                                    <a href="{{ route('umkm.create', array_filter(['folder' => request('folder'), 'role' => request('role')])) }}"
+                                        class="btn-primary-custom">
                                         <i class="bi bi-plus-circle"></i> Tambah Data
                                     </a>
                                 </div>
@@ -1182,16 +1183,16 @@
                                             onclick="filterByFolder({{ $folder->id }})">
                                             <div class="folder-actions">
                                                 @can('update', $folder)
-                                                <button class="btn-folder-action edit-folder" data-tooltip="Edit Folder"
-                                                    onclick="event.stopPropagation(); editFolder({{ $folder->id }}, '{{ $folder->name }}', {{ $folder->color ?? 1 }})">
-                                                    <i class="bi bi-pencil"></i>
-                                                </button>
+                                                    <button class="btn-folder-action edit-folder" data-tooltip="Edit Folder"
+                                                        onclick="event.stopPropagation(); editFolder({{ $folder->id }}, '{{ $folder->name }}', {{ $folder->color ?? 1 }})">
+                                                        <i class="bi bi-pencil"></i>
+                                                    </button>
                                                 @endcan
                                                 @can('delete', $folder)
-                                                <button class="btn-folder-action delete-folder" data-tooltip="Hapus Folder"
-                                                    onclick="event.stopPropagation(); deleteFolder({{ $folder->id }})">
-                                                    <i class="bi bi-trash3"></i>
-                                                </button>
+                                                    <button class="btn-folder-action delete-folder" data-tooltip="Hapus Folder"
+                                                        onclick="event.stopPropagation(); deleteFolder({{ $folder->id }})">
+                                                        <i class="bi bi-trash3"></i>
+                                                    </button>
                                                 @endcan
                                             </div>
                                             <span class="folder-icon"><i class="bi bi-folder2"></i></span>
@@ -1215,7 +1216,8 @@
                                 @if (request('folder') && isset($currentFolder))
                                     <div class="folder-breadcrumb">
                                         <span class="breadcrumb-item">
-                                            <a href="{{ route('umkm.index', array_filter(['role' => request('role')])) }}"><i class="bi bi-folder2-open"></i>
+                                            <a href="{{ route('umkm.index', array_filter(['role' => request('role')])) }}"><i
+                                                    class="bi bi-folder2-open"></i>
                                                 Semua</a>
                                         </span>
                                         <span class="breadcrumb-separator">/</span>
@@ -1223,7 +1225,8 @@
                                             <i class="bi bi-folder2"></i> {{ $currentFolder->name ?? 'Folder' }}
                                         </span>
                                         <span class="breadcrumb-item ms-auto">
-                                            <a href="{{ route('umkm.index', array_filter(['role' => request('role')])) }}" class="btn btn-sm btn-secondary-custom"
+                                            <a href="{{ route('umkm.index', array_filter(['role' => request('role')])) }}"
+                                                class="btn btn-sm btn-secondary-custom"
                                                 style="padding:2px 12px;font-size:11px;">
                                                 <i class="bi bi-x"></i> Hapus Filter
                                             </a>
@@ -1331,15 +1334,7 @@
                                                                 onclick="moveDocument({{ $dokumen->id }})">
                                                                 <i class="bi bi-arrow-right"></i>
                                                             </button>
-                                                            <form action="{{ route('umkm.hapus', $dokumen->id) }}"
-                                                                method="POST" class="delete-form">
-                                                                @csrf @method('DELETE')
-                                                                <button type="button"
-                                                                    class="btn-action delete delete-btn"
-                                                                    data-tooltip="Hapus">
-                                                                    <i class="bi bi-trash3"></i>
-                                                                </button>
-                                                            </form>
+                                                            @include('partials.dokumen-delete-form')
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -1531,7 +1526,7 @@
                     },
                     dom: '<"top"lf>rt<"bottom"ip>',
                     columnDefs: [{
-                        targets: [0, 4, 5],
+                        targets: [0, 4],
                         orderable: false
                     }]
                 });
@@ -1550,76 +1545,6 @@
                 }
                 handleResponsive();
                 $(window).resize(handleResponsive);
-
-                // Delete document
-                $('.delete-btn').click(function(e) {
-                    e.preventDefault();
-                    let form = $(this).closest('form');
-                    let docTitle = $(this).closest('tr').find('.doc-title').text().trim();
-
-                    Swal.fire({
-                        title: 'Hapus Dokumen?',
-                        html: `
-                <div style="text-align:left;padding:6px 0;">
-                    <p style="margin-bottom:6px;color:#64748B;font-size:14px;">
-                        <i class="bi bi-file-earmark-text" style="color:#4F46E5;"></i>
-                        <strong>${docTitle}</strong>
-                    </p>
-                    <p style="color:#EF4444;font-size:13px;margin:0;">
-                        <i class="bi bi-exclamation-triangle"></i> Data akan dihapus permanen!
-                    </p>
-                </div>
-            `,
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'Hapus',
-                        cancelButtonText: 'Batal',
-                        reverseButtons: true,
-                        customClass: {
-                            confirmButton: 'btn btn-danger px-4 py-2',
-                            cancelButton: 'btn btn-secondary px-4 py-2',
-                        },
-                        buttonsStyling: false
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            Swal.fire({
-                                title: 'Menghapus...',
-                                text: 'Mohon tunggu',
-                                allowOutsideClick: false,
-                                allowEscapeKey: false,
-                                didOpen: () => {
-                                    Swal.showLoading();
-                                }
-                            });
-
-                            $.ajax({
-                                url: form.attr('action'),
-                                type: 'POST',
-                                data: form.serialize(),
-                                success: function(response) {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Berhasil!',
-                                        text: 'Dokumen berhasil dihapus',
-                                        timer: 1200,
-                                        showConfirmButton: false,
-                                    }).then(() => {
-                                        location.reload();
-                                    });
-                                },
-                                error: function(xhr) {
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Gagal!',
-                                        text: 'Terjadi kesalahan',
-                                        confirmButtonColor: '#4F46E5',
-                                        confirmButtonText: 'OK'
-                                    });
-                                }
-                            });
-                        }
-                    });
-                });
 
                 // Flash messages with Toast
                 @if (session('message'))
@@ -1644,15 +1569,15 @@
                 };
 
                 const toast = `
-        <div class="toast ${type}">
-            <span class="toast-icon"><i class="bi ${icons[type] || icons.success}"></i></span>
-            <div class="toast-body">
-                <div class="toast-title">${title}</div>
-                <div class="toast-message">${message}</div>
-            </div>
-            <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
-        </div>
-    `;
+                <div class="toast ${type}">
+                    <span class="toast-icon"><i class="bi ${icons[type] || icons.success}"></i></span>
+                    <div class="toast-body">
+                        <div class="toast-title">${title}</div>
+                        <div class="toast-message">${message}</div>
+                    </div>
+                    <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+                </div>
+            `;
 
                 let container = document.querySelector('.toast-container');
                 if (!container) {
@@ -1772,5 +1697,7 @@
                 });
             });
         </script>
+
+        @include('partials.dokumen-delete-js')
     @endpush
 @endsection
