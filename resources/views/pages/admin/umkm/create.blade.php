@@ -51,7 +51,7 @@
                             @endif
 
                             <form
-                                action="{{ route('umkm.store') }}"
+                                action="{{ route('umkm.store', array_filter(['role' => request('role')])) }}"
                                 method="POST"
                                 enctype="multipart/form-data">
 

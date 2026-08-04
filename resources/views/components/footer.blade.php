@@ -1,6 +1,6 @@
 <footer class="main-footer">
     <div class="footer-left">
-        Copyright &copy; <div class="bullet"></div> Luluuu
+        Copyright &copy; <div class="bullet"></div> imigrasi.bantaengkab.go.id <div class="bullet"></div> 
         {{-- <a href="https://nauv.al/">
             Muhamad
             Nauval Azhar</a> --}}

@@ -1187,18 +1187,24 @@
                                     @forelse($folders ?? [] as $folder)
                                         <div class="folder-card folder-color-{{ $folder->color ?? 1 }} {{ request('folder') == $folder->id ? 'active' : '' }}"
                                             data-folder-id="{{ $folder->id }}"
-                                            onclick="filterByFolder({{ $folder->id }})">
+                                            onclick="filterByFolder({{ $folder->id }}, '{{ request('role') }}')">
+
                                             <div class="folder-actions">
-                                                <button class="btn-folder-action edit-folder" data-tooltip="Edit Folder"
+                                                <button class="btn-folder-action edit-folder"
                                                     onclick="event.stopPropagation(); editFolder({{ $folder->id }}, '{{ $folder->name }}', {{ $folder->color ?? 1 }})">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
-                                                <button class="btn-folder-action delete-folder" data-tooltip="Hapus Folder"
+
+                                                <button class="btn-folder-action delete-folder"
                                                     onclick="event.stopPropagation(); deleteFolder({{ $folder->id }})">
                                                     <i class="bi bi-trash3"></i>
                                                 </button>
                                             </div>
-                                            <span class="folder-icon"><i class="bi bi-folder2"></i></span>
+
+                                            <span class="folder-icon">
+                                                <i class="bi bi-folder2"></i>
+                                            </span>
+
                                             <div class="folder-name">{{ $folder->name }}</div>
                                             <div class="folder-count">{{ $folder->dokumen_count ?? 0 }} dokumen</div>
                                         </div>
@@ -1207,6 +1213,7 @@
                                             <i class="bi bi-folder2-open"></i>
                                             <h6>Belum Ada Folder</h6>
                                             <p>Buat folder untuk mengelompokkan dokumen Anda</p>
+
                                             <button type="button" class="btn-folder-create" data-toggle="modal"
                                                 data-target="#modalCreateFolder">
                                                 <i class="bi bi-folder-plus"></i> Buat Folder Pertama
@@ -1219,7 +1226,8 @@
                                 @if (request('folder') && isset($currentFolder))
                                     <div class="folder-breadcrumb">
                                         <span class="breadcrumb-item">
-                                            <a href="{{ route('umkm.index') }}"><i class="bi bi-folder2-open"></i>
+                                            <a href="{{ route('umkm.index', array_filter(['role' => request('role')])) }}"><i
+                                                    class="bi bi-folder2-open"></i>
                                                 Semua</a>
                                         </span>
                                         <span class="breadcrumb-separator">/</span>
@@ -1227,7 +1235,8 @@
                                             <i class="bi bi-folder2"></i> {{ $currentFolder->name ?? 'Folder' }}
                                         </span>
                                         <span class="breadcrumb-item ms-auto">
-                                            <a href="{{ route('umkm.index') }}" class="btn btn-sm btn-secondary-custom"
+                                            <a href="{{ route('umkm.index', array_filter(['role' => request('role')])) }}"
+                                                class="btn btn-sm btn-secondary-custom"
                                                 style="padding:2px 12px;font-size:11px;">
                                                 <i class="bi bi-x"></i> Hapus Filter
                                             </a>
@@ -1354,7 +1363,7 @@
                                                             <i class="bi bi-inbox"></i>
                                                             <h5>Belum Ada Dokumen</h5>
                                                             <p>Mulai tambahkan dokumen pertama Anda</p>
-                                                            <a href="{{ request('folder') ? route('umkm.create', ['folder' => request('folder')]) : route('umkm.create') }}"
+                                                            <a href="{{ route('umkm.create', array_filter(['folder' => request('folder'), 'role' => request('role')])) }}"
                                                                 class="btn-primary-custom"
                                                                 style="display:inline-flex;margin-top:8px;">
                                                                 <i class="bi bi-plus-circle"></i> Tambah Dokumen
@@ -1672,8 +1681,17 @@
             // ===== FOLDER FUNCTIONS =====
 
             // Filter by folder
-            function filterByFolder(folderId) {
-                window.location.href = "{{ route('umkm.index') }}?folder=" + folderId;
+            function filterByFolder(folderId, role = null) {
+
+                const url = new URL(window.location.href);
+
+                if (role) {
+                    url.searchParams.set('role', role);
+                }
+
+                url.searchParams.set('folder', folderId);
+
+                window.location.href = url.toString();
             }
 
             // Select color

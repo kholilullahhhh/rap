@@ -18,53 +18,94 @@ class DokumenController extends Controller
         $this->menu = 'dokumen';
     }
 
+    /**
+     * Query folder yang dapat diakses user berdasarkan role.
+     * Logika sama seperti dokumen: admin/kepala_kantor melihat semua folder
+     * (opsional difilter per role), role lain hanya melihat foldernya sendiri.
+     */
+    private function foldersQuery()
+    {
+        $user = Auth::user();
+        $query = Folder::query();
+
+        if (in_array($user->role, ['admin', 'kepala_kantor'], true)) {
+            $filterRole = request()->get('role');
+            if ($filterRole && $filterRole !== 'all') {
+                $query->whereHas('user', function ($q) use ($filterRole) {
+                    $q->where('role', $filterRole);
+                });
+            }
+        } else {
+            $query->where('user_id', $user->id);
+        }
+
+        return $query;
+    }
+
+    /**
+     * Terapkan filter visibilitas dokumen sesuai role.
+     * Dipakai untuk daftar dokumen dan penghitungan jumlah dokumen per folder.
+     */
+    private function applyDocVisibility($query)
+    {
+        $user = Auth::user();
+
+        if (in_array($user->role, ['admin', 'kepala_kantor'], true)) {
+            $filterRole = request()->get('role');
+            if ($filterRole && $filterRole !== 'all') {
+                $query->whereHas('user', function ($q) use ($filterRole) {
+                    $q->where('role', $filterRole);
+                });
+            }
+        } else {
+            $query->where('user_id', $user->id);
+        }
+
+        return $query;
+    }
+
     public function index(Request $request)
     {
         $menu = $this->menu;
         $user = Auth::user();
         $kategori = JenisUsaha::all();
 
-
-        // Ambil parameter filter
+        // Filter
         $filterRole = $request->get('role');
         $folderId = $request->get('folder');
 
-        // Query dasar
-        $query = Dokumen::with(['kategori', 'user', 'folder']);
-
-        // Filter berdasarkan role user
-        if (in_array($user->role, ['admin', 'kepala_kantor'])) {
-            if ($filterRole && $filterRole != 'all') {
-                $query->whereHas('user', function ($q) use ($filterRole) {
-                    $q->where('role', $filterRole);
-                });
-            }
-            // Admin dan Kepala Kantor melihat semua
-        } else {
-            // User lain hanya melihat dokumen miliknya
-            $query->where('user_id', $user->id);
-        }
-
-        // Filter berdasarkan folder
-        if ($folderId) {
-            $query->where('folder_id', $folderId);
-        }
-
-        // Ambil data
-        $datas = $query->latest()->get();
-
-        // Ambil folder untuk user
-        $folders = Folder::where('user_id', $user->id)
-                        ->withCount('dokumen')
-                        ->get();
-
-        // Current folder
+        // Current folder (hanya jika dapat diakses user sesuai role)
         $currentFolder = null;
         if ($folderId) {
-            $currentFolder = Folder::find($folderId);
+            $currentFolder = $this->foldersQuery()->find($folderId);
         }
 
-        // Menentukan view berdasarkan role
+        // Query dasar dokumen
+        $query = Dokumen::with(['kategori', 'user', 'folder']);
+
+        // Filter dokumen berdasarkan role user
+        $this->applyDocVisibility($query);
+
+        // Filter berdasarkan folder
+        if ($currentFolder) {
+            $query->where('folder_id', $currentFolder->id);
+        }
+
+        $datas = $query->latest()->get();
+
+        // Folder sesuai role, jumlah dokumen dihitung dari dokumen yang terlihat role tsb
+        $folders = $this->foldersQuery()
+            ->withCount(['dokumen' => function ($q) {
+                $this->applyDocVisibility($q);
+            }])
+            ->latest()
+            ->get();
+
+        /*
+    |--------------------------------------------------------------------------
+    | View Berdasarkan Role
+    |--------------------------------------------------------------------------
+    */
         $view = match ($user->role) {
             'admin', 'kepala_kantor' => 'pages.admin.umkm.index',
             'inteldaktim' => 'pages.admin.umkm.inteldaktim',
@@ -85,23 +126,23 @@ class DokumenController extends Controller
     }
 
     public function viewFile($id)
-{
-    $dokumen = Dokumen::findOrFail($id);
+    {
+        $dokumen = Dokumen::findOrFail($id);
 
-    $this->authorize('view', $dokumen);
+        $this->authorize('view', $dokumen);
 
-    if (!$dokumen->file_path) {
-        abort(404);
+        if (! $dokumen->file_path) {
+            abort(404);
+        }
+
+        $path = storage_path('app/public/'.$dokumen->file_path);
+
+        if (! file_exists($path)) {
+            abort(404);
+        }
+
+        return response()->file($path);
     }
-
-    $path = storage_path('app/public/' . $dokumen->file_path);
-
-    if (!file_exists($path)) {
-        abort(404);
-    }
-
-    return response()->file($path);
-}   
 
     // ===== FOLDER METHODS =====
 
@@ -111,7 +152,7 @@ class DokumenController extends Controller
     public function storeFolder(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:100|unique:folders,name,NULL,id,user_id,' . Auth::id(),
+            'name' => 'required|string|max:100|unique:folders,name,NULL,id,user_id,'.Auth::id(),
             'color' => 'nullable|integer|min:1|max:8',
         ]);
 
@@ -121,7 +162,7 @@ class DokumenController extends Controller
             'color' => $request->color ?? 1,
         ]);
 
-        return redirect()->back()->with('folder_success', 'Folder "' . $folder->name . '" berhasil dibuat');
+        return redirect()->back()->with('folder_success', 'Folder "'.$folder->name.'" berhasil dibuat');
     }
 
     /**
@@ -132,7 +173,7 @@ class DokumenController extends Controller
         $folder = Folder::where('user_id', Auth::id())->findOrFail($id);
 
         $request->validate([
-            'name' => 'required|string|max:100|unique:folders,name,' . $id . ',id,user_id,' . Auth::id(),
+            'name' => 'required|string|max:100|unique:folders,name,'.$id.',id,user_id,'.Auth::id(),
             'color' => 'nullable|integer|min:1|max:8',
         ]);
 
@@ -141,7 +182,7 @@ class DokumenController extends Controller
             'color' => $request->color ?? $folder->color,
         ]);
 
-        return redirect()->back()->with('message', 'Folder "' . $folder->name . '" berhasil diupdate');
+        return redirect()->back()->with('message', 'Folder "'.$folder->name.'" berhasil diupdate');
     }
 
     /**
@@ -159,7 +200,7 @@ class DokumenController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Folder "' . $folderName . '" berhasil dihapus'
+            'message' => 'Folder "'.$folderName.'" berhasil dihapus',
         ]);
     }
 
@@ -180,9 +221,9 @@ class DokumenController extends Controller
         if ($request->has('remove_from_folder') && $request->remove_from_folder) {
             $dokumen->folder_id = null;
         } else {
-            // Pastikan folder tujuan milik user (jika folder dipilih)
+            // Pastikan folder tujuan dapat diakses user (sesuai role)
             if ($request->filled('folder_id')) {
-                $folder = Folder::where('user_id', Auth::id())->find($request->folder_id);
+                $folder = $this->foldersQuery()->find($request->folder_id);
 
                 if (! $folder) {
                     return back()->withErrors(['folder_id' => 'Folder tidak valid.'])->withInput();
@@ -195,7 +236,8 @@ class DokumenController extends Controller
         $dokumen->save();
 
         $folderName = $dokumen->folder ? $dokumen->folder->name : 'Root';
-        return redirect()->back()->with('message', 'Dokumen berhasil dipindahkan ke "' . $folderName . '"');
+
+        return redirect()->back()->with('message', 'Dokumen berhasil dipindahkan ke "'.$folderName.'"');
     }
 
     // ===== DOKUMEN CRUD METHODS =====
@@ -207,7 +249,7 @@ class DokumenController extends Controller
     {
         $menu = $this->menu;
         $kategori = JenisUsaha::all();
-        $folders = Folder::where('user_id', Auth::id())->get();
+        $folders = $this->foldersQuery()->get();
 
         // Folder yang sedang dipilih (dari query "folder" atau input yang gagal validasi)
         $selectedFolder = $request->query('folder', old('folder_id'));
@@ -232,9 +274,9 @@ class DokumenController extends Controller
             'folder_id' => 'nullable|exists:folders,id',
         ]);
 
-        // Pastikan folder yang dipilih milik user yang sedang login
+        // Pastikan folder yang dipilih dapat diakses user yang sedang login
         if ($request->filled('folder_id')) {
-            $folder = Folder::where('user_id', Auth::id())->find($request->folder_id);
+            $folder = $this->foldersQuery()->find($request->folder_id);
 
             if (! $folder) {
                 return back()->withInput()->withErrors(['folder_id' => 'Folder tidak valid.']);
@@ -243,7 +285,7 @@ class DokumenController extends Controller
 
         // Upload file
         $file = $request->file('file_path');
-        $fileName = time() . '_' . $file->getClientOriginalName();
+        $fileName = time().'_'.$file->getClientOriginalName();
         $filePath = $file->storeAs('dokumen', $fileName, 'public');
 
         Dokumen::create([
@@ -273,7 +315,7 @@ class DokumenController extends Controller
         $this->authorize('update', $data);
 
         $kategori = JenisUsaha::all();
-        $folders = Folder::where('user_id', Auth::id())->get();
+        $folders = $this->foldersQuery()->get();
 
         return view('pages.admin.umkm.edit', compact('menu', 'data', 'kategori', 'folders'));
     }
@@ -301,9 +343,9 @@ class DokumenController extends Controller
 
         $data = $request->except('file_path');
 
-        // Pastikan folder tujuan milik user (jika folder diubah)
+        // Pastikan folder tujuan dapat diakses user (jika folder diubah)
         if ($request->filled('folder_id')) {
-            $folder = Folder::where('user_id', Auth::id())->find($request->folder_id);
+            $folder = $this->foldersQuery()->find($request->folder_id);
 
             if (! $folder) {
                 return back()->withErrors(['folder_id' => 'Folder tidak valid.'])->withInput();
@@ -320,7 +362,7 @@ class DokumenController extends Controller
             }
 
             $file = $request->file('file_path');
-            $fileName = time() . '_' . $file->getClientOriginalName();
+            $fileName = time().'_'.$file->getClientOriginalName();
             $data['file_path'] = $file->storeAs('dokumen', $fileName, 'public');
         }
 
@@ -347,7 +389,7 @@ class DokumenController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Dokumen berhasil dihapus'
+            'message' => 'Dokumen berhasil dihapus',
         ]);
     }
 }
