@@ -1357,7 +1357,7 @@
                                                     </td>
                                                 </tr>
                                             @empty
-                                                <tr>
+                                                {{-- <tr>
                                                     <td colspan="6">
                                                         <div class="empty-state">
                                                             <i class="bi bi-inbox"></i>
@@ -1370,7 +1370,7 @@
                                                             </a>
                                                         </div>
                                                     </td>
-                                                </tr>
+                                                </tr> --}}
                                             @endforelse
                                         </tbody>
                                     </table>

@@ -588,7 +588,7 @@
                                 <i class="fas fa-users"></i>
                             </span>
                             <div class="stat-number" data-count="1500">
-                                1.500+
+                                {{ $datas->count() }}
                             </div>
                             <div class="stat-label">
                                 Pengguna Aktif
@@ -601,7 +601,7 @@
                                 <i class="fas fa-file-alt"></i>
                             </span>
                             <div class="stat-number" data-count="850">
-                                850+
+                                {{ $dokumen->count() }}
                             </div>
                             <div class="stat-label">
                                 Total Dokumen

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Agenda;
+use App\Models\Dokumen;
+use App\Models\USer;
 use App\Models\Artikel;
 use App\Models\Modul;
 
@@ -15,12 +17,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        $datas = array(
-        );
+        $datas = User::get(); 
+        $dokumen= Dokumen::get(); 
+
 
         // dd($datas);
         // return view('pages.user.index', ['menu' => 'profil']);
-        return view('pages.landing.index', ['menu' => 'profil'], compact('datas'));
+        return view('pages.landing.index', ['menu' => 'profil'], compact('datas', 'dokumen'));
     }
 
     public function kontak()

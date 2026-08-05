@@ -510,7 +510,7 @@
 
             <!-- Summary Cards -->
             <div class="row g-4 mb-4">
-                <div class="col-xl-6 col-md-12">
+                <div class="col-xl-4 col-md-8">
                     <div class="dashboard-card fade-in-up">
                         <div class="card-body">
                             <div class="d-flex align-items-start justify-content-between">
@@ -539,63 +539,8 @@
                     </div>
                 </div>
 
-          
 
-                <div class="col-xl-6 col-md-12  ">
-                    <div class="dashboard-card fade-in-up">
-                        <div class="card-body">
-                            <div class="d-flex align-items-start justify-content-between">
-                                <div>
-                                    <div class="card-label">Total Pengguna</div>
-                                    <div class="card-value">{{ number_format($totalUsers) }}</div>
-                                    <div class="stat-footer">
-                                        <span class="text-muted">
-                                            <i class="bi bi-person-plus-fill me-1"></i>
-                                            Terdaftar aktif
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="card-icon-wrapper icon-bg-warning">
-                                    <i class="bi bi-people"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Status Summary -->
-            <div class="row g-4 mb-4">
-                <div class="col-lg-6">
-                    <div class="dashboard-card fade-in-up">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <p class="card-label mb-3">Status Dokumen</p>
-                                    <div class="d-flex gap-2 flex-wrap">
-                                        <div class="mini-stat">
-                                            <span class="status-badge bg-success">✓ Approved</span>
-                                            {{-- <span class="fw-bold ms-2">{{ $dokumenAktif }}</span> --}}
-                                        </div>
-                                        <div class="mini-stat">
-                                            <span class="status-badge bg-warning">⟳ Review</span>
-                                            {{-- <span class="fw-bold ms-2">{{ $dokumenPending }}</span> --}}
-                                        </div>
-                                        <div class="mini-stat">
-                                            <span class="status-badge bg-danger">✎ Draft</span>
-                                            {{-- <span class="fw-bold ms-2">{{ $dokumenArsip }}</span> --}}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-icon-wrapper icon-bg-primary" style="width: 48px; height: 48px; font-size: 20px;">
-                                    <i class="bi bi-check-circle"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="dashboard-card fade-in-up">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-start">
@@ -627,6 +572,64 @@
                         </div>
                     </div>
                 </div>
+
+          
+
+                <div class="col-xl-4 col-md-8  ">
+                    <div class="dashboard-card fade-in-up">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <div>
+                                    <div class="card-label">Total Pengguna</div>
+                                    <div class="card-value">{{ number_format($totalUsers) }}</div>
+                                    <div class="stat-footer">
+                                        <span class="text-muted">
+                                            <i class="bi bi-person-plus-fill me-1"></i>
+                                            Terdaftar aktif
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-icon-wrapper icon-bg-warning">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Summary -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-12">
+                    <div class="dashboard-card fade-in-up">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <p class="card-label mb-3">Daftar Dokumen</p>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <div class="mini-stat">
+                                            <span class="status-badge bg-success">✎ IT & Inteldaktim</span>
+                                            {{-- <span class="fw-bold ms-2">{{ $dokumenAktif }}</span> --}}
+                                        </div>
+                                        <div class="mini-stat">
+                                            <span class="status-badge bg-warning">✎ Tata Usaha</span>
+                                            {{-- <span class="fw-bold ms-2">{{ $dokumenPending }}</span> --}}
+                                        </div>
+                                        <div class="mini-stat">
+                                            <span class="status-badge bg-danger">✎ Verdokjal</span>
+                                            {{-- <span class="fw-bold ms-2">{{ $dokumenArsip }}</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-icon-wrapper icon-bg-primary" style="width: 48px; height: 48px; font-size: 20px;">
+                                    <i class="bi bi-folder"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
             </div>
 
             <!-- Charts Row -->
