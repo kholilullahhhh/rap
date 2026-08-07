@@ -15,7 +15,7 @@ Laravel 10 app (PHP ^8.1) on the Stisla admin template, built for an immigration
 ## Auth & sessions (non-standard)
 - Custom session auth, not the Laravel guard flow. `ValidasiUser` middleware (app/Http/Middleware/ValidasiUser.php) just checks `Session('cek')`.
 - `AuthController::login_action` sets session keys `cek`, `user_id`, `name`, `username`, `role`. Don't assume `auth()->user()` works for UI state.
-- The same accounts are seeded into **both** `users` and `admins` tables (AdminSeeder). Seeded roles: `admin`, `kepala_kantor`, `tu`, `inteldaktim`, `verdokjal` (sidebar also gates on `user` in `$showDokumen`). Seed credentials: `admin`/`admin`, others `12345678`.
+- The same accounts are seeded into **both** `users` and `admins` tables (AdminSeeder). Seeded roles: `admin`, `kepala_kantor`, `tu`, `inteldakim`, `verdokjal` (sidebar also gates on `user` in `$showDokumen`). Seed credentials: `admin`/`admin`, others `12345678`.
 - Sidebar visibility is gated by `session('role')` in resources/views/components/default/sidebar.blade.php.
 
 ## Repo quirks

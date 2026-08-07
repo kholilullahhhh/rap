@@ -1,13 +1,5 @@
     @push('styles')
-        <style>
-            .navbar-bg {
-                background-color: red !important;
-            }
-
-            .main-navbar {
-                background-color: red !important;
-            }
-        </style>
+        <link rel="stylesheet" href="{{ asset('css/components/transparent/header.css') }}">
     @endpush
     <div class="navbar-bg-danger"></div>
     <nav class="navbar navbar-expand-lg main-navbar">

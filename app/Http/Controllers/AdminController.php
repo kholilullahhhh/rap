@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Hash;
 use App\Models\Dokumen;
-use App\Models\JenisUsaha;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
@@ -43,21 +42,6 @@ class AdminController extends Controller
         // Dokumen dengan file
         $dokumenDenganFile = Dokumen::whereNotNull('file_path')->count();
 
-        // ========== DATA KATEGORI ==========
-        $totalKategori = JenisUsaha::count();
-        // $kategoriAktif = JenisUsaha::where('status', 'aktif')->count();
-
-        // Top 5 kategori dengan dokumen terbanyak
-        $topKategori = JenisUsaha::withCount('dokumen')
-            ->orderBy('dokumen_count', 'desc')
-            ->take(5)
-            ->get();
-
-        // Kategori tanpa dokumen
-        $kategoriKosong = JenisUsaha::withCount('dokumen')
-            ->having('dokumen_count', 0)
-            ->count();
-
         // ========== DATA PENGGUNA ==========
         $totalUsers = User::count();
         $userBaru = User::whereMonth('created_at', date('m'))
@@ -90,21 +74,6 @@ class AdminController extends Controller
             $monthlyUploads[] = $count;
         }
 
-        // Category distribution - FIXED
-        $categories = JenisUsaha::withCount('dokumen')
-            ->orderBy('dokumen_count', 'desc')
-            ->take(8)
-            ->get();
-
-        $categoryData = [];
-        $categoryLabels = [];
-        foreach ($categories as $category) {
-            if ($category->dokumen_count > 0) {
-                $categoryLabels[] = $category->nama;
-                $categoryData[] = $category->dokumen_count;
-            }
-        }
-
         // Top users data for chart - FIXED
         $topUsersList = User::withCount('dokumen')
             ->orderBy('dokumen_count', 'desc')
@@ -126,7 +95,7 @@ class AdminController extends Controller
         // $versionGroups = Dokumen::selectRaw('versi, count(*) as total')
         //     ->groupBy('versi')
         //     ->orderBy('versi')
-            // ->get();
+        // ->get();
 
         // foreach ($versionGroups as $group) {
         //     $versionLabels[] = 'v' . $group->versi;
@@ -165,7 +134,7 @@ class AdminController extends Controller
 
         $uploadMingguIni = Dokumen::whereBetween('created_at', [
             Carbon::now()->startOfWeek(),
-            Carbon::now()->endOfWeek()
+            Carbon::now()->endOfWeek(),
         ])->count();
 
         // Real download count (if you have downloads table) or use view count as alternative
@@ -180,7 +149,7 @@ class AdminController extends Controller
         //     ->count() ?? rand(100, 500);
 
         // Recent documents
-        $recentDocuments = Dokumen::with(['kategori', 'user'])
+        $recentDocuments = Dokumen::with(['user'])
             ->latest()
             ->take(10)
             ->get();
@@ -217,12 +186,6 @@ class AdminController extends Controller
             'dokumenDenganFile' => $dokumenDenganFile,
             'growthPercentage' => $growthPercentage,
 
-            // Category data
-            'totalKategori' => $totalKategori,
-            // 'kategoriAktif' => $kategoriAktif,
-            'kategoriKosong' => $kategoriKosong,
-            'topKategori' => $topKategori,
-
             // User data
             'totalUsers' => $totalUsers,
             'userBaru' => $userBaru,
@@ -233,8 +196,6 @@ class AdminController extends Controller
             // Chart data
             'monthlyUploads' => $monthlyUploads,
             'monthLabels' => $monthLabels,
-            'categoryData' => $categoryData,
-            'categoryLabels' => $categoryLabels,
             'topUsersData' => $topUsersData,
             'topUsersLabels' => $topUsersLabels,
             'versionData' => $versionData,
@@ -252,7 +213,7 @@ class AdminController extends Controller
             'recentDocuments' => $recentDocuments,
 
             // Filter
-            'selectedYear' => $selectedYear
+            'selectedYear' => $selectedYear,
         ]);
     }
 
@@ -262,7 +223,7 @@ class AdminController extends Controller
 
         return view('pages.admin.profile.index', [
             'menu' => 'profile',
-            'data' => $data
+            'data' => $data,
         ]);
     }
 

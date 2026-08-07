@@ -20,8 +20,8 @@
             @php
                 $role = session('role');
                 $hasMasterData = in_array($role, ['admin', 'kepala_kantor']);
-                $showDokumen = in_array($role, ['admin', 'user','verdokjal', 'tu', 'inteldaktim', 'kepala_kantor']);
-                $showKegiatan = in_array($role, ['admin', 'inteldaktim', 'kepala_kantor']);
+                $showDokumen = in_array($role, ['admin', 'user','verdokjal', 'tu', 'inteldakim', 'kepala_kantor']);
+                $showKegiatan = in_array($role, ['admin', 'inteldakim', 'kepala_kantor']);
                 $showKategori = in_array($role, ['admin', 'kepala_kantor']);
                 $showAkun = $role == 'admin';
             @endphp
@@ -49,8 +49,8 @@
                             </a>
                         </li>
 
-                        <li class="{{ request('role') == 'inteldaktim' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('umkm.index') }}?role=inteldaktim">
+                        <li class="{{ request('role') == 'inteldakim' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('umkm.index') }}?role=inteldakim">
                                 Inteldakim
                             </a>
                         </li>
@@ -68,15 +68,15 @@
                 </li>
             @endif
 
-            <!-- MENU DOKUMEN UNTUK INTELDAKTIM (hanya lihat dokumen inteldaktim) -->
-            @if ($role == 'inteldaktim')
+            <!-- MENU DOKUMEN UNTUK INTELDAKIM (hanya lihat dokumen inteldakim) -->
+            @if ($role == 'inteldakim')
                 <li class="nav-item {{ $menu == 'dokumen' ? 'active' : '' }}">
                     <a href="{{ route('umkm.index') }}" class="nav-link">
                         <i class="fas fa-file-alt"></i>
                         <span>Dokumen</span>
                     </a>
                 </li>
-                <!-- Kegiatan untuk inteldaktim -->
+                <!-- Kegiatan untuk inteldakim -->
                 <li class="nav-item {{ $menu == 'pembinaan' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('pembinaan.index') }}">
                         <i class="fas fa-calendar-alt"></i>

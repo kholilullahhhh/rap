@@ -4,27 +4,7 @@
     @push('styles')
         <link rel="stylesheet" href="{{ asset('library/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
         <link rel="stylesheet" href="{{ asset('library/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
-        <style>
-            .detail-table {
-                background-color: #f8f9fa;
-                border-radius: 5px;
-                padding: 15px;
-                margin-top: 20px;
-                display: none;
-            }
-            .detail-table table {
-                width: 100%;
-            }
-            .detail-table th {
-                background-color: #e9ecef;
-            }
-            .detail-toggle {
-                cursor: pointer;
-            }
-            .detail-toggle:hover {
-                text-decoration: underline;
-            }
-        </style>
+        <link rel="stylesheet" href="{{ asset('css/pages/admin/penilaian_kinerja/index.css') }}">
     @endpush
 
     <div class="main-content">

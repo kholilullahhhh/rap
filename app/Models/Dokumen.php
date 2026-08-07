@@ -5,35 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
 class Dokumen extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'kategori_id',
         'user_id',
         'folder_id',
-        // 'nomor_dokumen',
         'judul',
-        // 'deskripsi',
         'file_path',
         'tanggal_dokumen',
-        // 'versi',
-        // 'status'
     ];
 
     protected $casts = [
         'tanggal_dokumen' => 'date',
     ];
-
-    /**
-     * Relasi ke kategori dokumen
-     */
-    public function kategori()
-    {
-        return $this->belongsTo(JenisUsaha::class, 'kategori_id');
-    }
 
     /**
      * Relasi ke user pengunggah
@@ -46,7 +32,6 @@ class Dokumen extends Model
     /**
      * Relasi ke folder
      */
-
     public function folder()
     {
         return $this->belongsTo(Folder::class);

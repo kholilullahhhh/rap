@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Dokumen;
 use App\Models\Folder;
-use App\Models\JenisUsaha;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -68,7 +67,6 @@ class DokumenController extends Controller
     {
         $menu = $this->menu;
         $user = Auth::user();
-        $kategori = JenisUsaha::all();
 
         // Filter
         $filterRole = $request->get('role');
@@ -81,7 +79,7 @@ class DokumenController extends Controller
         }
 
         // Query dasar dokumen
-        $query = Dokumen::with(['kategori', 'user', 'folder']);
+        $query = Dokumen::with(['user', 'folder']);
 
         // Filter dokumen berdasarkan role user
         $this->applyDocVisibility($query);
@@ -108,7 +106,7 @@ class DokumenController extends Controller
     */
         $view = match ($user->role) {
             'admin', 'kepala_kantor' => 'pages.admin.umkm.index',
-            'inteldaktim' => 'pages.admin.umkm.inteldaktim',
+            'inteldakim' => 'pages.admin.umkm.inteldakim',
             'verdokjal' => 'pages.admin.umkm.verdokjal',
             'tu' => 'pages.admin.umkm.tu',
             default => abort(403),
@@ -118,7 +116,6 @@ class DokumenController extends Controller
             'datas',
             'user',
             'menu',
-            'kategori',
             'filterRole',
             'folders',
             'currentFolder'
@@ -252,13 +249,12 @@ class DokumenController extends Controller
     public function create(Request $request)
     {
         $menu = $this->menu;
-        $kategori = JenisUsaha::all();
         $folders = $this->foldersQuery()->get();
 
         // Folder yang sedang dipilih (dari query "folder" atau input yang gagal validasi)
         $selectedFolder = $request->query('folder', old('folder_id'));
 
-        return view('pages.admin.umkm.create', compact('menu', 'kategori', 'folders', 'selectedFolder'));
+        return view('pages.admin.umkm.create', compact('menu', 'folders', 'selectedFolder'));
     }
 
     /**
@@ -267,14 +263,8 @@ class DokumenController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kategori_id' => 'required|exists:jenis_usahas,id',
-            // 'nomor_dokumen' => 'required|string|unique:dokumens',
-            'judul' => 'required|string|max:255',
-            // 'deskripsi' => 'nullable|string',
             'file_path' => 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:10240',
             'tanggal_dokumen' => 'required|date',
-            // 'versi' => 'nullable|string|max:20',
-            // 'status' => 'nullable|in:draft,review,approved,obsolete',
             'folder_id' => 'nullable|exists:folders,id',
         ]);
 
@@ -289,20 +279,16 @@ class DokumenController extends Controller
 
         // Upload file
         $file = $request->file('file_path');
+        $documentName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $fileName = time().'_'.$file->getClientOriginalName();
         $filePath = $file->storeAs('dokumen', $fileName, 'public');
 
         Dokumen::create([
-            'kategori_id' => $request->kategori_id,
             'user_id' => Auth::id(),
             'folder_id' => $request->folder_id,
-            'nomor_dokumen' => $request->nomor_dokumen,
-            'judul' => $request->judul,
-            'deskripsi' => $request->deskripsi,
+            'judul' => $documentName,
             'file_path' => $filePath,
             'tanggal_dokumen' => $request->tanggal_dokumen,
-            'versi' => $request->versi ?? '1.0',
-            'status' => $request->status ?? 'draft',
         ]);
 
         return redirect()->route('umkm.index')->with('message', 'Dokumen berhasil ditambahkan');
@@ -318,10 +304,9 @@ class DokumenController extends Controller
 
         $this->authorize('update', $data);
 
-        $kategori = JenisUsaha::all();
         $folders = $this->foldersQuery()->get();
 
-        return view('pages.admin.umkm.edit', compact('menu', 'data', 'kategori', 'folders'));
+        return view('pages.admin.umkm.edit', compact('menu', 'data', 'folders'));
     }
 
     /**
@@ -334,18 +319,12 @@ class DokumenController extends Controller
         $this->authorize('update', $dokumen);
 
         $request->validate([
-            'kategori_id' => 'required|exists:jenis_usahas,id',
-            // 'nomor_dokumen' => 'required|string|unique:dokumens,nomor_dokumen,' . $id,
-            'judul' => 'required|string|max:255',
-            // 'deskripsi' => 'nullable|string',
             'file_path' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:10240',
             'tanggal_dokumen' => 'required|date',
-            // 'versi' => 'nullable|string|max:20',
-            // 'status' => 'nullable|in:draft,review,approved,obsolete',
             'folder_id' => 'nullable|exists:folders,id',
         ]);
 
-        $data = $request->except('file_path');
+        $data = $request->only(['folder_id', 'tanggal_dokumen']);
 
         // Pastikan folder tujuan dapat diakses user (jika folder diubah)
         if ($request->filled('folder_id')) {
@@ -368,6 +347,8 @@ class DokumenController extends Controller
             $file = $request->file('file_path');
             $fileName = time().'_'.$file->getClientOriginalName();
             $data['file_path'] = $file->storeAs('dokumen', $fileName, 'public');
+            // Nama/judul dokumen otomatis mengikuti nama file baru (tanpa ekstensi)
+            $data['judul'] = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         }
 
         $dokumen->update($data);
